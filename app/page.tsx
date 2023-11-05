@@ -6,7 +6,7 @@ import SearchBar from "@/components/SearchBar";
 export default function Home() {
 
   return (
-    <section className="w-full py-6 md:py-12 lg:py-24">
+    <section className="body w-full py-6 md:py-12 lg:py-24">
           <div className="container px-2 md:px-4 lg:px-6">
             <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem] text-center mb-2">
               Search For Recepies

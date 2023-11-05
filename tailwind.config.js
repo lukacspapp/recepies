@@ -13,6 +13,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        xs: "475px",
       },
     },
     extend: {
@@ -66,11 +67,17 @@ module.exports = {
           to: { height: 0 },
         },
       },
+      width: {
+        "inherit": "inherit"
+      },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+
+  ],
 }
