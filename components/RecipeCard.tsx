@@ -1,25 +1,35 @@
+import { serializeSlug } from '@/lib/slugFormatter'
 import Image from 'next/image'
+import Link from 'next/link'
 
-type Props = {}
+type RecepieCardPorps = {
+  meal: any
+}
 
-export default function RecipeCard({ }: Props) {
+export default function RecepieCard({ meal }: RecepieCardPorps) {
+
   return (
     <div className="space-y-2 md:space-y-4">
       <Image
-        alt="Blog post image"
+        alt={meal.strMealThumb}
         className="mx-auto aspect-content overflow-hidden rounded-xl object-cover object-center w-full"
         height="200"
-        src="/../../next.svg"
+        src={meal.strMealThumb}
         width="300"
       />
       <h2 className="leading-tighter text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
-        Blog Post Title
+        {meal.strMeal}
       </h2>
       <p className="max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
         Brief description of the blog post. This is just a summary to give readers an idea of what the post is
         about.
       </p>
-      <div>Read More</div>
+      <Link
+        className="text-base font-medium leading-6 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-400"
+        href={`/${serializeSlug(meal.strMeal)}`}
+      >
+        Read More
+      </Link>
     </div>
   )
 }
