@@ -21,12 +21,12 @@ export default function SearchBar() {
 
   return (
     <>
-      <form className="flex flex-col justify-center items-center my-4 md:my-8">
+      <form className="flex flex-col justify-center items-center my-4 md:my-8 relative">
         <div className="flex">
           <Input
             onChange={handleChange}
             aria-label="Search"
-            className="w-full max-w-md px-2 md:px-4 py-1 md:py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full relative max-w-md px-2 md:px-4 py-1 md:py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Search for articles..."
             type="search"
           />
@@ -41,7 +41,7 @@ export default function SearchBar() {
           </Button>
         </div>
         {input && (
-        <div className="m-2 w-full max-w-md shadow-md rounded">
+        <div className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded">
           <ul aria-label="Search suggestions" className="max-h-[200px] overflow-auto">
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Suggestion 1</li>
             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Suggestion 2</li>
