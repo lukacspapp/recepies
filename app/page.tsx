@@ -7,14 +7,7 @@ const url = process.env.NEXT_PUBLIC_BASE_URL
 
 export default async function Home() {
 
-  const { meals } = await doRequest(
-    "POST",
-    `${url}/api/recepies`,
-    JSON.stringify({ url: "getRandom10" })
-  )
-
-  console.log(meals);
-
+  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_10}`)
 
   return (
     <section className="w-full py-6 p-2 md:py-12 md:p-2 lg:py-24 lg:p-2">
