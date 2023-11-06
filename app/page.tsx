@@ -10,9 +10,8 @@ export default async function Home() {
   const { meals } = await doRequest(
     "POST",
     `${url}/api/recepies`,
-    JSON.stringify({ url : "getRandom10" })
+    JSON.stringify({ url: "getRandom10" })
   )
-
 
   return (
     <section className="w-full py-6 p-2 md:py-12 md:p-2 lg:py-24 lg:p-2">
@@ -27,10 +26,11 @@ export default async function Home() {
           <SearchBar />
         </div>
         <div className="grid gap-6 md:gap-10 sm:px-2 md:px-10 lg:gap-16 md:grid-cols-1 lg:grid-cols-2">
-          {meals ?? meals.map((meal: Meal) => (
+          {meals.map((meal: Meal) => (
             <RecipeCard
               key={meal.idMeal}
-              meal={meal}
+              strMealThumb={meal.strMealThumb}
+              strMeal={meal.strMeal}
             />
           ))}
         </div>
