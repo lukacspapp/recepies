@@ -1,9 +1,12 @@
+'use client'
+
 import { serializeSlug } from '@/lib/slugFormatter'
+import { Meal } from '@/lib/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
 type RecepieCardPorps = {
-  meal: any
+  meal: Meal
 }
 
 export default function RecepieCard({ meal }: RecepieCardPorps) {
@@ -16,6 +19,7 @@ export default function RecepieCard({ meal }: RecepieCardPorps) {
         height="200"
         src={meal.strMealThumb}
         width="300"
+        priority
       />
       <h2 className="leading-tighter text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
         {meal.strMeal}
