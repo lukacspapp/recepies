@@ -1,20 +1,20 @@
-const CATEGORIES = {
-  BEEF: 'Beef',
-  CHICKEN: 'Chicken',
-  PORK: 'Pork',
-  SEAFOOD: 'Seafood',
-  VEGETARIAN: 'Vegetarian',
-  VEGAN: 'Vegan',
-  LAMB: 'Lamb',
-  MISCELLANEOUS: 'Miscellaneous',
-  DESSERT: 'Dessert',
-  BREAKFAST: 'Breakfast',
-  GOAT: 'Goat',
-  STARTER: 'Starter',
-  SIDE: 'Side',
-}
+export const CATEGORIES = [
+  'Beef',
+  'Chicken',
+  'Pork',
+  'Seafood',
+  'Vegetarian',
+  'Vegan',
+  'Lamb',
+  'Miscellaneous',
+  'Dessert',
+  'Breakfast',
+  'Goat',
+  'Starter',
+  'Side',
+]
 
-const AREAS = {
+export const AREAS = {
   AMERICAN: 'American',
   BRITISH: 'British',
   CANADIAN: 'Canadian',

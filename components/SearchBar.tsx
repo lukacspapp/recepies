@@ -7,6 +7,7 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
+import { CATEGORIES } from '@/lib/constants'
 import {
   Form,
   FormControl,
@@ -28,10 +29,34 @@ export default function SearchBar() {
     },
   })
   const [input, setInput] = useState('')
-  const [suggestions, setSuggestions] = useState([])
+  const [suggestions, setSuggestions] = useState<string[]>([])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInput(e.target.value)
+
+    let suggestionList : string[] = [];
+
+    if (e.target.value.length === 0) {
+      setSuggestions([])
+      return
+    }
+
+    for (let i = 0; i < CATEGORIES.length; i++) {
+      for (let j = 0; j < CATEGORIES[i].length; j++) {
+        const letters = e.target.value.split('')
+        if (
+          CATEGORIES[i].toLowerCase().includes(e.target.value.toLowerCase())
+          || CATEGORIES[i][j].toLowerCase().includes(e.target.value.toLowerCase())
+          || CATEGORIES[i].toLowerCase().includes(letters.map((letter) => letter[0]).join(''))
+        ) {
+          suggestionList.push(CATEGORIES[i])
+        }
+      }
+      suggestionList = suggestionList.filter((item, index) => suggestionList.indexOf(item) === index)
+
+    }
+
+    setSuggestions(suggestionList)
+
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -62,7 +87,14 @@ export default function SearchBar() {
                 <FormMessage className='absolute bottom-10' />
                 <FormControl>
                   <Input
-                    placeholder="Ingridients, Meals...." {...field} />
+                    {...field}
+                    placeholder="Ingridients, Meals...."
+                    onChange={(e) => {
+                      setInput(e.target.value)
+                      handleChange(e)
+                      field.onChange(e)
+                    }}
+                  />
                 </FormControl>
               </FormItem>
             )}
@@ -72,7 +104,7 @@ export default function SearchBar() {
             type="submit">
             <MagnifyingGlassIcon />
           </Button>
-          {suggestions && (
+          {suggestions ? (
           <div className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded">
             <ul aria-label="Search suggestions" className="max-h-[200px] overflow-auto">
               {suggestions.map((suggestion, i) => (
@@ -83,7 +115,7 @@ export default function SearchBar() {
               ))}
             </ul>
           </div>
-        )}
+        ) : null}
         </form>
       </Form>
     </>
