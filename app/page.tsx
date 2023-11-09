@@ -18,7 +18,7 @@ export default async function Home() {
         <p className="max-w-[600px] text-zinc-500 md:text-xl dark:text-zinc-400 text-center mx-auto">
           By Ingridients, Cuisine or Calories
         </p>
-        <div className="flex justify-center my-4 md:my-8">
+        <div className="flex justify-center m-7 md:my-8">
           <SearchBar />
         </div>
         <div className="grid gap-6 md:gap-10 sm:px-2 md:px-10 lg:gap-16 md:grid-cols-1 lg:grid-cols-2">

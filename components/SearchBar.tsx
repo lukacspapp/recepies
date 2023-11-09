@@ -4,13 +4,40 @@ import { useState } from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
+import * as z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from 'react-hook-form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
+import { Label } from './ui/label'
+import Suggestion from './Suggestion'
 
 export default function SearchBar() {
 
+
+  const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25) })
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      search: "",
+    },
+  })
   const [input, setInput] = useState('')
+  const [suggestions, setSuggestions] = useState([])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInput(e.target.value)
+  }
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values)
   }
 
   // Countries
@@ -21,35 +48,44 @@ export default function SearchBar() {
 
   return (
     <>
-      <form className="flex flex-col justify-center items-center my-4 md:my-8 relative">
-        <div className="flex">
-          <Input
-            onChange={handleChange}
-            aria-label="Search"
-            className="w-full relative max-w-md px-2 md:px-4 py-1 md:py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Search for articles..."
-            type="text"
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex items-end justify-center space-y-1 space-x-1 relative"
+        >
+          <FormField
+            control={form.control}
+            name="search"
+            render={({ field }) => (
+              <FormItem>
+                <Label htmlFor="search" />
+                <FormMessage className='absolute bottom-10' />
+                <FormControl>
+                  <Input
+                    placeholder="Ingridients, Meals...." {...field} />
+                </FormControl>
+              </FormItem>
+            )}
           />
           <Button
-            disabled={!input}
-            name='Search'
-            className="ml-1 bg-blue-500 hover:bg-blue-700 text-white font-bold px-3 rounded"
-            type="submit"
-            aria-label='Search'
-          >
+            name='submit'
+            type="submit">
             <MagnifyingGlassIcon />
           </Button>
-        </div>
-        {input && (
-        <div className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded">
-          <ul aria-label="Search suggestions" className="max-h-[200px] overflow-auto">
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Suggestion 1</li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Suggestion 2</li>
-            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Suggestion 3</li>
-          </ul>
-        </div>
+          {suggestions && (
+          <div className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded">
+            <ul aria-label="Search suggestions" className="max-h-[200px] overflow-auto">
+              {suggestions.map((suggestion, i) => (
+                <Suggestion
+                  key={`${suggestion} - ${i}`}
+                  suggestion={suggestion}
+                />
+              ))}
+            </ul>
+          </div>
         )}
-      </form>
+        </form>
+      </Form>
     </>
   )
 }
