@@ -13,7 +13,7 @@ export default async function Home() {
 
   const { meals: ingridentsList } =  await doRequest('GET', `${process.env.RECEPIES_API_INGRIDIENTS_LIST}`)
   const { meals: categoriesList } =  await doRequest('GET', `${process.env.RECEPIES_API_CATEGORIES_LIST}`)
-  const { meals: areasList } =  await doRequest('GET', `${process.env.RECEPIES_API_AREAS_LIST}`)
+  const { meals: areasList } =  await doRequest('GET', `${process.env.RECEPIES_API_AREA_LIST}`)
 
   if (ingridentsList) {
     ingredients = ingridentsList.map((ingridient: any) => ingridient.strIngredient)
