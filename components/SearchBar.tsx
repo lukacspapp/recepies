@@ -7,7 +7,6 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
-import { AREAS, CATEGORIES } from '@/lib/constants'
 import {
   Form,
   FormControl,
@@ -34,10 +33,7 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
       search: "",
     },
   })
-  const [input, setInput] = useState('')
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: SuggestionType; }[]>([])
-
-
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let suggestionList: { suggestion: string; type: SuggestionType }[] = [];
@@ -113,7 +109,6 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
                     {...field}
                     placeholder="Ingridients, Meals...."
                     onChange={(e) => {
-                      setInput(e.target.value)
                       handleChange(e)
                       field.onChange(e)
                     }}
@@ -140,6 +135,7 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
                   key={`${suggestion} - ${i}`}
                   suggestion={suggestion.suggestion}
                   type={suggestion.type}
+                  setValue={form.setValue}
                 />
               ))}
             </ul>
