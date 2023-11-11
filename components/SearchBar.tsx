@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
@@ -75,6 +75,9 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
       }
     });
 
+    suggestionList = suggestionList.filter(
+      (v, i, a) => a.findIndex((t) => t.suggestion === v.suggestion) === i
+    );
 
     setSuggestions(suggestionList);
   }
@@ -85,10 +88,21 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
     console.log(values)
   }
 
-  // Countries
-  // make a constany aboutb the countries sam for  the ingredients and for vegan etc.
-  // if the letter is one letter that we assumed that is a suggestion what you want to search for country, ingrident or meal
-  // vlaidate the any input that is constant
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (e.target instanceof HTMLElement) {
+        if (e.target.id !== "search") {
+          setSuggestions([]);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [suggestions])
 
   return (
     <>
@@ -123,24 +137,24 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
             <MagnifyingGlassIcon />
           </Button>
           {suggestions.length ? (
-          <div
-            className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded"
-          >
-            <ul
-              aria-label="Search suggestions"
-              className="max-h-[200px] overflow-auto p-1"
+            <div
+              className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded"
             >
-              {suggestions.map((suggestion, i) => (
-                <Suggestion
-                  key={`${suggestion} - ${i}`}
-                  suggestion={suggestion.suggestion}
-                  type={suggestion.type}
-                  setValue={form.setValue}
-                />
-              ))}
-            </ul>
-          </div>
-        ) : null}
+              <ul
+                aria-label="Search suggestions"
+                className="max-h-[200px] overflow-auto p-1"
+              >
+                {suggestions.map((suggestion, i) => (
+                  <Suggestion
+                    key={`${suggestion} - ${i}`}
+                    suggestion={suggestion.suggestion}
+                    type={suggestion.type}
+                    setValue={form.setValue}
+                  />
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </form>
       </Form>
     </>
