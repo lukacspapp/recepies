@@ -53,3 +53,5 @@ export interface Meal {
   strCreativeCommonsConfirmed: any
   dateModified: any
 }
+
+export type SuggestionType = 'Category' | 'Cuisine' | 'Ingredient' ;

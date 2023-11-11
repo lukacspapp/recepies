@@ -7,7 +7,7 @@ import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
-import { CATEGORIES } from '@/lib/constants'
+import { AREAS, CATEGORIES } from '@/lib/constants'
 import {
   Form,
   FormControl,
@@ -17,9 +17,15 @@ import {
 } from "@/components/ui/form"
 import { Label } from './ui/label'
 import Suggestion from './Suggestion'
+import { SuggestionType } from '@/lib/types'
 
-export default function SearchBar() {
+type SearchBarProps = {
+  ingredients: string[]
+  categories: string[]
+  areas: string[]
+}
 
+export default function SearchBar({ ingredients, categories, areas }: SearchBarProps) {
 
   const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25) })
   const form = useForm<z.infer<typeof formSchema>>({
@@ -29,34 +35,52 @@ export default function SearchBar() {
     },
   })
   const [input, setInput] = useState('')
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: SuggestionType; }[]>([])
+
+
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-
-    let suggestionList : string[] = [];
+    let suggestionList: { suggestion: string; type: SuggestionType }[] = [];
 
     if (e.target.value.length === 0) {
-      setSuggestions([])
-      return
+      setSuggestions([]);
+      return;
     }
 
-    for (let i = 0; i < CATEGORIES.length; i++) {
-      for (let j = 0; j < CATEGORIES[i].length; j++) {
-        const letters = e.target.value.split('')
-        if (
-          CATEGORIES[i].toLowerCase().includes(e.target.value.toLowerCase())
-          || CATEGORIES[i][j].toLowerCase().includes(e.target.value.toLowerCase())
-          || CATEGORIES[i].toLowerCase().includes(letters.map((letter) => letter[0]).join(''))
-        ) {
-          suggestionList.push(CATEGORIES[i])
-        }
+    const searchValue = e.target.value.toLowerCase();
+
+    categories.forEach((category) => {
+      const categoryLowerCase = category.toLowerCase();
+      if (
+        categoryLowerCase.includes(searchValue) ||
+        categoryLowerCase.split('').some((letter) => letter.includes(searchValue))
+      ) {
+        suggestionList.push({ suggestion: category, type: 'Category' });
       }
-      suggestionList = suggestionList.filter((item, index) => suggestionList.indexOf(item) === index)
+    });
 
-    }
+    areas.forEach((area: string) => {
+      const areaLowerCase = area.toLowerCase();
+      if (
+        areaLowerCase.includes(searchValue) ||
+        areaLowerCase.split('').some((letter) => letter.includes(searchValue))
+      ) {
+        suggestionList.push({ suggestion: area, type: "Cuisine" });
+      }
+    });
 
-    setSuggestions(suggestionList)
+    ingredients.forEach((ingredient: string) => {
+      const ingredientLowerCase = ingredient.toLowerCase();
+      if (
+        ingredientLowerCase.includes(searchValue) ||
+        ingredientLowerCase.split('').some((letter) => letter.includes(searchValue))
+      ) {
+        suggestionList.push({ suggestion: ingredient, type: 'Ingredient' });
+      }
+    });
 
+
+    setSuggestions(suggestionList);
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -69,7 +93,6 @@ export default function SearchBar() {
   // make a constany aboutb the countries sam for  the ingredients and for vegan etc.
   // if the letter is one letter that we assumed that is a suggestion what you want to search for country, ingrident or meal
   // vlaidate the any input that is constant
-
 
   return (
     <>
@@ -104,13 +127,19 @@ export default function SearchBar() {
             type="submit">
             <MagnifyingGlassIcon />
           </Button>
-          {suggestions ? (
-          <div className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded">
-            <ul aria-label="Search suggestions" className="max-h-[200px] overflow-auto">
+          {suggestions.length ? (
+          <div
+            className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded"
+          >
+            <ul
+              aria-label="Search suggestions"
+              className="max-h-[200px] overflow-auto p-1"
+            >
               {suggestions.map((suggestion, i) => (
                 <Suggestion
                   key={`${suggestion} - ${i}`}
-                  suggestion={suggestion}
+                  suggestion={suggestion.suggestion}
+                  type={suggestion.type}
                 />
               ))}
             </ul>
