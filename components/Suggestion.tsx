@@ -22,7 +22,7 @@ export default function Suggestion({ suggestion, type, setValue }: SeggestionPro
     >
       {suggestion}
       <span
-        className={`text-gray-400 text-xs font-normal italic ml-2 ${colors[type]}`}
+        className={`text-xs font-normal italic ml-2 ${colors[type]}`}
       >
         {type}
       </span>
