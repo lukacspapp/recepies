@@ -26,11 +26,12 @@ type SearchBarProps = {
 
 export default function SearchBar({ ingredients, categories, areas }: SearchBarProps) {
 
-  const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25) })
+  const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       search: "",
+      type: "",
     },
   })
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: SuggestionType; }[]>([])

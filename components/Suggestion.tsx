@@ -1,10 +1,10 @@
-import React from 'react'
+
 import { UseFormSetValue } from 'react-hook-form';
 
 type SeggestionProps = {
   suggestion: string;
   type: string;
-  setValue: UseFormSetValue<{ search: string; }>
+  setValue: UseFormSetValue<{ type: string; search: string; }>
 }
 
 export default function Suggestion({ suggestion, type, setValue }: SeggestionProps) {
@@ -18,7 +18,10 @@ export default function Suggestion({ suggestion, type, setValue }: SeggestionPro
   return (
     <li
       className="px-2 py-1 hover:bg-gray-200 rounded cursor-pointer flex items-center justify-between"
-      onClick={() => setValue('search', suggestion)}
+      onClick={() => {
+        setValue('type', type)
+        setValue('search', suggestion)
+      }}
     >
       {suggestion}
       <span
