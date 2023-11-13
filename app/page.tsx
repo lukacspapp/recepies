@@ -1,3 +1,4 @@
+import RecepieList from "@/components/RecepieList";
 import RecipeCard from "@/components/RecipeCard";
 import SearchBar from "@/components/SearchBar";
 import { doRequest } from "@/lib/DoRequest";
@@ -36,22 +37,12 @@ export default async function Home() {
         <p className="max-w-[600px] text-zinc-500 md:text-xl dark:text-zinc-400 text-center mx-auto">
           By Ingridients, Cuisine or Calories
         </p>
-        <div className="flex justify-center m-7 md:my-8">
-          <SearchBar
-            ingredients={ingredients}
-            categories={categories}
-            areas={areas}
-          />
-        </div>
-        <div className="grid gap-6 md:gap-10 sm:px-2 md:px-10 lg:gap-16 md:grid-cols-1 lg:grid-cols-2">
-          {meals ? meals.map((meal: Meal) => (
-            <RecipeCard
-              key={meal.idMeal}
-              strMealThumb={meal.strMealThumb}
-              strMeal={meal.strMeal}
-            />
-          )) : null}
-        </div>
+        <RecepieList
+          ingredients={ingredients}
+          categories={categories}
+          areas={areas}
+          meals={meals}
+        />
       </div>
     </section>
   )

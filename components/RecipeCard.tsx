@@ -1,6 +1,6 @@
 'use client'
 
-import { serializeSlug } from '@/lib/slugFormatter'
+import { serializeSlug } from '@/lib/stringFormatter'
 import Image from 'next/image'
 import Link from 'next/link'
 

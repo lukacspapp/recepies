@@ -16,15 +16,25 @@ import {
 } from "@/components/ui/form"
 import { Label } from './ui/label'
 import Suggestion from './Suggestion'
-import { SuggestionType } from '@/lib/types'
+import { Meal, SuggestionType } from '@/lib/types'
+import { Loader2 } from 'lucide-react'
 
 type SearchBarProps = {
   ingredients: string[]
   categories: string[]
   areas: string[]
+  setMealList: React.Dispatch<React.SetStateAction<Meal[]>>
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export default function SearchBar({ ingredients, categories, areas }: SearchBarProps) {
+export default function SearchBar({
+  ingredients,
+  categories,
+  areas,
+  setMealList,
+  setLoading
+}: SearchBarProps) {
 
   const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
   const form = useForm<z.infer<typeof formSchema>>({
@@ -80,13 +90,38 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
       (v, i, a) => a.findIndex((t) => t.suggestion === v.suggestion) === i
     );
 
+    const matchedSuggestion = suggestionList.find(
+      (suggestion) => suggestion.suggestion.toLowerCase() === searchValue
+    );
+
+    if (matchedSuggestion) {
+      form.setValue('type', matchedSuggestion.type);
+    } else {
+      form.setValue('type', '');
+    }
     setSuggestions(suggestionList);
   }
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setLoading(true)
+    const res = fetch('/api/recepies', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values)
+    }).then(res => {
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+      return res.json();
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+
+    const meals = await res;
+    setMealList(meals)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -121,10 +156,12 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
                 <FormMessage className='absolute bottom-10' />
                 <FormControl>
                   <Input
+                    disabled={form.formState.isSubmitting}
                     {...field}
                     placeholder="Ingridients, Meals...."
                     onChange={(e) => {
                       handleChange(e)
+
                       field.onChange(e)
                     }}
                   />
@@ -133,9 +170,18 @@ export default function SearchBar({ ingredients, categories, areas }: SearchBarP
             )}
           />
           <Button
+            disabled={form.formState.isSubmitting}
             name='submit'
-            type="submit">
-            <MagnifyingGlassIcon />
+            type="submit"
+          >
+            {form.formState.isSubmitting
+              ?
+              <Loader2
+                size={15}
+                className='animate-spin'
+              />
+              :
+              <MagnifyingGlassIcon />}
           </Button>
           {suggestions.length ? (
             <div

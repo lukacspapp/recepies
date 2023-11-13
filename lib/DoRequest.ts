@@ -9,9 +9,8 @@ export async function doRequest(
     headers: {
       "Content-Type": "application/json",
     },
-    next: {
-      revalidate: 60,
-    }
+    credentials: "include",
+    cache: "no-cache",
   }
 
   if (apiKey) options.headers = { "x-api-key": apiKey }
