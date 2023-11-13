@@ -9,6 +9,7 @@ const urls = {
   cuisine: process.env.RECEPIES_API_FILTER_AREA || '',
   name: process.env.RECEPIES_API_NAME || '',
   firstLetter: process.env.RECEPIES_API_FIRST_LETTER || '',
+  id: process.env.RECEPIES_API_NAME_ID || '',
 }
 
 export async function GET(request: Request) {
@@ -23,9 +24,19 @@ export async function POST(req: Request) {
     const { search, type } = await req.json() as { search: string, type: string };
 
     if (type) {
+
       url = urls[type.toLowerCase() as keyof typeof urls] + serializeSearchParam(search);
       const { meals } = await doRequest('GET', url, null, key);
-      return new Response(JSON.stringify(meals))
+
+      const fetches = meals.map((meal: any) => {
+        return doRequest('GET', urls.id + meal.idMeal, null, key)
+      })
+
+      const results = await Promise.all(fetches)
+      const mealList = results.filter((result: any) => result.meals)
+      const filteredMealList = mealList.map((meal: any) => meal.meals).filter((meal: any) => meal.length > 0).flat();
+
+      return new Response(JSON.stringify(filteredMealList))
     }
 
     const fetches = Object.values(urls).map(key => {
@@ -44,7 +55,17 @@ export async function POST(req: Request) {
         return acc;
       }
     }, []);
-    return new Response(JSON.stringify(uniqueMealList))
+
+    const idFetches = uniqueMealList.map((meal: any) => {
+      return doRequest('GET', urls.id + meal.idMeal, null, key)
+    })
+
+    const idResults = await Promise.all(idFetches)
+
+    const idMealList = idResults.filter((result: any) => result.meals)
+    const filteredIdMealList = idMealList.map((meal: any) => meal.meals).filter((meal: any) => meal.length > 0).flat()
+
+    return new Response(JSON.stringify(filteredIdMealList))
   } catch (error) {
     console.error('Error parsing JSON:', error);
     return new Response(JSON.stringify({ error: 'Invalid JSON input' }), {
