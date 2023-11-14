@@ -103,6 +103,7 @@ export default function SearchBar({
   }
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setSuggestions([])
     setLoading(true)
     const res = fetch('/api/recepies', {
       method: 'POST',
@@ -161,7 +162,6 @@ export default function SearchBar({
                     placeholder="Ingridients, Meals...."
                     onChange={(e) => {
                       handleChange(e)
-
                       field.onChange(e)
                     }}
                   />

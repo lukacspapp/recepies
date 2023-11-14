@@ -19,7 +19,6 @@ export async function GET(request: Request) {
 
 export async function POST(req: Request) {
   let url: any
-
   try {
     const { search, type } = await req.json() as { search: string, type: string };
 
@@ -27,6 +26,8 @@ export async function POST(req: Request) {
 
       url = urls[type.toLowerCase() as keyof typeof urls] + serializeSearchParam(search);
       const { meals } = await doRequest('GET', url, null, key);
+
+      if (!meals) return new Response(JSON.stringify([]))
 
       const fetches = meals.map((meal: any) => {
         return doRequest('GET', urls.id + meal.idMeal, null, key)
@@ -44,6 +45,9 @@ export async function POST(req: Request) {
     })
 
     const results = await Promise.all(fetches)
+
+    if (!results) return new Response(JSON.stringify([]))
+
     const mealList = results.filter((result: any) => result.meals)
     const filteredMealList = mealList.map((meal: any) => meal.meals).filter((meal: any) => meal.length > 0).flat()
 
