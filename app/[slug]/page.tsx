@@ -1,14 +1,13 @@
+import Badge from "@/components/Badge";
 import Video from "@/components/Video";
 import { Button } from "@/components/ui/button";
 import { doRequest } from "@/lib/DoRequest";
 import { extractIngredientsAndMeasures } from "@/lib/utils";
 import Image from "next/image";
-import YouTube from "react-youtube";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-
-  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`)
+  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`);
 
   const { ingredients, measures } = extractIngredientsAndMeasures(meals[0]);
 
@@ -28,13 +27,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {meals[0].strMeal}
             </h2>
             <div className="flex justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
-              <Button className="inline-block transition-opacity hover:opacity-80 bg-green-500 px-2 py-1 rounded-lg" variant="link">
-                {meals[0].strCategory}
-              </Button>
-              <Button className="inline-block transition-opacity hover:opacity-80 bg-blue-500 px-2 py-1 rounded-lg" variant="link">
-                {meals[0].strArea}
-              </Button>
-
+              <Badge value={meals[0].strCategory} type='Category' />
+              <Badge value={meals[0].strArea} type='Cuisine' />
             </div>
             <h3 className="leading-tight text-lg font-bold tracking-tighter md:text-lg lg:text-xl xl:text-2xl">
               Instructions

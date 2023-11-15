@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { badgeVariants } from "@/components/ui/badge"
+import Badge from './Badge'
 
 type RecepieCardPorps = {
   strMealThumb: string,
@@ -35,20 +36,8 @@ export default function RecepieCard({
       <h2 className="leading-tighter text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
         {strMeal}
         <div>
-          <Link
-            className={`inline-block transition-opacity hover:opacity-80 bg-green-500 px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
-            href={`#`}
-            style={{ fontSize: '1rem' }}
-          >
-              {strArea}
-          </Link>
-          <Link
-            className={`inline-block transition-opacity hover:opacity-80 bg-blue-500 px-2 py-1 ml-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
-            href={`#`}
-            style={{ fontSize: '1rem' }}
-          >
-            {strCategory}
-          </Link>
+          <Badge value={strArea} type='Cuisine' />
+          <Badge value={strCategory} type='Category' />
         </div>
       </h2>
       <p className="max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">

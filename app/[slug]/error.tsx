@@ -14,15 +14,15 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <h2 className="text-lg font-bold tracking-tighter sm:text-lg md:text-lg xl:text-xl 2xl:text-2xl text-center mb-2">
+    <div className="flex m-6 flex-col items-center justify-center bg-center">
+      <h2 className="text-lg font-bold tracking-tighter sm:text-xl md:text-xl xl:text-xl 2xl:text-2xl text-center mb-2">
         Something Went Wrong 😥
       </h2>
       <p className="max-w-[600px] text-zinc-500 md:text-xl dark:text-zinc-400 text-center mx-auto">
         Try another refresh
       </p>
       <Button
-        className="inline-block transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
+        className="inline-block m-3 transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
         onClick={
           () => window.location.replace('/')
         }
