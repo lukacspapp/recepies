@@ -24,6 +24,9 @@ export default function Video({ id }: Props) {
         className="w-full h-96"
         opts={opts}
         loading="lazy"
+        onReady={(e) => {
+          e.target.pauseVideo()
+        }}
       />
     </div>
   )
