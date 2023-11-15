@@ -20,7 +20,7 @@ export default function Badge({ value, type }: BadgeProps) {
 
   return (
     <Link
-      className={`inline-block transition-opacity hover:opacity-80 ${colors[type]} px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
+      className={`inline-block transition-opacity ml-2 hover:opacity-80 ${colors[type]} px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
       href={`#`}
       style={{ fontSize: '1rem' }}
     >
