@@ -8,9 +8,10 @@ import { badgeVariants } from './ui/badge'
 type BadgeProps = {
   value: string
   type: "Category" | "Cuisine" | "Ingredient"
+  className?: string
 }
 
-export default function Badge({ value, type }: BadgeProps) {
+export default function Badge({ value, type, className }: BadgeProps) {
 
   const colors: { [key: string]: string } = {
     "Category": "bg-green-500",
@@ -20,7 +21,7 @@ export default function Badge({ value, type }: BadgeProps) {
 
   return (
     <Link
-      className={`inline-block transition-opacity ml-2 hover:opacity-80 ${colors[type]} px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
+      className={`${className} inline-block transition-opacity hover:opacity-80 ${colors[type]} px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
       href={`#`}
       style={{ fontSize: '1rem' }}
     >

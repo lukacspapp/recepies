@@ -37,7 +37,7 @@ export default function RecepieCard({
         {strMeal}
         <div>
           <Badge value={strArea} type='Cuisine' />
-          <Badge value={strCategory} type='Category' />
+          <Badge value={strCategory} className='ml-2' type='Category' />
         </div>
       </h2>
       <p className="max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
