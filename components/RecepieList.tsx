@@ -24,6 +24,8 @@ export default function RecepieList({
   const [mealList, setMealList] = React.useState<Meal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
 
+  console.log(meals);
+
   return (
     <>
       <div className="flex justify-center m-7 md:my-8">
@@ -45,6 +47,8 @@ export default function RecepieList({
               key={meal.idMeal}
               strMealThumb={meal.strMealThumb}
               strMeal={meal.strMeal}
+              strCategory={meal.strCategory}
+              strArea={meal.strArea}
             />
           ))
         ) : (
