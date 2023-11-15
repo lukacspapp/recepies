@@ -22,6 +22,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
               width={500}
               height={500}
               className="rounded-xl"
+              priority
+              placeholder="blur"
             />
             <h2 className="leading-tighter text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               {meals[0].strMeal}
