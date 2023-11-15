@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { badgeVariants } from "@/components/ui/badge"
-import Badge from './Badge'
 
 type RecepieCardPorps = {
   strMealThumb: string,
