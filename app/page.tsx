@@ -1,8 +1,5 @@
 import RecepieList from "@/components/RecepieList";
-import RecipeCard from "@/components/RecipeCard";
-import SearchBar from "@/components/SearchBar";
 import { doRequest } from "@/lib/DoRequest";
-import { Meal } from "@/lib/types";
 
 export default async function Home() {
 
@@ -29,8 +26,8 @@ export default async function Home() {
   }
 
   return (
-    <section className="w-full py-6 p-2 md:py-12 md:p-2 lg:py-24 lg:p-2">
-      <div className="container px-2 md:px-4 lg:px-6">
+    <section className="w-full py-12 md:py-24 lg:py-32">
+      <div className="container px-4 md:px-6">
         <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem] text-center mb-2">
           Search For Recipes
         </h1>
