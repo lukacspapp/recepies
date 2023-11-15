@@ -10,10 +10,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`)
 
-  console.log('====================================');
-  console.log(meals[0]);
-  console.log('====================================');
-
   const { ingredients, measures } = extractIngredientsAndMeasures(meals[0]);
 
   return (
