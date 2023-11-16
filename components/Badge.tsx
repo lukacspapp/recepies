@@ -22,7 +22,7 @@ export default function Badge({ value, type, className }: BadgeProps) {
   return (
     <Link
       className={`${className} inline-block transition-opacity hover:opacity-80 ${colors[type]} px-2 py-1 rounded-lg text-base md:text-lg${badgeVariants({ variant: 'outline' })}`}
-      href={`#`}
+      href={`categories/${value.toLowerCase().replace(/ /g, '-')}`}
       style={{ fontSize: '1rem' }}
     >
       {value}

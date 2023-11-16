@@ -54,4 +54,13 @@ export interface Meal {
   dateModified: any
 }
 
+export interface Category {
+  idCategory: string
+  strCategory: string
+  strCategoryThumb: string
+  strCategoryDescription: string
+}
+
 export type SuggestionType = 'Category' | 'Cuisine' | 'Ingredient' ;
+
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;

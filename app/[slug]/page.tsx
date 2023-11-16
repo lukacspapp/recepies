@@ -1,16 +1,13 @@
 import Badge from "@/components/Badge";
 import Video from "@/components/Video";
-import { Button } from "@/components/ui/button";
 import { doRequest } from "@/lib/DoRequest";
 import { extractIngredientsAndMeasures } from "@/lib/utils";
 import Image from "next/image";
-import { AspectRatio } from "@/components/ui/aspect-ratio"
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
   const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`);
-
   const { ingredients, measures } = extractIngredientsAndMeasures(meals[0]);
 
   return (
@@ -18,16 +15,14 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="container px-2 md:px-4 lg:px-6">
         <div className="grid gap-4 md:gap-6 lg:gap-10 xl:gap-16 md:grid-cols-1 lg:grid-cols-2">
           <div className="space-y-2 md:space-y-4">
-            <AspectRatio ratio={16 / 9}>
-              <Image
-                src={meals[0].strMealThumb}
-                alt={meals[0].strMeal}
-                width={500}
-                height={500}
-                className="rounded-xl"
-                priority
-              />
-            </AspectRatio>
+            <Image
+              src={meals[0].strMealThumb}
+              alt={meals[0].strMeal}
+              width={500}
+              height={500}
+              className="rounded-xl"
+              priority
+            />
             <h2 className="leading-tighter text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               {meals[0].strMeal}
             </h2>

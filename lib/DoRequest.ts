@@ -1,5 +1,7 @@
+import { RequestMethod } from "./types"
+
 export async function doRequest(
-  method: string,
+  method: RequestMethod,
   url: string,
   body?: any,
   apiKey?: string,
