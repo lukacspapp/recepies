@@ -24,8 +24,6 @@ export default function RecepieList({
   const [mealList, setMealList] = React.useState<Meal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
 
-  console.log(meals);
-
   return (
     <>
       <div className="flex justify-center m-7 md:my-8">
@@ -38,18 +36,19 @@ export default function RecepieList({
           setLoading={setLoading}
         />
       </div>
-      <div className="grid gap-6 md:gap-10 sm:px-2 md:px-10 lg:gap-16 md:grid-cols-1 lg:grid-cols-2">
+      <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-16">
         {loading ? (
           Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
         ) : mealList && mealList.length > 0 ? (
           mealList.map((meal: Meal) => (
+            <div key={meal.idMeal} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-8">
             <RecipeCard
-              key={meal.idMeal}
               strMealThumb={meal.strMealThumb}
               strMeal={meal.strMeal}
               strCategory={meal.strCategory}
               strArea={meal.strArea}
             />
+          </div>
           ))
         ) : (
           null

@@ -26,8 +26,8 @@ export default async function Home() {
   }
 
   return (
-    <section className="w-full flex justify-center py-12 md:py-24 lg:py-32">
-      <div className=" px-4 md:px-6">
+    <section className="w-full container flex justify-center py-12 md:py-24 lg:py-32">
+      <div className="mx-auto px-4 md:px-6">
         <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem] text-center mb-2">
           Search For Recipes
         </h1>
