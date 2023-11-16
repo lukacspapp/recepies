@@ -12,7 +12,7 @@ type CategoryCardProps = {
 
 export default function CategoryCard({ name, image, description }: CategoryCardProps) {
   return (
-    <div className="space-y-2 md:space-y-4 p-4 bg-white shadow-lg rounded-xl">
+    <div className="space-y-2 p-4 bg-white shadow-lg rounded-xl">
     <div className="rounded-xl overflow-hidden">
       <Image
         alt={name}

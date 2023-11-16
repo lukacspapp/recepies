@@ -11,19 +11,21 @@ type RecepieCardPorps = {
   strMealThumb: string,
   strMeal: string,
   strCategory: string,
-  strArea: string
+  strArea: string,
+  strDescription: string
 }
 
 export default function RecepieCard({
   strMealThumb,
   strMeal,
   strCategory,
-  strArea
+  strArea,
+  strDescription
 }: RecepieCardPorps) {
 
   return (
 
-    <div className="space-y-2 md:space-y-4 p-4 bg-white shadow-lg rounded-xl">
+    <div className="space-y-1 md:space-y-1 p-4 bg-white shadow-lg rounded-xl">
       <div className="rounded-xl overflow-hidden border border-gray-300">
         <Image
           alt={strMealThumb}
@@ -43,7 +45,7 @@ export default function RecepieCard({
       </h2>
       <div className="relative h-[6rem] overflow-hidden">
         <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam, omnis voluptas ea minus et quis aliquid nesciunt dolor laborum eaque aspernatur dignissimos accusantium alias aliquam nihil quod rem quidem sit.
+          {strDescription}
         </p>
         <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
       </div>

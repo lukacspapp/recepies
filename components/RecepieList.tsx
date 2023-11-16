@@ -47,6 +47,7 @@ export default function RecepieList({
               strMeal={meal.strMeal}
               strCategory={meal.strCategory}
               strArea={meal.strArea}
+              strDescription={meal.strInstructions}
             />
           </div>
           ))
