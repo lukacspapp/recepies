@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { doRequest } from "@/lib/DoRequest";
 import { extractIngredientsAndMeasures } from "@/lib/utils";
 import Image from "next/image";
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
@@ -16,15 +18,16 @@ export default async function Page({ params }: { params: { slug: string } }) {
       <div className="container px-2 md:px-4 lg:px-6">
         <div className="grid gap-4 md:gap-6 lg:gap-10 xl:gap-16 md:grid-cols-1 lg:grid-cols-2">
           <div className="space-y-2 md:space-y-4">
-            <Image
-              src={meals[0].strMealThumb}
-              alt={meals[0].strMeal}
-              width={500}
-              height={500}
-              className="rounded-xl"
-              priority
-              placeholder="blur"
-            />
+            <AspectRatio ratio={16 / 9}>
+              <Image
+                src={meals[0].strMealThumb}
+                alt={meals[0].strMeal}
+                width={500}
+                height={500}
+                className="rounded-xl"
+                priority
+              />
+            </AspectRatio>
             <h2 className="leading-tighter text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               {meals[0].strMeal}
             </h2>
