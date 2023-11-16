@@ -23,7 +23,7 @@ export default function RecepieCard({
 
   return (
     <div className="space-y-2 md:space-y-4 p-4 bg-white shadow-lg rounded-xl">
-      <div className="rounded-xl overflow-hidden border border-gray-300"> {/* Added container for the image with border */}
+      <div className="rounded-xl overflow-hidden border border-gray-300">
         <Image
           alt={strMealThumb}
           className="mx-auto aspect-content object-cover object-center w-full"
