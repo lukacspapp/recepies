@@ -146,7 +146,7 @@ export default function SearchBar({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex items-end justify-center space-y-1 space-x-1 relative"
+          className="flex items-end justify-center space-y-1 space-x-1 relative w-80"
         >
           <FormField
             control={form.control}

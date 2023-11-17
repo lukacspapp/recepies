@@ -64,3 +64,9 @@ export interface Category {
 export type SuggestionType = 'Category' | 'Cuisine' | 'Ingredient' ;
 
 export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
+
+export interface DescriptionType  {
+  title: string
+  description: string
+  hideBreak?: boolean
+}

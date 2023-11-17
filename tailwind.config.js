@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -13,7 +15,17 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
+        xl: "1200px",
+        lg: "1024px",
+        md: "768px",
         xs: "475px",
+      },
+      fontSize: {
+        xs: '0.75rem',
+        sm: '0.875rem',
+        base: '1.25rem',
+        lg: '1.5rem',
+        xl: '2rem',
       },
     },
     extend: {

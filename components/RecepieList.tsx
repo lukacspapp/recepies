@@ -26,7 +26,7 @@ export default function RecepieList({
 
   return (
     <>
-      <div className="flex justify-center m-7 md:my-8">
+      <div className='flex justify-center my-8 max-w-3xl mx-auto'>
         <SearchBar
           ingredients={ingredients}
           categories={categories}
@@ -36,20 +36,19 @@ export default function RecepieList({
           setLoading={setLoading}
         />
       </div>
-      <div className="flex flex-wrap justify-center gap-6 md:gap-10 lg:gap-16">
+      <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
         {loading ? (
           Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
         ) : mealList && mealList.length > 0 ? (
           mealList.map((meal: Meal) => (
-            <div key={meal.idMeal} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4 mb-8">
             <RecipeCard
+              key={meal.idMeal}
               strMealThumb={meal.strMealThumb}
               strMeal={meal.strMeal}
               strCategory={meal.strCategory}
               strArea={meal.strArea}
               strDescription={meal.strInstructions}
             />
-          </div>
           ))
         ) : (
           null

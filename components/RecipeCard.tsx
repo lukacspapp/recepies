@@ -4,7 +4,6 @@ import { serializeSlug } from '@/lib/stringFormatter'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
-import { badgeVariants } from "@/components/ui/badge"
 import Badge from './Badge'
 
 type RecepieCardPorps = {
@@ -24,38 +23,40 @@ export default function RecepieCard({
 }: RecepieCardPorps) {
 
   return (
-
-    <div className="space-y-1 md:space-y-1 p-4 bg-white shadow-lg rounded-xl">
-      <div className="rounded-xl overflow-hidden border border-gray-300">
+    <div className="px-2 sm:px-0">
+      <div className="relative aspect-w-4 aspect-h-5 overflow-hidden rounded-xl">
         <Image
           alt={strMealThumb}
-          className="mx-auto aspect-content object-cover object-center w-full"
-          height="200"
+          className="w-full aspect-content overflow-hidden rounded-xl object-cover object-center"
+          height="150"
           src={strMealThumb}
-          width="300"
+          width="200"
           priority
+          layout='responsive'
         />
-      </div>
-      <h2 className="leading-tighter text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
-        {strMeal}
-        <div>
+        <div className='mt-2 overflow-hidden'>
+          <h2 className="lg:leading-tighter mt-2 text-xl font-bold tracking-tighter sm:text-2xl">
+            {strMeal}
+          </h2>
+        </div>
+        <div className='mt-2'>
           <Badge value={strArea} type='Cuisine' />
           <Badge value={strCategory} className='ml-2' type='Category' />
         </div>
-      </h2>
-      <div className="relative h-[6rem] overflow-hidden">
-        <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
-          {strDescription}
-        </p>
-        <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
+        <div className="relative h-16 mt-2 overflow-hidden">
+          <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
+            {strDescription}
+          </p>
+          <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
+        </div>
+        <Button className="inline-block  transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg" variant='outline'>
+          <Link
+            href={`/${serializeSlug(strMeal)}`}
+          >
+            Read More
+          </Link>
+        </Button>
       </div>
-      <Button className="inline-block transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg" variant='outline'>
-      <Link
-        href={`/${serializeSlug(strMeal)}`}
-      >
-        Read More
-      </Link>
-      </Button>
     </div>
   )
 }
