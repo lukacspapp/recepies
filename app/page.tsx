@@ -32,15 +32,13 @@ export default async function Home() {
     <main className="w-full">
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
-          <AnimatedDescription title={"Search for Recepies"} description={"By Ingridients, Cuisine or Calories"}
-          />
+          <AnimatedDescription title={"Search for Recepies"} description={"By Ingridients, Cuisine or Calories"}/>
             <RecepieList
               ingredients={ingredients}
               categories={categories}
               areas={areas}
               meals={meals}
             />
-
         </div>
       </section>
     </main>

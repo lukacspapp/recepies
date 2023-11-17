@@ -15,7 +15,7 @@ export default function AnimatedDescription({ title, description, hideBreak = tr
   }, [])
 
   return (
-    <Transition show={show}>
+    <Transition className='mb-10' show={show}>
       <Transition.Child
         enter={clsx(transition)}
         enterFrom="opacity-0 -translate-y-2"
