@@ -39,7 +39,7 @@ export default function App() {
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="categories">
+          <Link color="foreground" href="/categories">
             Category
           </Link>
         </NavbarItem>
@@ -88,7 +88,7 @@ export default function App() {
                 index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
               }
               className="w-full"
-              href="#"
+              href={`/${item.toLowerCase()}`}
               size="lg"
             >
               {item}
