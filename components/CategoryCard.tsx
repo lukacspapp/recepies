@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
 
 type CategoryCardProps = {
   name: string
@@ -12,12 +13,14 @@ type CategoryCardProps = {
 
 export default function CategoryCard({ name, image, description = '' }: CategoryCardProps) {
 
+  const pathname = usePathname()
+
   return (
     <div
-      onClick={() => {
-        window.location.href = `/${name.toLowerCase().replace(/ /g, '-')}`
-      }}
       className="cursor-pointer space-y-2 p-4 bg-white shadow-lg rounded-xl transform transition-transform hover:scale-105"
+      onClick={() => {
+        window.location.href = `${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`
+      }}
     >
       <div className="rounded-xl overflow-hidden">
         <Image
