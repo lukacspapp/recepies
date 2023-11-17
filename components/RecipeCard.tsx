@@ -40,8 +40,8 @@ export default function RecepieCard({
           </h2>
         </div>
         <div className='mt-2'>
-          <Badge value={strArea} type='Cuisine' />
-          <Badge value={strCategory} className='ml-2' type='Category' />
+          <Badge value={strArea} type='cuisines' />
+          <Badge value={strCategory} className='ml-2' type='categories' />
         </div>
         <div className="relative h-16 mt-2 overflow-hidden">
           <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">

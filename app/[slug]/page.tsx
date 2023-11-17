@@ -27,8 +27,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
               {meals[0].strMeal}
             </h2>
             <div className="flex justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
-              <Badge value={meals[0].strCategory} type='Category' />
-              <Badge value={meals[0].strArea} className="ml-2" type='Cuisine' />
+              <Badge value={meals[0].strCategory} type='categories' />
+              <Badge value={meals[0].strArea} className="ml-2" type='cuisines' />
             </div>
             <h3 className="leading-tight text-lg font-bold tracking-tighter md:text-lg lg:text-xl xl:text-2xl">
               Instructions

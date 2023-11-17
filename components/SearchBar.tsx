@@ -44,10 +44,10 @@ export default function SearchBar({
       type: "",
     },
   })
-  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: SuggestionType; }[]>([])
+  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    let suggestionList: { suggestion: string; type: SuggestionType }[] = [];
+    let suggestionList: { suggestion: string; type: string }[] = [];
 
     if (e.target.value.length === 0) {
       setSuggestions([]);

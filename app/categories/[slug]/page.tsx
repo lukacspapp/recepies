@@ -4,7 +4,7 @@ import { doRequest } from "@/lib/DoRequest"
 
 export default async function page({ params }: { params: { slug: string } }) {
 
-  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`);
+  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_FILTER_CATEGORY + params.slug.replace(/-/g, '_')}`);
 
 
   return (

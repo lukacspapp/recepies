@@ -61,7 +61,7 @@ export interface Category {
   strCategoryDescription: string
 }
 
-export type SuggestionType = 'Category' | 'Cuisine' | 'Ingredient' ;
+export type SuggestionType = 'categories' | 'cuisines' | 'ingredient' ;
 
 export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 
