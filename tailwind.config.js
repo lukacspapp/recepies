@@ -1,12 +1,14 @@
 const plugin = require('tailwindcss');
+const {nextui} = require("@nextui-org/react");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
+  darkMode: "class",
   content: [
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     './src/**/*.{ts,tsx}',
 	],
   theme: {
@@ -95,5 +97,6 @@ module.exports = {
   },
   plugins: [
     require("tailwindcss-animate"),
+    nextui()
   ],
 }
