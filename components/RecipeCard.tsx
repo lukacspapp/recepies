@@ -32,7 +32,6 @@ export default function RecepieCard({
           src={strMealThumb}
           width="200"
           priority
-          layout='responsive'
         />
         <div className='mt-2 overflow-hidden'>
           <h2 className="lg:leading-tighter mt-2 text-xl font-bold tracking-tighter sm:text-2xl">
@@ -41,7 +40,7 @@ export default function RecepieCard({
         </div>
         <div className='mt-2'>
           <Badge value={strArea} type='cuisines' />
-          <Badge value={strCategory} className='ml-2' type='categories' />
+          <Badge value={strCategory} type='categories' />
         </div>
         <div className="relative h-16 mt-2 overflow-hidden">
           <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
