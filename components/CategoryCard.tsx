@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 type CategoryCardProps = {
   name: string

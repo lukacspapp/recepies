@@ -44,7 +44,7 @@ export default function App() {
           </Link>
         </NavbarItem>
         <NavbarItem isActive>
-          <Link href="/" aria-current="page">
+          <Link href="/cuisines" aria-current="page">
             Cusinies
           </Link>
         </NavbarItem>

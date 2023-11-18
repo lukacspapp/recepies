@@ -60,13 +60,16 @@ export interface Category {
   strCategoryThumb: string
   strCategoryDescription: string
 }
-
-export type SuggestionType = 'categories' | 'cuisines' | 'ingredient' ;
-
-export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
-
 export interface DescriptionType  {
   title: string
   description: string
   hideBreak?: boolean
 }
+
+export type SuggestionType = 'categories' | 'cuisines' | 'ingredient' ;
+
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
+
+export type CuisineColors = {
+  [key: string]: string;
+};
