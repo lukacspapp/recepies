@@ -185,22 +185,22 @@ export default function SearchBar({
           </Button>
           {suggestions.length ? (
             <div
-              className="m-2 w-full absolute top-[100%] bg-gray-100 max-w-md shadow-md rounded"
+            className="m-2 w-full absolute top-full bg-gray-100 max-w-md shadow-md rounded z-10"
+          >
+            <ul
+              aria-label="Search suggestions"
+              className="max-h-[200px] overflow-auto p-1"
             >
-              <ul
-                aria-label="Search suggestions"
-                className="max-h-[200px] overflow-auto p-1"
-              >
-                {suggestions.map((suggestion, i) => (
-                  <Suggestion
-                    key={`${suggestion} - ${i}`}
-                    suggestion={suggestion.suggestion}
-                    type={suggestion.type}
-                    setValue={form.setValue}
-                  />
-                ))}
-              </ul>
-            </div>
+              {suggestions.map((suggestion, i) => (
+                <Suggestion
+                  key={`${suggestion} - ${i}`}
+                  suggestion={suggestion.suggestion}
+                  type={suggestion.type}
+                  setValue={form.setValue}
+                />
+              ))}
+            </ul>
+          </div>
           ) : null}
         </form>
       </Form>
