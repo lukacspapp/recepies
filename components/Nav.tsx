@@ -1,3 +1,5 @@
+'use client'
+
 import React from "react";
 import {
   Navbar,
@@ -14,6 +16,7 @@ import {
   Avatar,
   DropdownItem,
 } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -22,6 +25,8 @@ export default function App() {
     "Categories",
     "Cuisines"
   ];
+
+  const pathname = usePathname();
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -32,19 +37,30 @@ export default function App() {
         />
         <NavbarBrand>
           <Link color="foreground" href="/">
-            <h1 className="font-bold text-xl">Foodie</h1>
+            <h1 className="font-bold text-xl">Rece🥧s</h1>
             </Link>
         </NavbarBrand>
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="/categories">
+        <NavbarItem
+          isActive={pathname === "/categories"}
+        >
+          <Link
+            className="text-green-500"
+            href="/categories"
+          >
             Category
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="/cuisines" aria-current="page">
+        <NavbarItem
+          isActive={pathname === "/cuisines"}
+        >
+          <Link
+            className="text-blue-500"
+            href="/cuisines"
+            aria-current="page"
+          >
             Cusinies
           </Link>
         </NavbarItem>
@@ -80,14 +96,16 @@ export default function App() {
         </Dropdown>
 
       </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+      <NavbarMenu
+        className="pt-5"
+        >
+        {menuItems.map((item, i) => (
+          <NavbarMenuItem
+            key={`${item}-${i}`}
+            isActive={pathname === `/${item.toLowerCase()}`}
+          >
             <Link
-              color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
-              }
-              className="w-full"
+              className={`w-full ${i === 0 ? 'text-green-500' : 'text-blue-500'}`}
               href={`/${item.toLowerCase()}`}
               size="lg"
             >

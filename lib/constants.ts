@@ -30,3 +30,9 @@ export const cuisineList: CuisineColors = {
   "Unknown" : "🤷‍♂️",
   "Vietnamese" : "🇻🇳",
 }
+
+export const colors: { [key: string]: string } = {
+  "categories": "bg-green-500",
+  "cuisines": "bg-blue-500",
+  "Ingredient": "bg-yellow-500"
+}
