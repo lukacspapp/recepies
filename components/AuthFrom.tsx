@@ -23,11 +23,15 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: provider,
     })
-    if (error) {
-      console.log(error)
-    } else {
-      router.push("/dashboard")
-    }
+    // if (error) {
+    //   console.log(error)
+    // } else {
+    //   router.push("/dashboard")
+    // }
+    setIsLoading(false)
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
   }
 
   async function onSubmit(event: React.SyntheticEvent) {
@@ -84,7 +88,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </div>
       <Button
-        onClick={() => signInWithProvider("github")}
+        onClick={()=> ''}
         variant="outline"
         type="button"
         disabled={isLoading}
