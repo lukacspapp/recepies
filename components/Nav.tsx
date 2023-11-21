@@ -17,14 +17,22 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
+import DropDownNav from "./DropDownNav";
+import { useSessionStore } from "@/store/sessionStore";
 
-export default function App() {
+export default function Nav() {
+
+  const session = useSessionStore((state: any) => state.session)
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
 
   const menuItems = [
     "Categories",
     "Cuisines"
+
   ];
+
+  const icon = <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-circle-2"><path d="M18 20a6 6 0 0 0-12 0"/><circle cx="12" cy="10" r="4"/><circle cx="12" cy="12" r="10"/></svg>
 
   const pathname = usePathname();
 
@@ -38,10 +46,9 @@ export default function App() {
         <NavbarBrand>
           <Link color="foreground" href="/">
             <h1 className="font-bold text-xl">Rece🥧s</h1>
-            </Link>
+          </Link>
         </NavbarBrand>
       </NavbarContent>
-
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem
           isActive={pathname === "/categories"}
@@ -72,33 +79,19 @@ export default function App() {
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
+              color='secondary'
+              name=""
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+              icon={!session ? icon : null} // Profile image comes here
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
-            <DropdownItem key="profile" className="h-14 gap-2">
-              <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
-            </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
-              Log Out
-            </DropdownItem>
-          </DropdownMenu>
+          <DropDownNav session={session} />
         </Dropdown>
 
       </NavbarContent>
       <NavbarMenu
         className="pt-5"
-        >
+      >
         {menuItems.map((item, i) => (
           <NavbarMenuItem
             key={`${item}-${i}`}

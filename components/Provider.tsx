@@ -1,9 +1,10 @@
 'use client'
 
-import {NextUIProvider} from '@nextui-org/react'
+import { NextUIProvider } from '@nextui-org/react'
 import Nav from './Nav'
 import { useSessionStore } from '@/store/sessionStore'
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 
 export function Providers({children, session}: { children: React.ReactNode, session: any }) {
 
@@ -15,7 +16,7 @@ export function Providers({children, session}: { children: React.ReactNode, sess
 
   return (
     <NextUIProvider>
-      <Nav />
+      {usePathname() !== '/login' && <Nav />}
       {children}
     </NextUIProvider>
   )
