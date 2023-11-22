@@ -88,7 +88,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         </div>
       </div>
       <Button
-        onClick={()=> ''}
+        onClick={()=> signInWithProvider('github')}
         variant="outline"
         type="button"
         disabled={isLoading}
