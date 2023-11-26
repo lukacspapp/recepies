@@ -102,6 +102,7 @@ export default function SearchBar({
     setSuggestions(suggestionList);
   }
 
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSuggestions([])
     setLoading(true)

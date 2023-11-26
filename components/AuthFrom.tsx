@@ -9,7 +9,7 @@ import { Label } from '../components/ui/label'
 import { GithubIcon, Loader2, Mail } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Provider } from "@supabase/supabase-js"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,38 +17,42 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
+  const pathName = usePathname()
+
+  const isLogin = pathName === '/login'
 
   async function signInWithProvider(provider: Provider) {
     setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: provider,
     })
-    // if (error) {
-    //   console.log(error)
-    // } else {
-    //   router.push("/dashboard")
-    // }
-    setIsLoading(false)
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
+    if (error) {
+      console.log(error)
+    } else {
+      router.push("/dashboard")
+    }
+  }
+
+  async function signInWithEmail() {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: 'lukacs.papp5@gmail.com',
+    })
   }
 
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault()
     setIsLoading(true)
 
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 3000)
+    signInWithEmail()
+    setIsLoading(false)
   }
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
+        <div className="grid gap-4">
+          <div className="grid gap-2">
+            <Label htmlFor="email">
               Email
             </Label>
             <Input
@@ -57,6 +61,19 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               type="email"
               autoCapitalize="none"
               autoComplete="email"
+              autoCorrect="off"
+              disabled={isLoading}
+            />
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">
+              Password
+            </Label>
+            <Input
+              id="password"
+              placeholder="********"
+              type="password"
+              autoComplete="current-password"
               autoCorrect="off"
               disabled={isLoading}
             />
@@ -73,7 +90,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             ) : (
               <Mail className="w-5 h-5 mr-2" />
             )}
-            Sign In with Email
+            {isLogin ? 'Login' : 'Sign Up'} with Email
           </Button>
         </div>
       </form>

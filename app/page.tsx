@@ -1,8 +1,6 @@
 import AnimatedDescription from "@/components/AnimatedDescription";
 import RecepieList from "@/components/RecepieList";
-import RecepieCard from "@/components/RecipeCard";
 import { doRequest } from "@/lib/DoRequest";
-import { Link } from "lucide-react";
 
 export default async function Home() {
 
@@ -10,11 +8,18 @@ export default async function Home() {
   let categories: string[] = []
   let areas: string[] = []
 
-  const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_10}`)
+  const [
+  { meals },
+  { meals : ingridentsList },
+  { meals: categoriesList },
+  { meals: areasList }
+  ] = await Promise.all([
+    doRequest('GET', `${process.env.RECEPIES_API_10}`),
+    doRequest('GET', `${process.env.RECEPIES_API_INGRIDIENTS_LIST}`),
+    doRequest('GET', `${process.env.RECEPIES_API_CATEGORIES_LIST}`),
+    doRequest('GET', `${process.env.RECEPIES_API_AREA_LIST}`)
+  ])
 
-  const { meals: ingridentsList } =  await doRequest('GET', `${process.env.RECEPIES_API_INGRIDIENTS_LIST}`)
-  const { meals: categoriesList } =  await doRequest('GET', `${process.env.RECEPIES_API_CATEGORIES_LIST}`)
-  const { meals: areasList } =  await doRequest('GET', `${process.env.RECEPIES_API_AREA_LIST}`)
 
   if (ingridentsList) {
     ingredients = ingridentsList.map((ingridient: any) => ingridient.strIngredient)

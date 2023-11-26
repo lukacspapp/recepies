@@ -3,15 +3,15 @@ import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
-import { UserAuthForm } from '../../components/AuthFrom'
-import { ArrowBigLeft, ChevronLeft } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
+import { UserAuthForm } from "@/components/AuthFrom"
 
 export const metadata: Metadata = {
-  title: "Login",
-  description: "Login to your account",
+  title: "Register",
+  description: "Create an account to get started.",
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link
@@ -22,27 +22,26 @@ export default function LoginPage() {
         )}
       >
         <>
-          <span className="sr-only">Back to home</span>
-          <ChevronLeft className="w-6 h-6"/>
-          Back
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Home
         </>
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Login
+          Create an account
           </h1>
           <p className="text-sm text-muted-foreground">
-            Enter your email to sign in to your account
+          Enter your email below to create your account
           </p>
         </div>
         <UserAuthForm />
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
-            href="/register"
+            href="/login"
             className="hover:text-brand underline underline-offset-4"
           >
-            Don&apos;t have an account? Sign Up
+            Already have an account? Go To Login
           </Link>
         </p>
       </div>
