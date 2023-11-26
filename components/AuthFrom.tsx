@@ -9,7 +9,7 @@ import { Label } from '../components/ui/label'
 import { GithubIcon, Loader2, Mail } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { Provider } from "@supabase/supabase-js"
-import { usePathname, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,9 +17,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
-  const pathName = usePathname()
-
-  const isLogin = pathName === '/login'
 
   async function signInWithProvider(provider: Provider) {
     setIsLoading(true)
@@ -50,9 +47,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
-        <div className="grid gap-4">
+        <div className="grid gap-3">
           <div className="grid gap-2">
-            <Label htmlFor="email">
+            <Label className="sr-only" htmlFor="email">
               Email
             </Label>
             <Input
@@ -61,19 +58,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               type="email"
               autoCapitalize="none"
               autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-          </div>
-          <div className="grid gap-2">
-            <Label htmlFor="password">
-              Password
-            </Label>
-            <Input
-              id="password"
-              placeholder="********"
-              type="password"
-              autoComplete="current-password"
               autoCorrect="off"
               disabled={isLoading}
             />
@@ -90,7 +74,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             ) : (
               <Mail className="w-5 h-5 mr-2" />
             )}
-            {isLogin ? 'Login' : 'Sign Up'} with Email
+            Sign In with Email
           </Button>
         </div>
       </form>

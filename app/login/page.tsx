@@ -7,11 +7,11 @@ import { ArrowLeft } from "lucide-react"
 import { UserAuthForm } from "@/components/AuthFrom"
 
 export const metadata: Metadata = {
-  title: "Register",
-  description: "Create an account to get started.",
+  title: "Login",
+  description: "Login to your account",
 }
 
-export default function RegisterPage() {
+export default function LoginPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link
@@ -22,28 +22,20 @@ export default function RegisterPage() {
         )}
       >
         <>
-          <ArrowLeft className="w-5 h-5 mr-2" />
-          Home
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
         </>
       </Link>
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <div className="flex flex-col space-y-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-          Create an account
+            Welcome
           </h1>
           <p className="text-sm text-muted-foreground">
-          Enter your email below to create your account
+            Enter your email to sign in to your account
           </p>
         </div>
         <UserAuthForm />
-        <p className="px-8 text-center text-sm text-muted-foreground">
-          <Link
-            href="/login"
-            className="hover:text-brand underline underline-offset-4"
-          >
-            Already have an account? Go To Login
-          </Link>
-        </p>
       </div>
     </div>
   )

@@ -11,18 +11,15 @@ export function Providers({children, session, likedMeals}: { children: React.Rea
 
   const setSession = useSessionStore((state: any) => state.setSession)
   const setLikedMeals = useLikedMealStore((state: any) => state.setLikedMeals)
-  const pathName = usePathname()
 
   useEffect(() => {
     setLikedMeals(likedMeals)
     setSession(session)
   }, [])
 
-  const isAuthPage = pathName === '/login' || pathName === '/register'
-
   return (
     <NextUIProvider>
-      {!isAuthPage && <Nav />}
+      {usePathname() !== '/login' && <Nav />}
       {children}
     </NextUIProvider>
   )
