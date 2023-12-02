@@ -24,15 +24,17 @@ export default function CategoryCard({ name, image, description = '' }: Category
       className={`space-y-2 p-4 bg-white shadow-lg rounded-xl ${!description ? '' : 'transform cursor-pointer  transition-transform hover:scale-105'} `}
       onClick={description ? () => window.location.href = `${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}` : undefined}
     >
-      <div className="rounded-xl overflow-hidden">
+      <div className="flex flex-col h-full justify-between">
         <Image
           alt={name}
-          className="mx-auto aspect-content object-cover object-center w-full"
+          className="mx-auto aspect-content object-cover object-center w-full rounded-lg"
           height={200}
           src={image}
           width={300}
         />
-        <h2 className="leading-tighter text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
+        <div>
+
+        <h2 className="leading-tighter mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
           {name}
         </h2>
         {description && <div className="relative h-[6rem] overflow-hidden">
@@ -65,6 +67,7 @@ export default function CategoryCard({ name, image, description = '' }: Category
             <HeartCheckbox />
           </div>
         )}
+        </div>
       </div>
     </div>
   )
