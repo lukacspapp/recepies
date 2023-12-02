@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { Button } from './ui/button'
 import Badge from './Badge'
 import HeartCheckbox from './HeartCheckBox'
+import { useAuth } from '@/context/Auth'
+import HeartModal from './HeartModal'
 
 type RecepieCardPorps = {
   strMealThumb: string,
@@ -22,6 +24,8 @@ export default function RecepieCard({
   strArea,
   strDescription
 }: RecepieCardPorps) {
+
+  const { user } = useAuth()
 
   return (
     <div className="px-2 sm:px-0">
@@ -41,11 +45,15 @@ export default function RecepieCard({
         </div>
         <div className='mt-2 flex flex-row justify-between items-center'>
           <div>
-          <Badge value={strArea} type='cuisines' />
-          <Badge value={strCategory} type='categories' />
+            <Badge value={strArea} type='cuisines' />
+            <Badge value={strCategory} type='categories' />
           </div>
           <div>
-            <HeartCheckbox />
+            {!user ?
+              <HeartModal />
+              :
+              <HeartCheckbox />
+            }
           </div>
         </div>
         <div className="relative h-16 mt-2 overflow-hidden">

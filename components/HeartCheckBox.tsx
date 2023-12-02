@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth } from '@/context/Auth';
 import React, { useState } from 'react';
 
 const HeartCheckbox = () => {
