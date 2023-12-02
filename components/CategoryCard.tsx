@@ -4,6 +4,8 @@ import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import HeartCheckbox from './HeartCheckBox'
+import { Button } from './ui/button'
 
 type CategoryCardProps = {
   name: string
@@ -15,12 +17,12 @@ export default function CategoryCard({ name, image, description = '' }: Category
 
   const pathname = usePathname()
 
+  // ! When there is catgeory I dont want to edit.
+
   return (
     <div
-      className="cursor-pointer space-y-2 p-4 bg-white shadow-lg rounded-xl transform transition-transform hover:scale-105"
-      onClick={() => {
-        window.location.href = `${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`
-      }}
+      className={`space-y-2 p-4 bg-white shadow-lg rounded-xl ${!description ? '' : 'transform cursor-pointer  transition-transform hover:scale-105'} `}
+      onClick={description ? () => window.location.href = `${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}` : undefined}
     >
       <div className="rounded-xl overflow-hidden">
         <Image
@@ -39,12 +41,30 @@ export default function CategoryCard({ name, image, description = '' }: Category
           </p>
           <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
         </div>}
-        {description && <Link
+        {description ?
+        <Link
           className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
           href={`/${name.toLowerCase().replace(/ /g, '-')}`}
         >
           Read More
-        </Link>}
+        </Link> : (
+          <div
+            className="flex justify-between items-center"
+          >
+            <Button
+              className="inline-block  transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
+              variant="outline"
+            >
+              <Link
+                className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
+                href={`/${name.toLowerCase().replace(/ /g, '-')}`}
+              >
+                Read More
+              </Link>
+            </Button>
+            <HeartCheckbox />
+          </div>
+        )}
       </div>
     </div>
   )
