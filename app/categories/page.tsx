@@ -15,6 +15,7 @@ export default async function page() {
         <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 xl:grid-cols-4 2xl:grid-cols-5">
           {categories.map((category: Category) => (
             <CategoryCard
+              id={category.idCategory}
               key={category.idCategory}
               name={category.strCategory}
               image={category.strCategoryThumb}

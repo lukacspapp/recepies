@@ -10,12 +10,13 @@ import { useAuth } from '@/context/Auth'
 import HeartModal from './HeartModal'
 
 type CategoryCardProps = {
+  id: string
   name: string
   image: string
   description?: string
 }
 
-export default function CategoryCard({ name, image, description = '' }: CategoryCardProps) {
+export default function CategoryCard({ id, name, image, description = '' }: CategoryCardProps) {
 
   const pathname = usePathname()
 

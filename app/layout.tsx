@@ -19,22 +19,13 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  // const supabase = createServerComponentClient({ cookies })
-  // const { data: { session } } = await supabase.auth.getSession()
-  // const { data: { user } } = await supabase.auth.getUser()
-
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <AuthProvider>
-          <Providers>
-            {children}
-          </Providers>
-        </AuthProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   )
 }
-
-
-// Improvments to make: Search, Less Api calls, types. NO-cache in the do request function.
