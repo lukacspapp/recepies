@@ -4,6 +4,7 @@ import './globals.css'
 import { Providers } from '@/components/Provider'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { AuthProvider } from '@/context/Auth';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,31 +19,18 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
+  // const supabase = createServerComponentClient({ cookies })
+  // const { data: { session } } = await supabase.auth.getSession()
+  // const { data: { user } } = await supabase.auth.getUser()
 
-
-
-  const supabase = createServerComponentClient({cookies})
-  const { data } = await supabase.auth.getSession()
-
-  console.log(data);
-
-
-
-  let { data: liked_meals, error } = await supabase
-  .from('liked_meals')
-  .select('*')
-
-  console.log('====================================');
-  console.log(liked_meals);
-  console.log('====================================');
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Providers
-        likedMeals={liked_meals}
-        session={data}>
-          {children}
-        </Providers>
+        <AuthProvider>
+          <Providers>
+            {children}
+          </Providers>
+        </AuthProvider>
       </body>
     </html>
   )

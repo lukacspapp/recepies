@@ -2,24 +2,14 @@
 
 import { NextUIProvider } from '@nextui-org/react'
 import Nav from './Nav'
-import { useSessionStore } from '@/store/sessionStore'
-import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { useLikedMealStore } from '@/store/likedMealsStore'
+import { useAuth } from '@/context/Auth'
 
-export function Providers({children, session, likedMeals}: { children: React.ReactNode, session: any, likedMeals: any }) {
-
-  const setSession = useSessionStore((state: any) => state.setSession)
-  const setLikedMeals = useLikedMealStore((state: any) => state.setLikedMeals)
-
-  useEffect(() => {
-    setLikedMeals(likedMeals)
-    setSession(session)
-  }, [])
-
+export function Providers({children}: { children: React.ReactNode }) {
+  const { user , session} = useAuth()
   return (
     <NextUIProvider>
-      {usePathname() !== '/login' && <Nav />}
+      {usePathname() === '/login' || '/register' ? <Nav /> : null}
       {children}
     </NextUIProvider>
   )

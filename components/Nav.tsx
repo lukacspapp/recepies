@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -11,34 +11,32 @@ import {
   NavbarItem,
   Link,
   Dropdown,
-  DropdownTrigger,
   DropdownMenu,
-  Avatar,
   DropdownItem,
+  DropdownSection,
 } from "@nextui-org/react";
-import { usePathname } from "next/navigation";
-import DropDownNav from "./DropDownNav";
-import { useSessionStore } from "@/store/sessionStore";
-import { UserCircle2 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Citrus, LogInIcon, LogOut, UserPlus2 } from "lucide-react";
+import { useAuth } from "@/context/Auth";
+import UserAvatar from "./UserAvatar";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+
 
 export default function Nav() {
 
-  const session = useSessionStore((state: any) => state.session)
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-console.log('====================================');
-console.log(session);
-console.log('====================================');
-  const avatarImage = session && session.session && session.session.user.user_metadata.avatar_url
-
-
-
-
-  const menuItems = [
-    "Categories",
-    "Cuisines"
-  ];
-
+  const menuItems = ["Categories", "Cuisines"];
   const pathname = usePathname();
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+
+  const { user } = useAuth()
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  async function handleLogout() {
+    const { error } = await supabase.auth.signOut();
+    if (!error && pathname === '/dashboard') router.push('/')
+  }
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
@@ -78,21 +76,51 @@ console.log('====================================');
       </NavbarContent>
       <NavbarContent justify="end">
         <Dropdown placement="bottom-end">
-          <DropdownTrigger>
-            <Avatar
-              isBordered
-              as="button"
-              className="transition-transform"
-              color='secondary'
-              name="profile"
-              size="sm"
-              icon={avatarImage}
-              fallback={<UserCircle2/>}
-            />
-          </DropdownTrigger>
-          <DropDownNav session={session} />
+          <UserAvatar user={user} />
+          {!user ? (
+            <DropdownMenu className="text-center" aria-label="Profile Actions" variant="flat">
+              <DropdownSection showDivider>
+                <DropdownItem key="profile">
+                  <Link className='p-1' href="/login">
+                    <LogInIcon className="mr-2 h-6 w-6" />
+                    <p className="font-semibold">Login</p>
+                  </Link>
+                </DropdownItem>
+              </DropdownSection>
+              <DropdownSection className="m-0">
+                <DropdownItem key="profile">
+                  <Link className="p-1" href="/register">
+                    <UserPlus2 className="mr-2 h-6 w-6" />
+                    <p className="font-semibold">Sign Up</p>
+                  </Link>
+                </DropdownItem>
+              </DropdownSection>
+            </DropdownMenu>
+          ) : (
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="profile" className="">
+                <p className="font-semibold">Signed in as</p>
+                <p className="font-semibold">{user.email}</p>
+              </DropdownItem>
+              <DropdownItem key="help_and_feedback" color="warning" className="py-2">
+                <div className="flex">
+                  <Citrus className="mr-2 h-6 w-6" />
+                  <Link href="/dashboard">
+                    Dashboard
+                  </Link>
+                </div>
+              </DropdownItem>
+              <DropdownItem key="logout" color="danger" className="py-2">
+                <div className="flex">
+                  <LogOut className="mr-2 h-6 w-6" />
+                  <Link onClick={() => handleLogout()}>
+                    Logout
+                  </Link>
+                </div>
+              </DropdownItem>
+            </DropdownMenu>
+          )}
         </Dropdown>
-
       </NavbarContent>
       <NavbarMenu
         className="pt-5"
