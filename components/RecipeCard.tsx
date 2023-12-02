@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import Badge from './Badge'
+import HeartCheckbox from './HeartCheckBox'
 
 type RecepieCardPorps = {
   strMealThumb: string,
@@ -38,9 +39,14 @@ export default function RecepieCard({
             {strMeal}
           </h2>
         </div>
-        <div className='mt-2'>
+        <div className='mt-2 flex flex-row justify-between items-center'>
+          <div>
           <Badge value={strArea} type='cuisines' />
           <Badge value={strCategory} type='categories' />
+          </div>
+          <div>
+            <HeartCheckbox />
+          </div>
         </div>
         <div className="relative h-16 mt-2 overflow-hidden">
           <p className="absolute top-0 left-0 max-w-[700px] text-zinc-500 md:text-lg dark:text-zinc-400">
