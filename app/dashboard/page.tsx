@@ -5,16 +5,27 @@ import { cookies } from 'next/headers';
 import { doRequest } from '@/lib/DoRequest';
 import CategoryCard from '@/components/CategoryCard';
 import AnimatedDescription from '@/components/AnimatedDescription';
-import RecepieList from '@/components/RecepieList';
-import HeartCheckbox from '@/components/HeartCheckBox';
+import { Meal } from '@/lib/types';
 
 export default async function page() {
 
   const supabase = createServerComponentClient({ cookies })
 
+  let likedMeals: Meal[] = []
 
+  let { data: mealIds, error } = await supabase
+    .from('liked_meals')
+    .select('meal_id')
 
-  const {meals} =  await doRequest('GET', `${process.env.RECEPIES_API_10}`)
+  if (mealIds) {
+    const fetches = mealIds?.map((mealId: any) => {
+      return doRequest('GET', `${process.env.RECEPIES_API_NAME_ID + mealId.meal_id}`)
+    })
+
+    const result = await Promise.all(fetches)
+
+    likedMeals = result.map((res: any) => res.meals[0])
+  }
 
   return (
     <main className="w-full">
@@ -25,14 +36,17 @@ export default async function page() {
             description={"Here you can find your liked recepies"}
           />
           <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
-            {meals.map((meal: any) => (
-              <CategoryCard
-                id={meal.idMeal}
-                key={meal.idMeal}
-                name={meal.strMeal}
-                image={meal.strMealThumb}
-              />
-            ))}
+            {likedMeals.length > 0 ?
+              likedMeals.map((meal: any) => (
+                <CategoryCard
+                  id={meal.idMeal}
+                  key={meal.idMeal}
+                  name={meal.strMeal}
+                  image={meal.strMealThumb}
+                />
+              )) :
+              null
+            }
           </div>
         </div>
       </section>

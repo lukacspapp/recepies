@@ -6,7 +6,6 @@ import { Meal } from '@/lib/types'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
-import { useAuth } from '@/context/Auth'
 
 type RecepieListProps = {
   ingredients: string[]
@@ -44,6 +43,7 @@ export default function RecepieList({
           mealList.map((meal: Meal) => (
             <RecipeCard
               key={meal.idMeal}
+              id={meal.idMeal}
               strMealThumb={meal.strMealThumb}
               strMeal={meal.strMeal}
               strCategory={meal.strCategory}

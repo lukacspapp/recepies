@@ -10,6 +10,7 @@ import { useAuth } from '@/context/Auth'
 import HeartModal from './HeartModal'
 
 type RecepieCardPorps = {
+  id: string,
   strMealThumb: string,
   strMeal: string,
   strCategory: string,
@@ -18,6 +19,7 @@ type RecepieCardPorps = {
 }
 
 export default function RecepieCard({
+  id,
   strMealThumb,
   strMeal,
   strCategory,
@@ -52,7 +54,7 @@ export default function RecepieCard({
             {!user ?
               <HeartModal />
               :
-              <HeartCheckbox />
+              <HeartCheckbox mealId={id} />
             }
           </div>
         </div>

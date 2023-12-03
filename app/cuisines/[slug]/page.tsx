@@ -17,6 +17,7 @@ export default async function page({ params }: { params: { slug: string } }) {
           <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
             {meals.map((meal: any) => (
               <CategoryCard
+                id={meal.idMeal}
                 key={meal.idMeal}
                 name={meal.strMeal}
                 image={meal.strMealThumb}

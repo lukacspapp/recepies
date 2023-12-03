@@ -19,7 +19,6 @@ type CategoryCardProps = {
 export default function CategoryCard({ id, name, image, description = '' }: CategoryCardProps) {
 
   const pathname = usePathname()
-
   const { user } = useAuth()
 
   return (
@@ -70,7 +69,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                 {!user ?
                   <HeartModal />
                   :
-                  <HeartCheckbox />
+                  <HeartCheckbox mealId={id} />
                 }
               </div>
             )}
