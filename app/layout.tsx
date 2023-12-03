@@ -19,10 +19,24 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
+  let likedMealIds: any[] = []
+
+  const supabase = createServerComponentClient({ cookies })
+
+  const { data } = await supabase.auth.getUser()
+
+  if (data && data.user) {
+    const { data: likedMeals } = await supabase
+      .from('liked_meals')
+      .select('meal_id')
+
+    if (likedMeals) likedMealIds = likedMeals.map((meal: any) => meal.meal_id)
+  }
+
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Providers>
+        <Providers likedMealIds={likedMealIds}>
           {children}
         </Providers>
       </body>

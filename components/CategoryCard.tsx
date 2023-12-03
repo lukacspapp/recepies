@@ -48,7 +48,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
           {description ?
             <Link
               className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
-              href={`/${name.toLowerCase().replace(/ /g, '-')}`}
+              href={`${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`}
             >
               Read More
             </Link> : (
@@ -66,11 +66,9 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                     Read More
                   </Link>
                 </Button>
-                {!user ?
-                  <HeartModal />
-                  :
-                  <HeartCheckbox mealId={id} />
-                }
+                {pathname === `/${name.toLowerCase().replace(/ /g, '-')}` && (
+                  !user ? <HeartModal /> : <HeartCheckbox mealId={id} />
+                )}
               </div>
             )}
         </div>

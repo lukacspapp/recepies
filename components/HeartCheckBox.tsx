@@ -1,16 +1,18 @@
 'use client';
 
 import { useAuth } from '@/context/Auth';
+import { useLikedMealStore } from '@/store/likedMealsStore';
 import { Spinner } from '@nextui-org/react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import uuid from 'react-uuid';
 
 const HeartCheckbox = ({ mealId }: { mealId: string }) => {
 
   const supabase = createClientComponentClient();
   const { user } = useAuth();
-  const [isChecked, setIsChecked] = useState(false);
+  const liked = ((useLikedMealStore.getState() as { likedMealIds: string[] }).likedMealIds);
+  const [isChecked, setIsChecked] = useState(liked.includes(mealId));
   const [loading, setLoading] = useState(false);
 
   const toggleCheckbox = () => {
@@ -30,6 +32,9 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
         }
       ])
       .select()
+
+    useLikedMealStore.setState({ likedMealIds: [...liked, mealId] })
+
     setLoading(false);
   }
 
@@ -39,6 +44,9 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
       .from('liked_meals')
       .delete()
       .eq('meal_id', mealId)
+
+    useLikedMealStore.setState({ likedMealIds: liked.filter((id: string) => id !== mealId) })
+
     setLoading(false);
   }
 

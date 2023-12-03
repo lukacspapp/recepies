@@ -4,8 +4,13 @@ import { NextUIProvider } from '@nextui-org/react'
 import Nav from './Nav'
 import { usePathname } from 'next/navigation'
 import { AuthProvider } from '@/context/Auth'
+import { useLikedMealStore } from '@/store/likedMealsStore'
 
-export function Providers({children}: { children: React.ReactNode }) {
+export function Providers({children, likedMealIds}: { children: React.ReactNode, likedMealIds: string[] }) {
+
+  useLikedMealStore.setState({ likedMealIds: likedMealIds })
+  const liked = ((useLikedMealStore.getState() as { likedMealIds: string[] }).likedMealIds);
+
   return (
     <AuthProvider>
       <NextUIProvider>
