@@ -66,7 +66,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                     Read More
                   </Link>
                 </Button>
-                {pathname === `/${name.toLowerCase().replace(/ /g, '-')}` && (
+                {(pathname === `/${name.toLowerCase().replace(/ /g, '-')}` || pathname === '/dashboard') && (
                   !user ? <HeartModal /> : <HeartCheckbox mealId={id} />
                 )}
               </div>
