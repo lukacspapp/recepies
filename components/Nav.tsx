@@ -35,7 +35,7 @@ export default function Nav() {
 
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
-    if (!error && pathname === '/dashboard') router.push('/')
+    if (!error) router.push('/')
   }
 
   return (

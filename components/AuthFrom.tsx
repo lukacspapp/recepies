@@ -22,7 +22,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: 'lukacs.papp5@gmail.com',
       password: '123456',
     })
-    router.push('/dashboard')
+    router.refresh()
+    router.push('/')
   }
 
   async function logIn() {
@@ -30,7 +31,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: 'lukacs.papp5@gmail.com',
       password: '123456'
     })
-    router.push('/dashboard')
+    router.refresh()
+    router.push('/')
   }
 
   async function signUpWithEmail() {
@@ -41,7 +43,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         emailRedirectTo: `${location.origin}/auth/callback`
       }
     })
-    router.push('/dashboard')
+    router.refresh()
+    router.push('/')
   }
 
   async function onSubmit(event: React.SyntheticEvent) {

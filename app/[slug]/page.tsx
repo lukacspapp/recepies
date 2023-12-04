@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`);
 
-  const { ingredients, measures } = extractIngredientsAndMeasures(meals[0]);
+  const { ingredients, measures } = meals ? extractIngredientsAndMeasures(meals[0]) : { ingredients: [], measures: [] };
 
   return (
     <section className="w-full py-4 md:py-6 lg:py-12 xl:py-24">
@@ -41,11 +41,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
               Ingredients and Measurements
             </h3>
             <ul className="list-disc list-inside text-sm md:text-base lg:text-lg dark:text-zinc-400">
-              {ingredients.map((ingredient, index) => (
+              {ingredients.length > 0 ? ingredients.map((ingredient, index) => (
                 <li key={index}>
                   {ingredient} - {measures[index]}
                 </li>
-              ))}
+              )) : null}
             </ul>
           </div>
           <div className="space-y-2 md:space-y-4">
