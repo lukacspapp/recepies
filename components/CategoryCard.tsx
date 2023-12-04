@@ -58,6 +58,8 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                 <Button
                   className="inline-block  transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
                   variant="outline"
+                  type="button"
+                  name="read-more"
                 >
                   <Link
                     className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"

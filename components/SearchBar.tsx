@@ -171,9 +171,10 @@ export default function SearchBar({
             )}
           />
           <Button
+            aria-label='Search'
             disabled={form.formState.isSubmitting}
-            name='submit'
-            type="submit"
+            name='search'
+            type='submit'
           >
             {form.formState.isSubmitting
               ?

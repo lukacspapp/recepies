@@ -1,7 +1,5 @@
 "use client"
 
-import * as React from "react"
-
 import { cn } from "@/lib/utils"
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
@@ -9,13 +7,13 @@ import { Label } from '../components/ui/label'
 import { Loader2, Mail } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false)
-  const [user, setUser] = React.useState<any>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
 
@@ -24,7 +22,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: 'lukacs.papp5@gmail.com',
       password: '123456',
     })
-    router.refresh()
+    router.push('/dashboard')
   }
 
   async function logIn() {
@@ -32,6 +30,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       email: 'lukacs.papp5@gmail.com',
       password: '123456'
     })
+    router.push('/dashboard')
   }
 
   async function signUpWithEmail() {
@@ -42,7 +41,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         emailRedirectTo: `${location.origin}/auth/callback`
       }
     })
-    router.refresh()
+    router.push('/dashboard')
   }
 
   async function onSubmit(event: React.SyntheticEvent) {
@@ -86,6 +85,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             />
           </div>
           <Button
+            name="email"
             disabled={isLoading}
             className="hover:bg-primary/80 mt-2"
           >

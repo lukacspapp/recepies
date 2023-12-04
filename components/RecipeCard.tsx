@@ -64,7 +64,12 @@ export default function RecepieCard({
           </p>
           <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
         </div>
-        <Button className="inline-block  transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg" variant='outline'>
+        <Button
+          className="inline-block transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
+          variant='outline'
+          type='button'
+          name='read-more'
+        >
           <Link
             href={`/${serializeSlug(strMeal)}`}
           >
