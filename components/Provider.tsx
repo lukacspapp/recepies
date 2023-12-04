@@ -9,7 +9,6 @@ import { useLikedMealStore } from '@/store/likedMealsStore'
 export function Providers({children, likedMealIds}: { children: React.ReactNode, likedMealIds: string[] }) {
 
   useLikedMealStore.setState({ likedMealIds: likedMealIds })
-  const liked = ((useLikedMealStore.getState() as { likedMealIds: string[] }).likedMealIds);
 
   return (
     <AuthProvider>
