@@ -6,70 +6,69 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Loader2, Mail } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { useState } from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import path from "path"
 
 const userAuthSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(6),
+  password: z.string().min(6)
 })
 
 type userAuthSchemaType = z.infer<typeof userAuthSchema>
 
-interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
-  const { register, handleSubmit } = useForm<userAuthSchemaType>({
+export function UserAuthForm({ className } : { className?: string }) {
+
+  const { register, handleSubmit, formState: { errors }, } = useForm<userAuthSchemaType>({
     resolver: zodResolver(userAuthSchema)
   })
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
+  const pathname = usePathname()
 
-  async function signInWithEmail() {
+  async function logIn(formData: userAuthSchemaType) {
     const { data, error } = await supabase.auth.signInWithPassword({
-      email: 'lukacs.papp5@gmail.com',
-      password: '123456',
+      email: formData.email,
+      password: formData.password,
     })
-    router.refresh()
     router.push('/')
   }
 
-  async function logIn() {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: 'lukacs.papp5@gmail.com',
-      password: '123456'
-    })
-    router.refresh()
-    router.push('/')
-  }
-
-  async function signUpWithEmail() {
+  async function signUpWithEmail(formData: userAuthSchemaType) {
     const { data, error } = await supabase.auth.signUp({
-      email: 'lukacs.papp5@gmail.com',
-      password: '123456',
+      email: formData.email,
+      password: formData.password,
       options: {
         emailRedirectTo: `${location.origin}/auth/callback`
       }
     })
-    router.refresh()
-    router.push('/')
+    if (!error) {
+      logIn(formData)
+    }
+  }
+
+  async function signInWithOtp(formData: userAuthSchemaType) {
+    const { data, error } = await supabase.auth.signInWithOtp({
+      email: formData.email,
+      options: {
+        emailRedirectTo: 'https://example.com/welcome'
+      }
+    })
   }
 
   async function onSubmit(data: userAuthSchemaType) {
     setIsLoading(true)
-    console.log(data)
-
-    // signUpWithEmail()
-    // signInWithEmail()
+    pathname === '/login' ? logIn(data) : signUpWithEmail(data)
     setIsLoading(false)
   }
 
   return (
-    <div className={cn("grid gap-4", className)} {...props}>
+    <div className={cn("grid gap-4", className)}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4">
           <div className="grid gap-3">
@@ -86,6 +85,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
               {...register('email', { required: true })}
             />
+            {errors?.email && (
+              <p className="px-1 text-xs text-red-600">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">
@@ -101,6 +105,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               disabled={isLoading}
               {...register('password', { required: true })}
             />
+            {errors?.password && (
+              <p className="px-1 text-xs text-red-600">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <Button
             name="submit"
