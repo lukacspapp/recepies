@@ -8,11 +8,23 @@ import { Loader2, Mail } from "lucide-react"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
+const userAuthSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+})
+
+type userAuthSchemaType = z.infer<typeof userAuthSchema>
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const { register, handleSubmit } = useForm<userAuthSchemaType>({
+    resolver: zodResolver(userAuthSchema)
+  })
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const supabase = createClientComponentClient()
   const router = useRouter()
@@ -47,17 +59,18 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     router.push('/')
   }
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault()
+  async function onSubmit(data: userAuthSchemaType) {
     setIsLoading(true)
+    console.log(data)
 
     // signUpWithEmail()
-    signInWithEmail()
+    // signInWithEmail()
     setIsLoading(false)
   }
+
   return (
     <div className={cn("grid gap-4", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-4">
           <div className="grid gap-3">
             <Label htmlFor="email">
@@ -71,6 +84,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              {...register('email', { required: true })}
             />
           </div>
           <div className="grid gap-2">
@@ -85,10 +99,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="password"
               autoCorrect="off"
               disabled={isLoading}
+              {...register('password', { required: true })}
             />
           </div>
           <Button
-            name="email"
+            name="submit"
+            type="submit"
             disabled={isLoading}
             className="hover:bg-primary/80 mt-2"
           >
