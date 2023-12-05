@@ -12,6 +12,9 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
   const supabase = createClientComponentClient();
   const { user } = useAuth();
   const liked = ((useLikedMealStore.getState() as { likedMealIds: string[] }).likedMealIds);
+  console.log('====================================');
+  console.log(liked);
+  console.log('====================================');
   const [isChecked, setIsChecked] = useState(liked.includes(mealId));
   const [loading, setLoading] = useState(false);
 

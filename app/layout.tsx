@@ -36,9 +36,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className}`}>
-        <Providers likedMealIds={likedMealIds}>
-          {children}
-        </Providers>
+        <AuthProvider>
+          <Providers likedMealIds={likedMealIds}>
+            {children}
+          </Providers>
+        </AuthProvider>
       </body>
     </html>
   )
