@@ -32,6 +32,7 @@ export function Providers({ children, likedMealIds }: { children: React.ReactNod
     if (!user) {
       useLikedMealStore.setState({ likedMealIds: [] })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

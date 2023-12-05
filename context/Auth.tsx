@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: any) => {
         return () => {
             listener?.subscription.unsubscribe();
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const value = {
