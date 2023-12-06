@@ -41,7 +41,6 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/android-chrome-192x192.png",
   },
-  manifest: "https://recipes.lukacsjpapp.com/site.webmanifest",
 }
 
 export const viewport: Viewport = {
