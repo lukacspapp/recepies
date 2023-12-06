@@ -14,6 +14,8 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownSection,
+  Avatar,
+  DropdownTrigger,
 } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { Citrus, LogInIcon, LogOut, UserPlus2 } from "lucide-react";
@@ -26,7 +28,6 @@ import Logo from "./Logo";
 
 export default function Nav() {
 
-  const menuItems = ["Categories", "Cuisines"];
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -42,27 +43,13 @@ export default function Nav() {
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-        <NavbarBrand>
-          <Link
-            className="h-11 w-11"
-            color="foreground"
-            href="/"
-          >
-            <Logo />
-          </Link>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
+      <NavbarMenu className="mt-2">
         <NavbarItem
           isActive={pathname === "/categories"}
         >
           <Link
-            className="text-green-500"
+            className='text-sm w-[90px] mb-1 font-semibold px-4 py-2  text-gray-700 bg-orange-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
             href="/categories"
           >
             Category
@@ -72,7 +59,33 @@ export default function Nav() {
           isActive={pathname === "/cuisines"}
         >
           <Link
-            className="text-blue-500"
+            className='text-sm font-semibold w-[90px] px-4 py-2  text-gray-700 bg-lime-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
+            href="/cuisines"
+            aria-current="page"
+          >
+            Cusinies
+          </Link>
+        </NavbarItem>
+      </NavbarMenu>
+      <NavbarBrand>
+        <Logo />
+      </NavbarBrand>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarItem
+          isActive={pathname === "/categories"}
+        >
+          <Link
+            className='m-2 text-sm font-semibold px-4 py-2  text-gray-700 bg-orange-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
+            href="/categories"
+          >
+            Category
+          </Link>
+        </NavbarItem>
+        <NavbarItem
+          isActive={pathname === "/cuisines"}
+        >
+          <Link
+            className='m-2 text-sm font-semibold px-4 py-2  text-gray-700 bg-lime-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
             href="/cuisines"
             aria-current="page"
           >
@@ -80,7 +93,7 @@ export default function Nav() {
           </Link>
         </NavbarItem>
       </NavbarContent>
-      <NavbarContent justify="end">
+      <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
           <UserAvatar user={user} />
           {!user ? (
@@ -128,24 +141,6 @@ export default function Nav() {
           )}
         </Dropdown>
       </NavbarContent>
-      <NavbarMenu
-        className="pt-5"
-      >
-        {menuItems.map((item, i) => (
-          <NavbarMenuItem
-            key={`${item}-${i}`}
-            isActive={pathname === `/${item.toLowerCase()}`}
-          >
-            <Link
-              className={`w-full ${i === 0 ? 'text-green-500' : 'text-blue-500'}`}
-              href={`/${item.toLowerCase()}`}
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-      </NavbarMenu>
     </Navbar>
   );
 }

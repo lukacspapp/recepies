@@ -64,18 +64,14 @@ export default function RecepieCard({
           </p>
           <div className="absolute bottom-0 left-0 w-full h-[5rem] bg-gradient-to-t from-white dark:from-zinc-800" />
         </div>
-        <Button
+        <Link
+          href={`/${serializeSlug(strMeal)}`}
           className="inline-block transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
-          variant='outline'
-          type='button'
-          name='read-more'
         >
-          <Link
-            href={`/${serializeSlug(strMeal)}`}
-          >
+          <span className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200">
             Learn More
-          </Link>
-        </Button>
+          </span>
+        </Link>
       </div>
     </div>
   )
