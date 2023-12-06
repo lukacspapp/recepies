@@ -50,7 +50,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
               className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
               href={`${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`}
             >
-              Learn More
+              See Category
             </Link> : (
               <div className="flex justify-between items-center">
               <Link
@@ -58,7 +58,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                 className="inline-block transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
               >
                 <span className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200">
-                  Learn More
+                  See Recipe
                 </span>
               </Link>
               {!user ? <HeartModal /> : <HeartCheckbox mealId={id} />}
