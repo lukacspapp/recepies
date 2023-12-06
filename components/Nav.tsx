@@ -20,6 +20,8 @@ import { Citrus, LogInIcon, LogOut, UserPlus2 } from "lucide-react";
 import { useAuth } from "@/context/Auth";
 import UserAvatar from "./UserAvatar";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import React from 'react';
+import Logo from "./Logo";
 
 
 export default function Nav() {
@@ -46,8 +48,12 @@ export default function Nav() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <Link color="foreground" href="/">
-            <h1 className="font-bold text-xl">Rece🥧s</h1>
+          <Link
+            className="h-11 w-11"
+            color="foreground"
+            href="/"
+          >
+            <Logo />
           </Link>
         </NavbarBrand>
       </NavbarContent>
