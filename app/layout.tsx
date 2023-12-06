@@ -26,6 +26,23 @@ export const metadata = {
     "homemade",
     "recipe search",
   ],
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://recepies.org",
+    title: "Recepies",
+    description: "Delicious Recipes Hub is your go-to destination for discovering and searching a diverse range of recipes. Find inspiration for your next culinary creation as you search, cook, and share delightful meals from around the world. Elevate your cooking experience and satisfy your taste buds with our extensive collection of recipes. Start your flavorful journey today!",
+    siteName: "Recepies",
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "https://recepies.org/site.webmanifest",
 }
 
 export default async function RootLayout({
