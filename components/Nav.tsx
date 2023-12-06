@@ -44,7 +44,7 @@ export default function Nav() {
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
-      <NavbarMenu className="mt-2">
+      <NavbarMenu className="">
         <NavbarItem
           isActive={pathname === "/categories"}
         >
