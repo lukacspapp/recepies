@@ -50,7 +50,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
               className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
               href={`${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`}
             >
-              Read More
+              Learn More
             </Link> : (
               <div
                 className="flex justify-between items-center"
@@ -65,7 +65,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
                     className="w-full flex items-center justify-start text-center text-zinc-700 dark:text-zinc-300 font-semibold hover:text-zinc-400 dark:hover:text-zinc-600 transition-colors duration-200"
                     href={`/${name.toLowerCase().replace(/ /g, '-')}`}
                   >
-                    Read More
+                    Learn More
                   </Link>
                 </Button>
                 {!user ?

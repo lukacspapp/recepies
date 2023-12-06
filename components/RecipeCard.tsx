@@ -73,7 +73,7 @@ export default function RecepieCard({
           <Link
             href={`/${serializeSlug(strMeal)}`}
           >
-            Read More
+            Learn More
           </Link>
         </Button>
       </div>

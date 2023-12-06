@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from '@/components/Provider'
@@ -8,9 +9,10 @@ import { AuthProvider } from '@/context/Auth';
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://recipes.lukacsjpapp.com/"),
   title: {
-    default: "Recepies",
+    default: "Recipes",
     template: "%s | Recipes from Around the World",
   },
   description:
@@ -26,42 +28,29 @@ export const metadata = {
     "homemade",
     "recipe search",
   ],
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-  ],
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://recepies.lukacsjpapp.com/",
-    title: "Recepies",
+    url: "https://recipes.lukacsjpapp.com/",
+    title: "Recipes",
     description: "Delicious Recipes Hub is your go-to destination for discovering and searching a diverse range of recipes. Find inspiration for your next culinary creation as you search, cook, and share delightful meals from around the world. Elevate your cooking experience and satisfy your taste buds with our extensive collection of recipes. Start your flavorful journey today!",
-    siteName: "Recepies",
+    siteName: "Recipes",
   },
   icons: {
-    icon: "./favicon.ico",
-    shortcut: "../public/favicon-16x16.png",
-    apple: "../public/android-chrome-192x192.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/android-chrome-192x192.png",
   },
-  manifest: {
-    "name": "Recepies",
-    "short_name": "Recepies",
-    "icons": [
-      {
-        "src": "../public/android-chrome-192x192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "../public/android-chrome-512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
-  }
+  manifest: "https://recipes.lukacsjpapp.com/site.webmanifest",
 }
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#ffffff",
+}
+
 
 export default async function RootLayout({
   children,
