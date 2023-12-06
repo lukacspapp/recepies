@@ -1,5 +1,3 @@
 User-Agent: *
-Allow: /
-Disallow:
-
-Sitemap: https://recepies.lukacsjpapp.com/
+Disallow: /
+Sitemap: https://recepies.lukacsjpapp.com/sitemap.xml
