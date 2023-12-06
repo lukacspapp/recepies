@@ -5,7 +5,6 @@ import { Providers } from '@/components/Provider'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { AuthProvider } from '@/context/Auth';
-import log from '.'
 
 const inter = Inter({ subsets: ['latin'] })
 
