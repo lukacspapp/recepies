@@ -36,12 +36,10 @@ export function Providers({ children, likedMealIds }: { children: React.ReactNod
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
-  const nav = (pathname !== '/login' && pathname !== '/register') ? <Nav /> : null;
-
   return (
     <AuthProvider>
       <NextUIProvider>
-        {nav}
+        {pathname !== '/login' && pathname !== '/register' && <Nav />}
         {children}
       </NextUIProvider>
     </AuthProvider>

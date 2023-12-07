@@ -33,7 +33,7 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
       ])
       .select()
 
-    useLikedMealStore.setState({ likedMealIds: [...liked, mealId] })
+    if (!error) useLikedMealStore.setState({ likedMealIds: [...liked, mealId] })
 
     setLoading(false);
   }
@@ -45,7 +45,7 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
       .delete()
       .eq('meal_id', mealId)
 
-    useLikedMealStore.setState({ likedMealIds: liked.filter((id: string) => id !== mealId) })
+    if (!error) useLikedMealStore.setState({ likedMealIds: liked.filter((id: string) => id !== mealId) })
 
     setLoading(false);
   }

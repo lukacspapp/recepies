@@ -6,6 +6,7 @@ import { doRequest } from '@/lib/DoRequest';
 import CategoryCard from '@/components/CategoryCard';
 import AnimatedDescription from '@/components/AnimatedDescription';
 import { Meal } from '@/lib/types';
+import NoResult from '@/components/NoResult';
 
 export default async function page() {
 
@@ -35,19 +36,19 @@ export default async function page() {
             title={'Welcome to your Dashboard'}
             description={"Here you can find your liked recepies"}
           />
-          <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
-            {likedMeals.length > 0 ?
-              likedMeals.map((meal: any) => (
+          {likedMeals.length > 0 ?
+            likedMeals.map((meal: any) => (
+              <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
                 <CategoryCard
                   id={meal.idMeal}
                   key={meal.idMeal}
                   name={meal.strMeal}
                   image={meal.strMealThumb}
                 />
-              )) :
-              null
-            }
-          </div>
+              </div>
+            )) :
+            <NoResult />
+          }
         </div>
       </section>
     </main>
