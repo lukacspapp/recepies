@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { Suspense } from 'react'
 import SearchBar from './SearchBar'
 import { Meal } from '@/lib/types'
 import RecipeCard from './RecipeCard'
@@ -36,25 +36,27 @@ export default function RecepieList({
           setLoading={setLoading}
         />
       </div>
-      <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
-        {loading ? (
-          Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
-        ) : mealList && mealList.length > 0 ? (
-          mealList.map((meal: Meal) => (
-            <RecipeCard
-              key={meal.idMeal}
-              id={meal.idMeal}
-              strMealThumb={meal.strMealThumb}
-              strMeal={meal.strMeal}
-              strCategory={meal.strCategory}
-              strArea={meal.strArea}
-              strDescription={meal.strInstructions}
-            />
-          ))
-        ) : (
-          null
-        )}
-      </div>
+      <Suspense fallback={<LoadingRecepieCard />}>
+        <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
+          {loading ? (
+            Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
+          ) : mealList && mealList.length > 0 ? (
+            mealList.map((meal: Meal) => (
+              <RecipeCard
+                key={meal.idMeal}
+                id={meal.idMeal}
+                strMealThumb={meal.strMealThumb}
+                strMeal={meal.strMeal}
+                strCategory={meal.strCategory}
+                strArea={meal.strArea}
+                strDescription={meal.strInstructions}
+              />
+            ))
+          ) : (
+            null
+          )}
+        </div>
+      </Suspense>
       {mealList && mealList.length === 0 && !loading && <NoResult />}
     </>
 

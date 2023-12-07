@@ -46,7 +46,7 @@ export default async function Home() {
               areas={areas}
               meals={meals}
             />
-          </Suspense>
+            </Suspense >
         </div>
       </section>
     </main>
