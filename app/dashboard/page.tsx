@@ -4,10 +4,9 @@ import { doRequest } from '@/lib/DoRequest';
 import AnimatedDescription from '@/components/AnimatedDescription';
 import { Meal } from '@/lib/types';
 import DashboardList from '@/components/DashboardList';
-import { NextApiResponse } from 'next';
 import { redirect } from 'next/navigation';
 
-export default async function page(res: NextApiResponse) {
+export default async function page() {
 
 
   const supabase = createServerComponentClient({ cookies })
