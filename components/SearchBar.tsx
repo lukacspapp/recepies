@@ -133,6 +133,7 @@ export default function SearchBar({
                 <FormMessage className='absolute bottom-10' />
                 <FormControl>
                   <Input
+                    className='text-lg'
                     disabled={form.formState.isSubmitting}
                     {...field}
                     placeholder="Ingridients, Meals...."
