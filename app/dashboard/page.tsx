@@ -7,6 +7,7 @@ import CategoryCard from '@/components/CategoryCard';
 import AnimatedDescription from '@/components/AnimatedDescription';
 import { Meal } from '@/lib/types';
 import NoResult from '@/components/NoResult';
+import DashboardList from '@/components/DashboardList';
 
 export default async function page() {
 
@@ -36,21 +37,7 @@ export default async function page() {
             title={'Welcome to your Dashboard'}
             description={"Here you can find your liked recepies"}
           />
-          <div
-            className={`${likedMeals.length > 0 ? `grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4` : ''}`}
-          >
-            {likedMeals.length > 0 ?
-              likedMeals.map((meal: Meal) => (
-                <CategoryCard
-                  id={meal.idMeal}
-                  key={meal.idMeal}
-                  name={meal.strMeal}
-                  image={meal.strMealThumb}
-                />
-              )) :
-              <NoResult />
-            }
-          </div>
+            <DashboardList likedMeals={likedMeals} />
         </div>
       </section>
     </main>

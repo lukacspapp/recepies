@@ -1,6 +1,8 @@
 'use client'
 
+import AnimatedDescription from '@/components/AnimatedDescription'
 import { Button } from '@/components/ui/button'
+import { Frown } from 'lucide-react'
 import { useEffect } from 'react'
 
 export default function Error({
@@ -15,12 +17,11 @@ export default function Error({
 
   return (
     <div className="flex m-6 flex-col items-center justify-center bg-center">
-      <h2 className="text-lg font-bold tracking-tighter sm:text-xl md:text-xl xl:text-xl 2xl:text-2xl text-center mb-2">
-        Something Went Wrong 😥
-      </h2>
-      <p className="max-w-[600px] text-zinc-500 md:text-xl dark:text-zinc-400 text-center mx-auto">
-        Try another refresh
-      </p>
+      <AnimatedDescription
+        title={"Computer Says NO"}
+        description={"Something went Wrong, try to refresh the page"}
+      />
+      <Frown className="w-32 h-32 text-red-400"/>
       <Button
         className="inline-block m-3 transition-opacity hover:opacity-80 bg-zinc-300 p-2 rounded-lg"
         onClick={
