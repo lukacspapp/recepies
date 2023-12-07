@@ -23,7 +23,7 @@ export default async function page() {
       return doRequest('GET', `${process.env.RECEPIES_API_NAME_ID + mealId.meal_id}`)
     })
 
-    const result = await Promise.all(fetches)
+    const result: Meal[] = await Promise.all(fetches)
 
     likedMeals = result.map((res: any) => res.meals[0])
   }
@@ -36,19 +36,21 @@ export default async function page() {
             title={'Welcome to your Dashboard'}
             description={"Here you can find your liked recepies"}
           />
-          {likedMeals.length > 0 ?
-            likedMeals.map((meal: any) => (
-              <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
+          <div
+            className={`${likedMeals.length > 0 ? `grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4` : ''}`}
+          >
+            {likedMeals.length > 0 ?
+              likedMeals.map((meal: Meal) => (
                 <CategoryCard
                   id={meal.idMeal}
                   key={meal.idMeal}
                   name={meal.strMeal}
                   image={meal.strMealThumb}
                 />
-              </div>
-            )) :
-            <NoResult />
-          }
+              )) :
+              <NoResult />
+            }
+          </div>
         </div>
       </section>
     </main>
