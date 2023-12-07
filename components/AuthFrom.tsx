@@ -77,6 +77,7 @@ export function UserAuthForm({ className } : { className?: string }) {
             </Label>
             <Input
               id="email"
+              className="text-lg"
               placeholder="name@example.com"
               type="email"
               autoCapitalize="none"
@@ -97,6 +98,7 @@ export function UserAuthForm({ className } : { className?: string }) {
             </Label>
             <Input
               id="password"
+              className="text-lg"
               placeholder="*******"
               type="password"
               autoCapitalize="none"
