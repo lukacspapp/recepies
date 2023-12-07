@@ -12,10 +12,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { ingredients, measures } = meals ? extractIngredientsAndMeasures(meals[0]) : { ingredients: [], measures: [] };
 
   return (
-    <section className="w-full py-4 md:py-6 lg:py-12 xl:py-24">
+    <section className="w-full py-4 md:py-6 lg:py-12 xl:py-24 p-6">
       <div className="container px-2 md:px-4 lg:px-6">
         <div className="grid gap-4 md:gap-6 lg:gap-10 xl:gap-16 md:grid-cols-1 lg:grid-cols-2">
-          <div className="space-y-2 md:space-y-4">
+          <div className="space-y-6 md:space-y-4">
             <Image
               src={meals[0].strMealThumb}
               alt={meals[0].strMeal}
@@ -26,15 +26,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
             />
             <h2 className="leading-tighter text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               {meals[0].strMeal}
-            </h2>
             <div className="flex justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
               <Badge value={meals[0].strCategory} type='categories' />
               <Badge value={meals[0].strArea} className="ml-2" type='cuisines' />
             </div>
+            </h2>
             <h3 className="leading-tight text-lg font-bold tracking-tighter md:text-lg lg:text-xl xl:text-2xl">
               Instructions
             </h3>
-            <p className="max-w-[700px] text-zinc-500 text-sm md:text-base lg:text-lg dark:text-zinc-400">
+            <p className="max-w-[700px] leading-[1.4rem] text-zinc-500 text-sm md:text-base lg:text-lg dark:text-zinc-400">
               {meals[0].strInstructions}
             </p>
             <h3 className="leading-tight text-md font-bold tracking-tighter md:text-lg lg:text-xl xl:text-2xl">

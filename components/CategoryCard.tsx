@@ -26,6 +26,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
       onClick={description ? () => window.location.href = `${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}` : undefined}
     >
       <div className="flex flex-col h-full justify-between">
+        <Link href={`${pathname === '/categories' ? '/categories/' : '/'}${name.toLowerCase().replace(/ /g, '-')}`}>
         <Image
           alt={name}
           className="mx-auto aspect-content object-cover object-center w-full rounded-lg"
@@ -33,6 +34,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
           src={image}
           width={300}
         />
+        </Link>
         <div>
 
           <h2 className="leading-tighter mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
