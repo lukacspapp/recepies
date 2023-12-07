@@ -32,7 +32,6 @@ const listTypes = [
 
 export default function Nav() {
 
-
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -91,7 +90,7 @@ export default function Nav() {
         <Dropdown placement="bottom-end">
           <UserAvatar />
           {!user ? (
-            <DropdownMenu className="text-center" aria-label="Profile Actions" variant="flat">
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
               <DropdownSection showDivider>
                 <DropdownItem key="profile">
                   <Link className='p-1' href="/login">
