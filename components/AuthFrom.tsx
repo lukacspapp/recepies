@@ -9,7 +9,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useRouter, usePathname } from "next/navigation"
 import { useState } from "react"
 import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import path from "path"
 
@@ -32,14 +32,17 @@ export function UserAuthForm({ className } : { className?: string }) {
   const pathname = usePathname()
 
   async function logIn(formData: userAuthSchemaType) {
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signInWithPassword({
       email: formData.email,
       password: formData.password,
     })
     router.push('/')
+    setIsLoading(false)
   }
 
   async function signUpWithEmail(formData: userAuthSchemaType) {
+    setIsLoading(true)
     const { data, error } = await supabase.auth.signUp({
       email: formData.email,
       password: formData.password,
@@ -50,15 +53,7 @@ export function UserAuthForm({ className } : { className?: string }) {
     if (!error) {
       logIn(formData)
     }
-  }
-
-  async function signInWithOtp(formData: userAuthSchemaType) {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email: formData.email,
-      options: {
-        emailRedirectTo: 'https://example.com/welcome'
-      }
-    })
+    setIsLoading(false)
   }
 
   async function onSubmit(data: userAuthSchemaType) {

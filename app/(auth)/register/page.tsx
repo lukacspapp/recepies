@@ -3,6 +3,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/AuthFrom"
+import { ArrowLeft } from "lucide-react"
 
 export const metadata = {
   title: "Create an account",
@@ -12,6 +13,18 @@ export const metadata = {
 export default function RegisterPage() {
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
+      <div className="absolute left-4 top-4 md:left-8 md:top-8">
+        <Link
+          href="/"
+          className={cn(
+            buttonVariants({ variant: "ghost" }),
+            "mr-4"
+          )}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Home
+        </Link>
+      </div>
       <Link
         href="/login"
         className={cn(
