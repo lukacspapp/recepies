@@ -15,7 +15,6 @@ import {
   DropdownItem,
   DropdownSection,
   Spinner,
-  SpinnerProps,
 } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { Citrus, Loader2, LogInIcon, LogOut, SprayCanIcon, UserPlus2 } from "lucide-react";

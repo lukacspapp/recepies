@@ -4,10 +4,16 @@ import { doRequest } from '@/lib/DoRequest';
 import AnimatedDescription from '@/components/AnimatedDescription';
 import { Meal } from '@/lib/types';
 import DashboardList from '@/components/DashboardList';
+import { NextApiResponse } from 'next';
+import { redirect } from 'next/navigation';
 
-export default async function page() {
+export default async function page(res: NextApiResponse) {
+
 
   const supabase = createServerComponentClient({ cookies })
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) redirect('/login')
 
   let likedMeals: Meal[] = []
 
