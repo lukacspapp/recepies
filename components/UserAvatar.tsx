@@ -1,12 +1,11 @@
+import { useAuth } from '@/context/Auth'
 import { Avatar, DropdownTrigger } from '@nextui-org/react'
 import { UserCircle2 } from 'lucide-react'
 import React from 'react'
 
-type UserAvatarProps = {
-  user: any
-}
+export default function UserAvatar() {
 
-export default function UserAvatar({ user }: UserAvatarProps) {
+  const { user } = useAuth()
 
   return (
     <DropdownTrigger>

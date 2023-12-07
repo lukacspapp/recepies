@@ -14,8 +14,6 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownSection,
-  Avatar,
-  DropdownTrigger,
 } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import { Citrus, LogInIcon, LogOut, UserPlus2 } from "lucide-react";
@@ -24,6 +22,11 @@ import UserAvatar from "./UserAvatar";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import React from 'react';
 import Logo from "./Logo";
+
+const listTypes = [
+  { name: 'Category', href: '/categories', color: 'bg-orange-400' },
+  { name: 'Cusinies', href: '/cuisines', color: 'bg-lime-400' },
+]
 
 
 export default function Nav() {
@@ -44,58 +47,42 @@ export default function Nav() {
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
-      <NavbarMenu className="">
-        <NavbarItem
-          isActive={pathname === "/categories"}
-        >
-          <Link
-            className='text-sm w-[90px] mb-1 font-semibold px-4 py-2  text-gray-700 bg-orange-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
-            href="/categories"
+      <NavbarMenu>
+        {listTypes.map((item) => (
+          <NavbarMenuItem
+            key={item.name}
+            isActive={pathname === item.href}
           >
-            Category
-          </Link>
-        </NavbarItem>
-        <NavbarItem
-          isActive={pathname === "/cuisines"}
-        >
-          <Link
-            className='text-sm font-semibold w-[90px] px-4 py-2  text-gray-700 bg-lime-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
-            href="/cuisines"
-            aria-current="page"
-          >
-            Cusinies
-          </Link>
-        </NavbarItem>
+            <Link
+              className={`text-sm w-[90px] mb-1 font-semibold px-4 py-2  text-gray-700 ${item.color} transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md`}
+              href={item.href}
+            >
+              {item.name}
+            </Link>
+          </NavbarMenuItem>
+        ))}
       </NavbarMenu>
       <NavbarBrand>
         <Logo />
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem
-          isActive={pathname === "/categories"}
-        >
-          <Link
-            className='m-2 text-sm font-semibold px-4 py-2  text-gray-700 bg-orange-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
-            href="/categories"
+        {listTypes.map((item) => (
+          <NavbarItem
+            key={item.name}
+            isActive={pathname === item.href}
           >
-            Category
-          </Link>
-        </NavbarItem>
-        <NavbarItem
-          isActive={pathname === "/cuisines"}
-        >
-          <Link
-            className='m-2 text-sm font-semibold px-4 py-2  text-gray-700 bg-lime-400 transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md'
-            href="/cuisines"
-            aria-current="page"
-          >
-            Cusinies
-          </Link>
-        </NavbarItem>
+            <Link
+              className={`text-sm w-[90px] m-1 font-semibold px-4 py-2  text-gray-700 ${item.color} transform transition-transform hover:scale-105  dark:text-gray-200 rounded-md`}
+              href={item.href}
+            >
+              {item.name}
+            </Link>
+          </NavbarItem>
+        ))}
       </NavbarContent>
       <NavbarContent as="div" justify="end">
         <Dropdown placement="bottom-end">
-          <UserAvatar user={user} />
+          <UserAvatar />
           {!user ? (
             <DropdownMenu className="text-center" aria-label="Profile Actions" variant="flat">
               <DropdownSection showDivider>

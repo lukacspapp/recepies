@@ -5,7 +5,6 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import HeartCheckbox from './HeartCheckBox'
-import { Button } from './ui/button'
 import { useAuth } from '@/context/Auth'
 import HeartModal from './HeartModal'
 

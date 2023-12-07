@@ -15,9 +15,9 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import Suggestion from './Suggestion'
-import { Meal, SuggestionType } from '@/lib/types'
+import { Meal } from '@/lib/types'
 import { Loader2 } from 'lucide-react'
+import SuggestionList from './SuggestionList'
 
 type SearchBarProps = {
   ingredients: string[]
@@ -47,59 +47,34 @@ export default function SearchBar({
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    let suggestionList: { suggestion: string; type: string }[] = [];
-
-    if (e.target.value.length === 0) {
-      setSuggestions([]);
-      return;
-    }
-
     const searchValue = e.target.value.toLowerCase();
+    const suggestionList: string[] = [];
 
-    categories.forEach((category) => {
-      const categoryLowerCase = category.toLowerCase();
-      if (
-        categoryLowerCase.includes(searchValue) ||
-        categoryLowerCase.split('').some((letter) => letter.includes(searchValue))
-      ) {
-        suggestionList.push({ suggestion: category, type: 'Category' });
+    const allData = [...categories, ...areas, ...ingredients];
+
+    allData.forEach((item: string) => {
+      const itemLowerCase = item.toLowerCase();
+
+      if (itemLowerCase.includes(searchValue) || itemLowerCase.startsWith(searchValue)) {
+        suggestionList.push(item);
       }
     });
 
-    areas.forEach((area: string) => {
-      const areaLowerCase = area.toLowerCase();
-      if (
-        areaLowerCase.includes(searchValue) ||
-        areaLowerCase.split('').some((letter) => letter.includes(searchValue))
-      ) {
-        suggestionList.push({ suggestion: area, type: "Cuisine" });
-      }
+    const suggestionObjects = Array.from(suggestionList).map((suggestion) => {
+      const type =
+        categories.includes(suggestion) ? 'Category' :
+          areas.includes(suggestion) ? 'Cuisine' :
+            ingredients.includes(suggestion) ? 'Ingredient' : '';
+
+      return { suggestion, type };
     });
 
-    ingredients.forEach((ingredient: string) => {
-      const ingredientLowerCase = ingredient.toLowerCase();
-      if (
-        ingredientLowerCase.includes(searchValue) ||
-        ingredientLowerCase.split('').some((letter) => letter.includes(searchValue))
-      ) {
-        suggestionList.push({ suggestion: ingredient, type: 'Ingredient' });
-      }
-    });
-
-    suggestionList = suggestionList.filter(
-      (v, i, a) => a.findIndex((t) => t.suggestion === v.suggestion) === i
-    );
-
-    const matchedSuggestion = suggestionList.find(
+    const matchedSuggestion = suggestionObjects.find(
       (suggestion) => suggestion.suggestion.toLowerCase() === searchValue
     );
 
-    if (matchedSuggestion) {
-      form.setValue('type', matchedSuggestion.type);
-    } else {
-      form.setValue('type', '');
-    }
-    setSuggestions(suggestionList);
+    form.setValue('type', matchedSuggestion ? matchedSuggestion.type : '');
+    setSuggestions(suggestionObjects);
   }
 
 
@@ -186,23 +161,7 @@ export default function SearchBar({
               <MagnifyingGlassIcon />}
           </Button>
           {suggestions.length ? (
-            <div
-            className="m-2 w-full absolute top-full bg-gray-100 max-w-md shadow-md rounded z-10"
-          >
-            <ul
-              aria-label="Search suggestions"
-              className="max-h-[200px] overflow-auto p-1"
-            >
-              {suggestions.map((suggestion, i) => (
-                <Suggestion
-                  key={`${suggestion} - ${i}`}
-                  suggestion={suggestion.suggestion}
-                  type={suggestion.type}
-                  setValue={form.setValue}
-                />
-              ))}
-            </ul>
-          </div>
+            <SuggestionList suggestions={suggestions} form={form} />
           ) : null}
         </form>
       </Form>

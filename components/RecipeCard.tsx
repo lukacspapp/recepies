@@ -3,7 +3,6 @@
 import { serializeSlug } from '@/lib/stringFormatter'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from './ui/button'
 import Badge from './Badge'
 import HeartCheckbox from './HeartCheckBox'
 import { useAuth } from '@/context/Auth'

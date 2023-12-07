@@ -4,7 +4,7 @@ import { useAuth } from '@/context/Auth';
 import { useLikedMealStore } from '@/store/likedMealsStore';
 import { Spinner } from '@nextui-org/react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import uuid from 'react-uuid';
 
 const HeartCheckbox = ({ mealId }: { mealId: string }) => {
@@ -12,9 +12,6 @@ const HeartCheckbox = ({ mealId }: { mealId: string }) => {
   const supabase = createClientComponentClient();
   const { user } = useAuth();
   const liked = ((useLikedMealStore.getState() as { likedMealIds: string[] }).likedMealIds);
-  console.log('====================================');
-  console.log(liked);
-  console.log('====================================');
   const [isChecked, setIsChecked] = useState(liked.includes(mealId));
   const [loading, setLoading] = useState(false);
 
