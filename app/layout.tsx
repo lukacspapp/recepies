@@ -6,6 +6,7 @@ import { Providers } from '@/components/Provider'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { AuthProvider } from '@/context/Auth';
+import { DatabaseMealID } from '@/lib/types'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -57,7 +58,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  let likedMealIds: any[] = []
+  let likedMealIds: string[] = []
 
   const supabase = createServerComponentClient({ cookies })
 
@@ -66,9 +67,9 @@ export default async function RootLayout({
   if (data && data.user) {
     const { data: likedMeals } = await supabase
       .from('liked_meals')
-      .select('meal_id')
+      .select('meal_id');
 
-    if (likedMeals) likedMealIds = likedMeals.map((meal: any) => meal.meal_id)
+    if (likedMeals) likedMealIds = likedMeals.map((meal: DatabaseMealID) => meal.meal_id)
   }
 
   return (

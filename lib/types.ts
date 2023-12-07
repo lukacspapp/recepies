@@ -73,3 +73,12 @@ export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 export type CuisineColors = {
   [key: string]: string;
 };
+
+export type DatabaseMealID = {
+  meal_id: string
+}
+
+export type IngredientAndMeasure = {
+  ingredients: string[];
+  measures: string[];
+};
