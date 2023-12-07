@@ -1,4 +1,8 @@
-export interface Meal {
+export type Recipe = {
+  meals: Meal[];
+};
+
+export type Meal = {
   idMeal: string
   strMeal: string
   strDrinkAlternate: any

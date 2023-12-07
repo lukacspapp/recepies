@@ -1,4 +1,4 @@
-import { RequestMethod } from "./types"
+import { RequestMethod } from "./types";
 
 export async function doRequest(
   method: RequestMethod,
@@ -6,6 +6,7 @@ export async function doRequest(
   body?: any,
   apiKey?: string,
 ) {
+
   const options: RequestInit = {
     method: method,
     headers: {
@@ -21,12 +22,12 @@ export async function doRequest(
   try {
     const res = await fetch(url, options)
 
-    if (!res.ok) return "There was a problem with the request"
-    const responseBody = await res.json()
-    return responseBody
-
+    if (res.ok) {
+      const responseBody = await res.json();
+      return responseBody;
+    }
+    return `There was an Error: ${res.status}`;
   } catch (e) {
-    return `There was an Error: ${e}`
-
+    return `There was an Error: ${e}`;
   }
 }

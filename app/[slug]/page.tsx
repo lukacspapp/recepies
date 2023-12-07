@@ -8,9 +8,7 @@ import Image from "next/image";
 export default async function Page({ params }: { params: { slug: string } }) {
 
   const { meals } = await doRequest('GET', `${process.env.RECEPIES_API_NAME + params.slug.replace(/-/g, '_')}`);
-  console.log('====================================');
-  console.log(meals);
-  console.log('====================================');
+
   const { ingredients, measures } = meals ? extractIngredientsAndMeasures(meals[0]) : { ingredients: [], measures: [] };
 
   return (
