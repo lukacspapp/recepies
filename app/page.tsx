@@ -1,6 +1,7 @@
 import AnimatedDescription from "@/components/AnimatedDescription";
 import RecepieList from "@/components/RecepieList";
 import { doRequest } from "@/lib/DoRequest";
+import { Suspense } from "react";
 
 export default async function Home() {
 
@@ -38,12 +39,14 @@ export default async function Home() {
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <AnimatedDescription title={"Search for Recepies"} description={"By Ingridients, Cuisine or Calories"}/>
+          <Suspense fallback={<div>Loading...</div>}>
             <RecepieList
               ingredients={ingredients}
               categories={categories}
               areas={areas}
               meals={meals}
             />
+          </Suspense>
         </div>
       </section>
     </main>

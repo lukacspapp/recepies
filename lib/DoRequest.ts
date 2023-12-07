@@ -12,6 +12,7 @@ export async function doRequest(
       "Content-Type": "application/json",
     },
     credentials: "include",
+    cache: "no-cache",
   }
 
   if (apiKey) options.headers = { "x-api-key": apiKey }
