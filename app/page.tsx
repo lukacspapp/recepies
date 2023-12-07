@@ -1,7 +1,6 @@
 import AnimatedDescription from "@/components/AnimatedDescription";
 import RecepieList from "@/components/RecepieList";
 import { doRequest } from "@/lib/DoRequest";
-import { Suspense } from "react";
 
 export default async function Home() {
 
@@ -10,10 +9,10 @@ export default async function Home() {
   let areas: string[] = []
 
   const [
-  { meals },
-  { meals : ingridentsList },
-  { meals: categoriesList },
-  { meals: areasList }
+    { meals },
+    { meals: ingridentsList },
+    { meals: categoriesList },
+    { meals: areasList }
   ] = await Promise.all([
     doRequest('GET', `${process.env.RECEPIES_API_10}`),
     doRequest('GET', `${process.env.RECEPIES_API_INGRIDIENTS_LIST}`),
@@ -38,15 +37,13 @@ export default async function Home() {
     <main className="w-full">
       <section className="w-full py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
-          <AnimatedDescription title={"Search for Recepies"} description={"By Ingridients, Cuisine or Calories"}/>
-          <Suspense fallback={<div>Loading...</div>}>
+          <AnimatedDescription title={"Search for Recepies"} description={"By Ingridients, Cuisine or Calories"} />
             <RecepieList
               ingredients={ingredients}
               categories={categories}
               areas={areas}
               meals={meals}
             />
-            </Suspense >
         </div>
       </section>
     </main>
