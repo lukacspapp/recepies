@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cypress:open": "cypress open"
+    "prepare": "husky install",
+    "cypress-install": "cypress install",
+    "cypress": "cypress run --headless -C cypress/cypress.config.ts"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -29,6 +31,7 @@
     "clsx": "^2.0.0",
     "cypress": "^13.6.1",
     "framer-motion": "^10.16.14",
+    "husky": "^8.0.3",
     "lucide-react": "^0.292.0",
     "next": "^14.0.3",
     "react": "^18",
