@@ -58,7 +58,7 @@ Deployed on [Vercel](https://vercel.com/)
 
 
 
-* **Lukacs J Papp** - *Initial work* - [lukacspapp](
+* **Lukacs J Papp** - [lukacspapp](
   https://github.com/lukacspapp)
 
 ## License
