@@ -11,14 +11,15 @@ import { DatabaseMealID } from '@/lib/types'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://recipes.lukacsjpapp.com/"),
+  metadataBase: new URL("https://pite.lukacsjpapp.com/"),
   title: {
-    default: "Recipes",
+    default: "Pite",
     template: "%s | Recipes from Around the World",
   },
   description:
     "Delicious Recipes Hub is your go-to destination for discovering and searching a diverse range of recipes. Find inspiration for your next culinary creation as you search, cook, and share delightful meals from around the world. Elevate your cooking experience and satisfy your taste buds with our extensive collection of recipes. Start your flavorful journey today!",
   keywords: [
+    'pite',
     "recipes",
     "cooking",
     "food",
@@ -32,10 +33,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://recipes.lukacsjpapp.com/",
-    title: "Recipes",
+    url: "https://pite.lukacsjpapp.com/",
+    title: "Pite",
     description: "Delicious Recipes Hub is your go-to destination for discovering and searching a diverse range of recipes. Find inspiration for your next culinary creation as you search, cook, and share delightful meals from around the world. Elevate your cooking experience and satisfy your taste buds with our extensive collection of recipes. Start your flavorful journey today!",
-    siteName: "Recipes",
+    siteName: "Pite",
   },
   icons: {
     icon: "/favicon.ico",

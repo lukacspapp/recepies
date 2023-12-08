@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Recipes",
-    short_name: "Recipes",
+    name: "Pite",
+    short_name: "Pite",
     icons: [
       {
         src:  "/android-chrome-192x192.png",
