@@ -43,8 +43,10 @@ RECEPIES_API_KEY=
 
 ## Built With
 
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Framework**: [Next.js](https://nextjs.org/)
 - **Deployment**: [Vercel](https://vercel.com)
+- **API**: [TheMealDB](https://www.themealdb.com/api.php)
 - **Database**: [Supabase](https://supabase.io/)
 - **Authentication**: [Supabase Auth](https://supabase.io/docs/guides/auth)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
