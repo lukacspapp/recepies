@@ -52,6 +52,7 @@ RECEPIES_API_KEY=
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **UI Components**: [Next UI](https://nextui.org/), [shadcn/ui](https://ui.shadcn.com/)
 - **State Management**: [Zustand](https://zustanddemo.pmnd.rs/), [useContext](https://react.dev/reference/react/useContext)
+- **Testing**: [Cypress](https://www.cypress.io/) This is being added incrementally
 
 Deployed on [Vercel](https://vercel.com/)
 
