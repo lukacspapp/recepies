@@ -7,6 +7,8 @@ import { AuthProvider, useAuth } from '@/context/Auth'
 import { useLikedMealStore } from '@/store/likedMealsStore'
 import { useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import Footer from './Footer'
+import { TooltipProvider } from '@radix-ui/react-tooltip'
 
 export function Providers({ children, likedMealIds }: { children: React.ReactNode, likedMealIds: string[] }) {
 
@@ -41,6 +43,9 @@ export function Providers({ children, likedMealIds }: { children: React.ReactNod
       <NextUIProvider>
         {pathname !== '/login' && pathname !== '/register' && <Nav />}
         {children}
+        <TooltipProvider>
+          <Footer />
+        </TooltipProvider>
       </NextUIProvider>
     </AuthProvider>
   )
