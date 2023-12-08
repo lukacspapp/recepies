@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit(`${process.env.NEXT_PUBLIC_BASE_URL}`)
   });
 
   it('should display the correct title and description', () => {
