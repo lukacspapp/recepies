@@ -7,6 +7,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { AuthProvider } from '@/context/Auth';
 import { DatabaseMealID } from '@/lib/types'
+import PlausibleProvider from 'next-plausible';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -75,6 +76,12 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+      <PlausibleProvider
+        domain="pite.lukacsjpapp.com"
+        trackFileDownloads={true}
+      />
+      </head>
       <body className={`${inter.className}`}>
         <AuthProvider>
           <Providers likedMealIds={likedMealIds}>

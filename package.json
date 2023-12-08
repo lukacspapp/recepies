@@ -34,6 +34,7 @@
     "husky": "^8.0.3",
     "lucide-react": "^0.292.0",
     "next": "^14.0.3",
+    "next-plausible": "^3.12.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.43.9",
