@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://shade.dragi.me">
+  <a href="https://pite.lukacsjpapp.com">
     <img height="256" alt="pite" src="https://pite.lukacsjpapp.com/android-chrome-192x192.png">
   </a>
 </div>
