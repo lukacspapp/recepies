@@ -78,7 +78,9 @@ export default async function RootLayout({
       <body className={`${inter.className}`}>
         <AuthProvider>
           <Providers likedMealIds={likedMealIds}>
-            {children}
+            <div data-test-id="root-layout">
+              {children}
+            </div>
           </Providers>
         </AuthProvider>
       </body>

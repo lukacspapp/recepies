@@ -8,7 +8,7 @@ export default function UserAvatar() {
   const { user } = useAuth()
 
   return (
-    <DropdownTrigger>
+    <DropdownTrigger data-test-id="nav-trigger">
       <Avatar
         isBordered
         as="button"

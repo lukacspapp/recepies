@@ -49,7 +49,7 @@ export default function Nav() {
   }
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen}>
+    <Navbar data-test-id="nav" onMenuOpenChange={setIsMenuOpen}>
       <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} className="sm:hidden" />
       <NavbarMenu>
         {listTypes.map((item) => (
@@ -90,10 +90,10 @@ export default function Nav() {
         <Dropdown placement="bottom-end">
           <UserAvatar />
           {!user ? (
-            <DropdownMenu aria-label="Profile Actions" variant="flat">
+            <DropdownMenu data-test-id="user-dropdown" aria-label="Profile Actions" variant="flat">
               <DropdownSection showDivider>
                 <DropdownItem key="profile">
-                  <Link className='p-1' href="/login">
+                  <Link data-test-id="profile-login" className='p-1' href="/login">
                     <LogInIcon className="mr-2 h-6 w-6" />
                     <p className="font-semibold">Login</p>
                   </Link>
@@ -101,7 +101,7 @@ export default function Nav() {
               </DropdownSection>
               <DropdownSection className="m-0">
                 <DropdownItem key="profile">
-                  <Link className="p-1" href="/register">
+                  <Link data-test-id="profile-signup" className="p-1" href="/register">
                     <UserPlus2 className="mr-2 h-6 w-6" />
                     <p className="font-semibold">Sign Up</p>
                   </Link>
