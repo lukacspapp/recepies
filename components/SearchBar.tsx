@@ -18,6 +18,7 @@ import { Label } from './ui/label'
 import { Meal } from '@/lib/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
+import meals from '../db/meals.json'
 
 type SearchBarProps = {
   ingredients: string[]
@@ -116,6 +117,9 @@ export default function SearchBar({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [suggestions])
+
+  // removed all duplicate items from meals.json
+
 
   return (
     <>
