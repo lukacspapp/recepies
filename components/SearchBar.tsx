@@ -118,9 +118,6 @@ export default function SearchBar({
     };
   }, [suggestions])
 
-  // removed all duplicate items from meals.json
-
-
   return (
     <>
       <Form {...form}>
