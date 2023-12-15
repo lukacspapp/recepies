@@ -2,6 +2,25 @@ export type Recipe = {
   meals: Meal[];
 };
 
+export type NewMeal = {
+  id: string
+  created_at: string
+  updated_at: string
+  title: string
+  image: string
+  video_link: string
+  creator_id: string
+  ingridient_measurement: IngridientMeasurement[]
+  category: string
+  cuisine: string
+  description: string
+}
+
+export interface IngridientMeasurement {
+  ingridient: string
+  measurement: string
+}
+
 export type Meal = {
   idMeal: string
   strMeal: string
@@ -86,3 +105,5 @@ export type IngredientAndMeasure = {
   ingredients: string[];
   measures: string[];
 };
+
+export type SearchType = 'Category' | 'Cuisine' | 'Ingredient' ;

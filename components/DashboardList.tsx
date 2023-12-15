@@ -1,6 +1,6 @@
 'use client'
 
-import { Meal } from '@/lib/types'
+import { Meal } from '@/lib/types/types'
 import CategoryCard from './CategoryCard'
 import NoResult from './NoResult'
 

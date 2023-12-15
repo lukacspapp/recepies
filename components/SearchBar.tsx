@@ -15,16 +15,21 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { Meal } from '@/lib/types'
+import { Meal, NewMeal } from '@/lib/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { doRequest } from '@/lib/DoRequest'
+import uuid from 'react-uuid'
 import meals from '../db/meals.json'
+import { extractIngredientsAndMeasures } from '@/lib/utils'
+
 
 type SearchBarProps = {
   ingredients: string[]
   categories: string[]
   areas: string[]
-  setMealList: React.Dispatch<React.SetStateAction<Meal[]>>
+  setMealList: React.Dispatch<React.SetStateAction<NewMeal[]>>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -34,8 +39,10 @@ export default function SearchBar({
   categories,
   areas,
   setMealList,
-  setLoading
+  setLoading,
 }: SearchBarProps) {
+
+  const supabase = createClientComponentClient()
 
   const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
   const form = useForm<z.infer<typeof formSchema>>({
@@ -82,7 +89,7 @@ export default function SearchBar({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSuggestions([])
     setLoading(true)
-    const res = fetch('/api/recepies', {
+    const res = fetch('/api/cuisinies', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,8 +106,11 @@ export default function SearchBar({
 
     const meals = await res;
     setMealList(meals)
+
     setLoading(false)
+
   }
+
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -117,6 +127,7 @@ export default function SearchBar({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [suggestions])
+
 
   return (
     <>
@@ -137,7 +148,7 @@ export default function SearchBar({
                     className='text-lg'
                     disabled={form.formState.isSubmitting}
                     {...field}
-                    placeholder="Ingridients, Meals...."
+                    placeholder="Ingredients, Meals...."
                     onChange={(e) => {
                       handleChange(e)
                       field.onChange(e)

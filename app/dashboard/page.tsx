@@ -2,7 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers';
 import { doRequest } from '@/lib/DoRequest';
 import AnimatedDescription from '@/components/AnimatedDescription';
-import { Meal } from '@/lib/types';
+import { Meal } from '@/lib/types/types';
 import DashboardList from '@/components/DashboardList';
 import { redirect } from 'next/navigation';
 

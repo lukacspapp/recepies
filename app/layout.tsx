@@ -6,7 +6,7 @@ import { Providers } from '@/components/Provider'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { AuthProvider } from '@/context/Auth';
-import { DatabaseMealID } from '@/lib/types'
+import { DatabaseMealID } from '@/lib/types/types'
 import PlausibleProvider from 'next-plausible';
 
 const inter = Inter({ subsets: ['latin'] })

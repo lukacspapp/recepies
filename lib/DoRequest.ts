@@ -1,4 +1,4 @@
-import { RequestMethod } from "./types";
+import { RequestMethod } from "./types/types";
 
 export async function doRequest(
   method: RequestMethod,

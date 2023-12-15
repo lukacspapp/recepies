@@ -1,7 +1,7 @@
 import AnimatedDescription from '@/components/AnimatedDescription'
 import CategoryCard from '@/components/CategoryCard'
 import { doRequest } from '@/lib/DoRequest'
-import { Category } from '@/lib/types'
+import { Category } from '@/lib/types/types'
 
 export default async function page() {
 

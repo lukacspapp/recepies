@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react'
 import SearchBar from './SearchBar'
-import { Meal } from '@/lib/types'
+import { NewMeal } from '@/lib/types/types'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
@@ -11,18 +11,42 @@ type RecepieListProps = {
   ingredients: string[]
   categories: string[]
   areas: string[]
-  meals: Meal[]
+  meals: NewMeal[]
 }
 
 export default function RecepieList({
   ingredients,
   categories,
   areas,
-  meals
+  meals,
 }: RecepieListProps) {
 
-  const [mealList, setMealList] = React.useState<Meal[]>(meals)
+  const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
+  const [viewedMealsCount, setViewedMealsCount] = React.useState<number>(0)
+  const fifthMealRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        // 5th meal is viewed, increment the counter
+        setViewedMealsCount(prevCount => prevCount + 1);
+
+          console.log('viewedMealsCount', viewedMealsCount);
+
+      }
+    });
+
+    if (fifthMealRef.current) {
+      observer.observe(fifthMealRef.current);
+    }
+
+    return () => {
+      if (fifthMealRef.current) {
+        observer.unobserve(fifthMealRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -41,16 +65,18 @@ export default function RecepieList({
           {loading ? (
             Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
           ) : mealList && mealList.length > 0 ? (
-            mealList.map((meal: Meal) => (
+            mealList.map((meal: NewMeal, i: number) => (
+              <div key={`${meal.id}-${i}`} ref={i === 4 ? fifthMealRef : null}>
               <RecipeCard
-                key={meal.idMeal}
-                id={meal.idMeal}
-                strMealThumb={meal.strMealThumb}
-                strMeal={meal.strMeal}
-                strCategory={meal.strCategory}
-                strArea={meal.strArea}
-                strDescription={meal.strInstructions}
+                key={meal.id}
+                id={meal.id}
+                strMealThumb={meal.image}
+                strMeal={meal.title}
+                strCategory={meal.category}
+                strArea={meal.cuisine}
+                strDescription={meal.description}
               />
+              </div>
             ))
           ) : (
             null
