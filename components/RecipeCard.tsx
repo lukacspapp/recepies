@@ -7,6 +7,8 @@ import Badge from './Badge'
 import HeartCheckbox from './HeartCheckBox'
 import { useAuth } from '@/context/Auth'
 import HeartModal from './HeartModal'
+import { useInView } from 'react-intersection-observer'
+import React from 'react'
 
 type RecepieCardPorps = {
   id: string,
@@ -15,6 +17,7 @@ type RecepieCardPorps = {
   strCategory: string,
   strArea: string,
   strDescription: string
+  i: number
 }
 
 export default function RecepieCard({
@@ -23,13 +26,23 @@ export default function RecepieCard({
   strMeal,
   strCategory,
   strArea,
-  strDescription
+  strDescription,
+  i,
 }: RecepieCardPorps) {
+
+  const {ref, inView} = useInView({triggerOnce: true})
+
+  React.useEffect(() => {
+    if (inView) {
+      console.log(inView);
+
+    }
+  }, [inView])
 
   const { user } = useAuth()
 
   return (
-    <div className="px-2 sm:px-0">
+    <div className="px-2 sm:px-0" ref={i % 10 === 5 ? ref : null}>
       <div className="relative aspect-w-4 aspect-h-5 overflow-hidden rounded-xl">
         <Link href={`/${serializeSlug(strMeal)}`}>
         <Image

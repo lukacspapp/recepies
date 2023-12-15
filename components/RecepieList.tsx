@@ -6,6 +6,7 @@ import { NewMeal } from '@/lib/types/types'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
+import { useInView } from 'react-intersection-observer'
 
 type RecepieListProps = {
   ingredients: string[]
@@ -43,6 +44,7 @@ export default function RecepieList({
           ) : mealList && mealList.length > 0 ? (
             mealList.map((meal: NewMeal, i: number) => (
               <RecipeCard
+                i={i}
                 key={meal.id}
                 id={meal.id}
                 strMealThumb={meal.image}
