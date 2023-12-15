@@ -23,30 +23,6 @@ export default function RecepieList({
 
   const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
-  const [viewedMealsCount, setViewedMealsCount] = React.useState<number>(0)
-  const fifthMealRef = React.useRef<HTMLDivElement>(null);
-
-  React.useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        // 5th meal is viewed, increment the counter
-        setViewedMealsCount(prevCount => prevCount + 1);
-
-          console.log('viewedMealsCount', viewedMealsCount);
-
-      }
-    });
-
-    if (fifthMealRef.current) {
-      observer.observe(fifthMealRef.current);
-    }
-
-    return () => {
-      if (fifthMealRef.current) {
-        observer.unobserve(fifthMealRef.current);
-      }
-    };
-  }, []);
 
   return (
     <>
@@ -66,7 +42,6 @@ export default function RecepieList({
             Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
           ) : mealList && mealList.length > 0 ? (
             mealList.map((meal: NewMeal, i: number) => (
-              <div key={`${meal.id}-${i}`} ref={i === 4 ? fifthMealRef : null}>
               <RecipeCard
                 key={meal.id}
                 id={meal.id}
@@ -76,7 +51,6 @@ export default function RecepieList({
                 strArea={meal.cuisine}
                 strDescription={meal.description}
               />
-              </div>
             ))
           ) : (
             null

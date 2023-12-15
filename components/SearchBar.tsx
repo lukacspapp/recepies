@@ -15,14 +15,10 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { Meal, NewMeal } from '@/lib/types/types'
+import { NewMeal } from '@/lib/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { doRequest } from '@/lib/DoRequest'
-import uuid from 'react-uuid'
-import meals from '../db/meals.json'
-import { extractIngredientsAndMeasures } from '@/lib/utils'
 
 
 type SearchBarProps = {
@@ -41,8 +37,6 @@ export default function SearchBar({
   setMealList,
   setLoading,
 }: SearchBarProps) {
-
-  const supabase = createClientComponentClient()
 
   const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
   const form = useForm<z.infer<typeof formSchema>>({
@@ -87,6 +81,7 @@ export default function SearchBar({
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+
     setSuggestions([])
     setLoading(true)
     const res = fetch('/api/cuisinies', {
@@ -108,7 +103,6 @@ export default function SearchBar({
     setMealList(meals)
 
     setLoading(false)
-
   }
 
 
