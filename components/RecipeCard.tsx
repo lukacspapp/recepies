@@ -17,7 +17,8 @@ type RecepieCardPorps = {
   strCategory: string,
   strArea: string,
   strDescription: string
-  i: number
+  i: number,
+  inViewRef: React.RefObject<any> | ((node?: Element | null) => void);
 }
 
 export default function RecepieCard({
@@ -28,21 +29,13 @@ export default function RecepieCard({
   strArea,
   strDescription,
   i,
+  inViewRef
 }: RecepieCardPorps) {
-
-  const {ref, inView} = useInView({triggerOnce: true})
-
-  React.useEffect(() => {
-    if (inView) {
-      console.log(inView);
-
-    }
-  }, [inView])
 
   const { user } = useAuth()
 
   return (
-    <div className="px-2 sm:px-0" ref={i % 10 === 5 ? ref : null}>
+    <div className="px-2 sm:px-0" ref={i % 10 === 5 ? inViewRef : null}>
       <div className="relative aspect-w-4 aspect-h-5 overflow-hidden rounded-xl">
         <Link href={`/${serializeSlug(strMeal)}`}>
         <Image

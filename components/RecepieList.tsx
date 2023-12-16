@@ -24,11 +24,25 @@ export default function RecepieList({
 
   const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
+  const [offsetStart, setOffsetStart] =    React.useState<number>(0)
+  const [offsetEnd, setOffsetEnd] = React.useState<number>(9)
+  const {ref, inView} = useInView({
+    triggerOnce: true,
+    onChange: (inView) => {
+      if (inView) {
+        setOffsetStart(offsetStart + 10)
+        setOffsetEnd(offsetEnd + 10)
+      }
+    }
+  })
 
   return (
     <>
       <div className='flex justify-center my-8 max-w-3xl mx-auto'>
         <SearchBar
+          offsetStart={offsetStart}
+          offsetEnd={offsetEnd}
+          inView={inView}
           ingredients={ingredients}
           categories={categories}
           areas={areas}
@@ -44,6 +58,7 @@ export default function RecepieList({
           ) : mealList && mealList.length > 0 ? (
             mealList.map((meal: NewMeal, i: number) => (
               <RecipeCard
+                inViewRef={ref}
                 i={i}
                 key={meal.id}
                 id={meal.id}

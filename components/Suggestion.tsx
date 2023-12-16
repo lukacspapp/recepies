@@ -4,7 +4,12 @@ import { UseFormSetValue } from 'react-hook-form';
 type SeggestionProps = {
   suggestion: string;
   type: string;
-  setValue: UseFormSetValue<{ type: string; search: string; }>
+  setValue: UseFormSetValue<{
+    type: string;
+    search: string;
+    offsetStart: number;
+    offsetEnd: number;
+  }>
 }
 
 export default function Suggestion({ suggestion, type, setValue }: SeggestionProps) {

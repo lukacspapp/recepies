@@ -5,7 +5,12 @@ import { UseFormReturn } from 'react-hook-form'
 
 type Props = {
   suggestions: { suggestion: string; type: string; }[]
-  form: UseFormReturn<{ search: string; type: string; }, any, undefined>
+  form: UseFormReturn<{
+    search: string;
+    type: string;
+    offsetStart: number;
+    offsetEnd: number;
+  }, any, undefined>
 }
 
 export default function SuggestionList({ suggestions, form }: Props) {

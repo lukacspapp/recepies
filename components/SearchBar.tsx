@@ -18,7 +18,6 @@ import { Label } from './ui/label'
 import { NewMeal } from '@/lib/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 
 type SearchBarProps = {
@@ -28,6 +27,9 @@ type SearchBarProps = {
   setMealList: React.Dispatch<React.SetStateAction<NewMeal[]>>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  inView: boolean
+  offsetStart: number
+  offsetEnd: number
 }
 
 export default function SearchBar({
@@ -36,14 +38,25 @@ export default function SearchBar({
   areas,
   setMealList,
   setLoading,
+  inView,
+  offsetStart,
+  offsetEnd
 }: SearchBarProps) {
 
-  const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
+  const [fetching, setFetching] = useState<boolean>(inView)
+  const formSchema = z.object({
+    search: z.string().min(1, { message: "Search is Empty" }).max(25),
+    type: z.string(),
+    offsetStart: z.number(),
+    offsetEnd: z.number()
+  })
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       search: "",
       type: "",
+      offsetStart: offsetStart,
+      offsetEnd: offsetEnd
     },
   })
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
@@ -81,7 +94,6 @@ export default function SearchBar({
 
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-
     setSuggestions([])
     setLoading(true)
     const res = fetch('/api/cuisinies', {
@@ -121,8 +133,6 @@ export default function SearchBar({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [suggestions])
-
-
   return (
     <>
       <Form {...form}>
