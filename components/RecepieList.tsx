@@ -33,8 +33,10 @@ export default function RecepieList({
         setOffsetStart(offsetStart + 10)
         setOffsetEnd(offsetEnd + 10)
       }
+      inView = false
     }
   })
+
 
   return (
     <>

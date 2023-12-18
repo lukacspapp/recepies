@@ -1,5 +1,4 @@
 import { SupabaseClient } from "@supabase/supabase-js";
-import { SearchType } from "./types/types";
 
 
 export async function getMeals(

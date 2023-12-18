@@ -43,7 +43,6 @@ export default function SearchBar({
   offsetEnd
 }: SearchBarProps) {
 
-  const [fetching, setFetching] = useState<boolean>(inView)
   const formSchema = z.object({
     search: z.string().min(1, { message: "Search is Empty" }).max(25),
     type: z.string(),
@@ -112,11 +111,21 @@ export default function SearchBar({
     });
 
     const meals = await res;
-    setMealList(meals)
+
+
+    setMealList((prevMealList) => [...prevMealList, ...meals]);
 
     setLoading(false)
   }
 
+  useEffect(() => {
+    if (inView) {
+      setLoading(true)
+      onSubmit(form.getValues())
+      setLoading(false)
+    }
+
+  }, [inView]);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
