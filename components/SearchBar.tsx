@@ -118,13 +118,16 @@ export default function SearchBar({
     setLoading(false)
   }
 
-  useEffect(() => {
+  function handleInViewChange() {
     if (inView) {
-      setLoading(true)
-      onSubmit(form.getValues())
-      setLoading(false)
+      setLoading(true);
+      onSubmit(form.getValues());
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
+    handleInViewChange();
   }, [inView]);
 
   useEffect(() => {
