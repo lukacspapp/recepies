@@ -28,8 +28,6 @@ type SearchBarProps = {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
   inView: boolean
-  offsetStart: number
-  offsetEnd: number
 }
 
 export default function SearchBar({
@@ -39,8 +37,6 @@ export default function SearchBar({
   setMealList,
   setLoading,
   inView,
-  offsetStart,
-  offsetEnd
 }: SearchBarProps) {
 
   const formSchema = z.object({
@@ -54,8 +50,8 @@ export default function SearchBar({
     defaultValues: {
       search: "",
       type: "",
-      offsetStart: offsetStart,
-      offsetEnd: offsetEnd
+      offsetStart: 0,
+      offsetEnd: 9
     },
   })
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
@@ -95,6 +91,10 @@ export default function SearchBar({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSuggestions([])
     setLoading(true)
+
+    form.setValue('offsetStart', values.offsetStart);
+    form.setValue('offsetEnd', values.offsetEnd);
+
     const res = fetch('/api/cuisinies', {
       method: 'POST',
       headers: {
@@ -120,7 +120,13 @@ export default function SearchBar({
 
   function handleInViewChange() {
     if (inView) {
+      setLoading(true)
+
+      form.setValue('offsetStart', form.getValues().offsetEnd + 1);
+      form.setValue('offsetEnd', form.getValues().offsetEnd + 10);
       onSubmit(form.getValues());
+
+      setLoading(false)
     }
   }
 
@@ -143,6 +149,11 @@ export default function SearchBar({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [suggestions])
+
+  console.log('====================================');
+  console.log(form.getValues().offsetEnd);
+  console.log('====================================');
+
   return (
     <>
       <Form {...form}>
