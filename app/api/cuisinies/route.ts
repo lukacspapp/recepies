@@ -3,6 +3,12 @@ import { pickTwoNumbers } from '@/lib/utils'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
+let responseBody = {
+  search: 0,
+  meals: [] as any,
+  offsetStart: 0,
+}
+
 export async function POST(req: Request) {
 
   const cookieStore = cookies()
@@ -15,7 +21,13 @@ export async function POST(req: Request) {
 
       const meals = await getMeals(supabase, type, search, offsetStart, offsetEnd)
 
-      if (meals) return new Response(JSON.stringify(meals))
+      responseBody = {
+        offsetStart,
+        search: 1,
+        meals
+      }
+
+      if (meals) return new Response(JSON.stringify(responseBody))
 
     } catch (e) {
       throw new Error(String(e))
@@ -35,7 +47,13 @@ export async function POST(req: Request) {
 
       if (error) throw new Error(`${error.message} ${error.details}`)
 
-      return new Response(JSON.stringify(meals))
+      responseBody = {
+        offsetStart: n1,
+        search: 0,
+        meals
+      }
+
+      return new Response(JSON.stringify(responseBody))
 
     } catch (e) {
       throw new Error(String(e));

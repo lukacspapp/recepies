@@ -110,10 +110,19 @@ export default function SearchBar({
       console.error('Error:', error);
     });
 
-    const meals = await res;
+    const { meals, search, offsetStart } = await res;
 
+    if (search) {
 
-    setMealList((prevMealList) => [...prevMealList, ...meals]);
+      if (offsetStart > 9) {
+        setMealList((prevMealList) => [...prevMealList, ...meals]);
+      }
+
+      setMealList(meals);
+    } else {
+      setMealList((prevMealList) => [...prevMealList, ...meals]);
+    }
+
 
     setLoading(false)
   }
@@ -149,10 +158,6 @@ export default function SearchBar({
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [suggestions])
-
-  console.log('====================================');
-  console.log(form.getValues().offsetEnd);
-  console.log('====================================');
 
   return (
     <>
