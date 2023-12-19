@@ -98,3 +98,6 @@ export async function POST(req: Request) {
 
 
 // meal_ingredients_measurements
+
+
+// ! when you fetch you need to know what is it a searched item then you need to remove the randomly searched meals and you need to put the search meals in the array then the rest of the items when you scroll down will go to the end of the array

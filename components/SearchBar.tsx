@@ -120,9 +120,7 @@ export default function SearchBar({
 
   function handleInViewChange() {
     if (inView) {
-      setLoading(true);
       onSubmit(form.getValues());
-      setLoading(false);
     }
   }
 
