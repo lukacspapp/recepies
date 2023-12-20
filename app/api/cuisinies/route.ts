@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
   } else if (offsetEnd && !search) {
 
-    // when the user is om the homa page scrolling through meals
+    // when the user is om the hom page scrolling through meals without searching
 
     const { n1, n2 } = pickTwoNumbers();
 
@@ -62,37 +62,51 @@ export async function POST(req: Request) {
 
 
   } else {
-    // let { data: mealsFromTitle, error: titleError } = await supabase
-    // .from('meals')
-    // .select("*")
-    // .ilike('title', `%${search}%`)
-    // .range(offsetStart, offsetEnd)
 
-    // let { data: mealsFromCategory, error: categoryError } = await supabase
-    // .from('meals')
-    // .select("*")
-    // .ilike('category', `%${search}%`)
-    // .range(offsetStart, offsetEnd)
 
-    // let { data: mealsFromCuisine, error: cuisineError } = await supabase
-    // .from('meals')
-    // .select("*")
-    // .ilike('cuisine', `%${search}%`)
-    // .range(offsetStart, offsetEnd)
+    let { data: mealsFromTitle, error: titleError } = await supabase
+    .from('meals')
+    .select("*")
+    .ilike('title', `%${search}%`)
+    .range(offsetStart, offsetEnd)
 
-    // let { data: mealIdsFromIngredients, error: ingredientsError } = await supabase
-    // .from('meal_ingredients_measurements')
-    // .select("meal_id")
-    // .ilike('ingredient', `%${search}%`)
-    // .range(offsetStart, offsetEnd)
+    if (titleError) throw new Error(`${titleError.message} ${titleError.details}`)
+
+    let { data: mealsFromCategory, error: categoryError } = await supabase
+    .from('meals')
+    .select("*")
+    .ilike('category', `%${search}%`)
+    .range(offsetStart, offsetEnd)
+
+    if (categoryError) throw new Error(`${categoryError.message} ${categoryError.details}`)
+
+    let { data: mealsFromCuisine, error: cuisineError } = await supabase
+    .from('meals')
+    .select("*")
+    .ilike('cuisine', `%${search}%`)
+    .range(offsetStart, offsetEnd)
+
+    if (cuisineError) throw new Error(`${cuisineError.message} ${cuisineError.details}`)
+
+    let { data: mealIdsFromIngredients, error: ingredientsError } = await supabase
+    .from('meal_ingredients_measurements')
+    .select("meal_id")
+    .ilike('ingredient', `%${search}%`)
+    .range(offsetStart, offsetEnd)
+
+    if (ingredientsError) throw new Error(`${ingredientsError.message} ${ingredientsError.details}`)
+
+
+    const meals = [
+      ...mealsFromTitle || [],
+      ...mealsFromCategory || [],
+      ...mealsFromCuisine || [],
+      ...mealIdsFromIngredients || []
+    ]
+
+    console.log(meals.length);
+
   }
-
-
-
-
-
-
-
   // const { data, error } = await supabase
   //   .from('meal_ingredients_measurements')
   //   .select('meal_id')
@@ -108,8 +122,6 @@ export async function POST(req: Request) {
   //   .in('id', s.slice(0, 10));
 
   // console.log(meals);
-
-
 
 
 }

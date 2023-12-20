@@ -81,9 +81,6 @@ export default function SearchBar({
     form.setValue('type', matchedSuggestion ? matchedSuggestion.type : '');
     setSuggestions(suggestionObjects);
   }
-console.log('====================================');
-console.log(prevSearchType);
-console.log('====================================');
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSuggestions([])
@@ -108,19 +105,16 @@ console.log('====================================');
 
     setPrevSearchType(values.search);
 
-    if (meals.search) {
-      if (prevSearchType !== values.search) {
-        if (meals.offsetStart > 9) {
-            setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
-        } else {
-          setMealList(meals.meals);
-        }
-      } else {
-        setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
-      }
+    if (meals.search && prevSearchType !== values.search) {
+      setMealList((prevMealList) => {
+        return meals.offsetStart > 9
+          ? [...prevMealList, ...meals.meals]
+          : meals.meals;
+      });
     } else {
       setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
     }
+
     setLoading(false)
   }
 
