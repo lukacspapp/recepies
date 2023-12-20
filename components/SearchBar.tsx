@@ -51,7 +51,7 @@ export default function SearchBar({
       search: "",
       type: "",
       offsetStart: 0,
-      offsetEnd: 9
+      offsetEnd: 10
     },
   })
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
@@ -110,20 +110,19 @@ export default function SearchBar({
       console.error('Error:', error);
     });
 
-    const { meals, search, offsetStart } = await res;
+    const meals = await res;
 
-    if (search) {
+    if (meals.search) {
 
-      if (offsetStart > 9) {
-        setMealList((prevMealList) => [...prevMealList, ...meals]);
+      if (meals.offsetStart > 9) {
+        setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
+      } else {
+        setMealList(meals.meals);
       }
 
-      setMealList(meals);
     } else {
-      setMealList((prevMealList) => [...prevMealList, ...meals]);
+      setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
     }
-
-
     setLoading(false)
   }
 
@@ -131,7 +130,7 @@ export default function SearchBar({
     if (inView) {
       setLoading(true)
 
-      form.setValue('offsetStart', form.getValues().offsetEnd + 1);
+      form.setValue('offsetStart', form.getValues().offsetEnd);
       form.setValue('offsetEnd', form.getValues().offsetEnd + 10);
       onSubmit(form.getValues());
 

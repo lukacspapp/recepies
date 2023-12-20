@@ -41,3 +41,10 @@ export function pickTwoNumbers() {
 export function generateIdRange(start: number, end: number) {
   return Array.from({ length: end - start + 1 }, (_, i) => start + i);
 }
+
+export function getOffsetEnd(offSetEnd: number , mealsLength: number) {
+  if (offSetEnd > mealsLength) {
+    return mealsLength
+  }
+  return offSetEnd
+}

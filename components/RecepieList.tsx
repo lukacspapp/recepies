@@ -24,13 +24,12 @@ export default function RecepieList({
 
   const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
-  const {ref, inView} = useInView({
-    triggerOnce: true,
-    onChange: (inView) => {
-      inView = false
-    }
-  })
+  const {ref, inView} = useInView({ triggerOnce: true })
 
+
+  console.log('====================================');
+  console.log('mealList', mealList.length);
+  console.log('====================================');
 
   return (
     <>

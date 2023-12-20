@@ -43,7 +43,8 @@ export async function POST(req: Request) {
       const { data: meals, error } = await supabase
         .from('meals')
         .select('*')
-        .range(n1, n2);
+        .range(n1, n2)
+        .order('title', { ascending: true })
 
       if (error) throw new Error(`${error.message} ${error.details}`)
 
