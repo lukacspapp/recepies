@@ -44,7 +44,7 @@ export async function getMeals(
   if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
 
 
-  // console.log(meals?.length);
+  console.log(meals?.length);
 
   // console.log(offSetStart, offSetEnd);
 
@@ -61,6 +61,8 @@ export async function getMeals(
     .from('meals')
     .select("*")
     .in('id', [mealList])
+
+
 
   if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
 

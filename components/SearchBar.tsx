@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { NewMeal } from '@/lib/types/types'
+import { NewMeal, formSchema } from '@/lib/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
 
@@ -39,12 +39,8 @@ export default function SearchBar({
   inView,
 }: SearchBarProps) {
 
-  const formSchema = z.object({
-    search: z.string().min(1, { message: "Search is Empty" }).max(25),
-    type: z.string(),
-    offsetStart: z.number(),
-    offsetEnd: z.number()
-  })
+  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
+  const [prevSearchType, setPrevSearchType] = useState<string>('')
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +50,6 @@ export default function SearchBar({
       offsetEnd: 10
     },
   })
-  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const searchValue = e.target.value.toLowerCase();
@@ -86,14 +81,13 @@ export default function SearchBar({
     form.setValue('type', matchedSuggestion ? matchedSuggestion.type : '');
     setSuggestions(suggestionObjects);
   }
-
+console.log('====================================');
+console.log(prevSearchType);
+console.log('====================================');
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setSuggestions([])
     setLoading(true)
-
-    form.setValue('offsetStart', values.offsetStart);
-    form.setValue('offsetEnd', values.offsetEnd);
 
     const res = fetch('/api/cuisinies', {
       method: 'POST',
@@ -112,14 +106,18 @@ export default function SearchBar({
 
     const meals = await res;
 
+    setPrevSearchType(values.search);
+
     if (meals.search) {
-
-      if (meals.offsetStart > 9) {
-        setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
+      if (prevSearchType !== values.search) {
+        if (meals.offsetStart > 9) {
+            setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
+        } else {
+          setMealList(meals.meals);
+        }
       } else {
-        setMealList(meals.meals);
+        setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
       }
-
     } else {
       setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
     }
@@ -158,10 +156,16 @@ export default function SearchBar({
     };
   }, [suggestions])
 
+  useEffect(() => {
+    form.setValue('offsetStart', 0);
+    form.setValue('offsetEnd', 10);
+  }, [form.getValues('search')]);
+
   return (
     <>
       <Form {...form}>
         <form
+          autoComplete='off'
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex items-end justify-center space-y-1 space-x-1 relative w-80"
         >
@@ -174,6 +178,7 @@ export default function SearchBar({
                 <FormMessage className='absolute bottom-10' />
                 <FormControl>
                   <Input
+                    autoComplete='off'
                     className='text-lg'
                     disabled={form.formState.isSubmitting}
                     {...field}

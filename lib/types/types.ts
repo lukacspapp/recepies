@@ -1,6 +1,15 @@
+import * as z from "zod";
+
 export type Recipe = {
   meals: Meal[];
 };
+
+export const formSchema = z.object({
+  search: z.string().min(1, { message: "Search is Empty" }).max(25),
+  type: z.string(),
+  offsetStart: z.number(),
+  offsetEnd: z.number()
+})
 
 export type NewMeal = {
   id: string
