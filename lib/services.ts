@@ -19,9 +19,7 @@ export async function getMeals(
 
     if (ingredientsError) throw new Error(`${ingredientsError.message} ${ingredientsError.details}`)
 
-    if (!mealIdsFromIngredients) return []
-
-    let mealIds = mealIdsFromIngredients.slice(offSetStart, getOffsetEnd(offSetEnd, mealIdsFromIngredients.length)).map((meal: any) => meal.meal_id)
+    let mealIds = mealIdsFromIngredients ? mealIdsFromIngredients.slice(offSetStart, getOffsetEnd(offSetEnd, mealIdsFromIngredients.length)).map((meal: any) => meal.meal_id) : []
 
     let { data: meals, error: mealsError } = await supabase
       .from('meals')
@@ -41,9 +39,7 @@ export async function getMeals(
 
   if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
 
-  if (!meals) return []
-
-  const mealIds = meals.slice(offSetStart, getOffsetEnd(offSetEnd, meals?.length)).map((meal: any) => meal.id)
+  const mealIds = meals ? meals.slice(offSetStart, getOffsetEnd(offSetEnd, meals?.length)).map((meal: any) => meal.id) : []
 
   let { data: mealsFromIds, error: mealsFromIdsError } = await supabase
     .from('meals')

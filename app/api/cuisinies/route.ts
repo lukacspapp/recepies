@@ -106,9 +106,7 @@ export async function POST(req: Request) {
       ...mealIdsFromIngredients || []
     ]
 
-    if (!meals) return []
-
-    const uniqueMealIds = Array.from(new Set(meals.map((meal: any) => meal.meal_id))).filter((meal: any) => meal !== undefined)
+    const uniqueMealIds = meals.length > 0 ? Array.from(new Set(meals.map((meal: any) => meal.meal_id))).filter((meal: any) => meal !== undefined) : []
 
     const mealIds = uniqueMealIds.slice(offsetStart, getOffsetEnd(offsetEnd, uniqueMealIds.length)).map((meal: any) => meal)
 
@@ -118,8 +116,6 @@ export async function POST(req: Request) {
     .in('id', [mealIds])
 
     if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
-
-    if (!mealsFromIds) return []
 
     responseBody = {
       offsetStart,
