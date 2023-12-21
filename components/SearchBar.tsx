@@ -117,7 +117,7 @@ export default function SearchBar({
       setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
     }
 
-    // setPaginationLoading(false)
+    setPaginationLoading(false)
     setLoading(false)
   }
 
