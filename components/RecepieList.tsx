@@ -66,6 +66,7 @@ export default function RecepieList({
             null
           )}
         </div>
+        {loading ? 'Loading...' : null}
       </Suspense>
       {mealList && mealList.length === 0 && !loading && <NoResult />}
     </>

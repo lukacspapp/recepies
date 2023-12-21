@@ -105,7 +105,7 @@ export default function SearchBar({
 
     setPrevSearchType(values.search);
 
-    if (meals.search && prevSearchType !== values.search) {
+    if (meals && meals.search && prevSearchType !== values.search) {
       setMealList((prevMealList) => {
         return meals.offsetStart > 9
           ? [...prevMealList, ...meals.meals]

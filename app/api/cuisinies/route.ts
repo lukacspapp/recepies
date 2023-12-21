@@ -1,5 +1,5 @@
 import { getMeals } from '@/lib/services'
-import { pickTwoNumbers } from '@/lib/utils'
+import { getOffsetEnd, pickTwoNumbers } from '@/lib/utils'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
@@ -42,16 +42,23 @@ export async function POST(req: Request) {
     try {
       const { data: meals, error } = await supabase
         .from('meals')
-        .select('*')
-        .range(n1, n2)
-        .order('title', { ascending: true })
+        .select('id')
 
       if (error) throw new Error(`${error.message} ${error.details}`)
+
+      const mealList = meals?.slice(n1, getOffsetEnd(n2, meals.length)).map((meal: any) => meal.id)
+
+      const { data: mealsFromIds, error: mealsFromIdsError } = await supabase
+        .from('meals')
+        .select('*')
+        .in('id', [mealList])
+
+      if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
 
       responseBody = {
         offsetStart: n1,
         search: 0,
-        meals
+        meals: mealsFromIds
       }
 
       return new Response(JSON.stringify(responseBody))
@@ -104,7 +111,11 @@ export async function POST(req: Request) {
       ...mealIdsFromIngredients || []
     ]
 
-    console.log(meals.length);
+    const mealIds = Array.from(new Set(meals.map((meal: any) => meal.meal_id)))
+
+    console.log('====================================');
+    console.log(mealIds.length);
+    console.log('====================================');
 
   }
   // const { data, error } = await supabase

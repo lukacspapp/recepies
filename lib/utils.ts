@@ -27,10 +27,8 @@ export function extractIngredientsAndMeasures(meal: Meal): IngredientAndMeasure 
 }
 
 export function pickTwoNumbers() {
-  // Generate a random starting point between 0 and 291 (301 - 10)
   const start = Math.floor(Math.random() * 292);
 
-  // Pick two numbers that are 10 counts apart
   const n1 = start;
   const n2 = start + 9;
 
