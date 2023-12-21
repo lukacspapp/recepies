@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 export type Recipe = {
@@ -10,6 +11,21 @@ export const formSchema = z.object({
   offsetStart: z.number(),
   offsetEnd: z.number()
 })
+
+const deafultSearchValues = {
+  search: "",
+  type: "",
+  offsetStart: 0,
+  offsetEnd: 10
+}
+
+const useFormDefaultSearchSchema = z.object({}).merge(formSchema)
+
+export const defaultFromValues = {
+  defaultValues: deafultSearchValues,
+  resolver: zodResolver(useFormDefaultSearchSchema),
+}
+
 
 export type NewMeal = {
   id: string

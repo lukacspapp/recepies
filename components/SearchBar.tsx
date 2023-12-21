@@ -5,7 +5,6 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import * as z from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import {
   Form,
@@ -15,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { NewMeal, formSchema } from '@/lib/types/types'
+import { NewMeal, defaultFromValues, formSchema } from '@/lib/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
 
@@ -43,15 +42,7 @@ export default function SearchBar({
 
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
   const [prevSearchType, setPrevSearchType] = useState<string>('')
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      search: "",
-      type: "",
-      offsetStart: 0,
-      offsetEnd: 10
-    },
-  })
+  const form = useForm<z.infer<typeof formSchema>>(defaultFromValues)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const searchValue = e.target.value.toLowerCase();
