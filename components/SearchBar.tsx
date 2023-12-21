@@ -79,7 +79,7 @@ export default function SearchBar({
     setSuggestions([])
     setLoading(true)
 
-    const res = fetch('/api/cuisinies', {
+    const res = fetch('/api/recipes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
