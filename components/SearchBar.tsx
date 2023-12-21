@@ -28,6 +28,7 @@ type SearchBarProps = {
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
   inView: boolean
+  setPaginationLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function SearchBar({
@@ -37,6 +38,7 @@ export default function SearchBar({
   setMealList,
   setLoading,
   inView,
+  setPaginationLoading
 }: SearchBarProps) {
 
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
@@ -115,11 +117,13 @@ export default function SearchBar({
       setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
     }
 
+    // setPaginationLoading(false)
     setLoading(false)
   }
 
   function handleInViewChange() {
     if (inView) {
+      setPaginationLoading(true)
       setLoading(true)
 
       form.setValue('offsetStart', form.getValues().offsetEnd);

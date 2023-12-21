@@ -75,7 +75,6 @@ export async function POST(req: Request) {
     .from('meals')
     .select("*")
     .ilike('title', `%${search}%`)
-    .range(offsetStart, offsetEnd)
 
     if (titleError) throw new Error(`${titleError.message} ${titleError.details}`)
 
@@ -83,7 +82,6 @@ export async function POST(req: Request) {
     .from('meals')
     .select("*")
     .ilike('category', `%${search}%`)
-    .range(offsetStart, offsetEnd)
 
     if (categoryError) throw new Error(`${categoryError.message} ${categoryError.details}`)
 
@@ -91,7 +89,6 @@ export async function POST(req: Request) {
     .from('meals')
     .select("*")
     .ilike('cuisine', `%${search}%`)
-    .range(offsetStart, offsetEnd)
 
     if (cuisineError) throw new Error(`${cuisineError.message} ${cuisineError.details}`)
 
@@ -99,10 +96,8 @@ export async function POST(req: Request) {
     .from('meal_ingredients_measurements')
     .select("meal_id")
     .ilike('ingredient', `%${search}%`)
-    .range(offsetStart, offsetEnd)
 
     if (ingredientsError) throw new Error(`${ingredientsError.message} ${ingredientsError.details}`)
-
 
     const meals = [
       ...mealsFromTitle || [],
@@ -111,35 +106,27 @@ export async function POST(req: Request) {
       ...mealIdsFromIngredients || []
     ]
 
-    const mealIds = Array.from(new Set(meals.map((meal: any) => meal.meal_id)))
+    if (!meals) return []
 
-    console.log('====================================');
-    console.log(mealIds.length);
-    console.log('====================================');
+    const uniqueMealIds = Array.from(new Set(meals.map((meal: any) => meal.meal_id))).filter((meal: any) => meal !== undefined)
 
+    const mealIds = uniqueMealIds.slice(offsetStart, getOffsetEnd(offsetEnd, uniqueMealIds.length)).map((meal: any) => meal)
+
+    let { data: mealsFromIds, error: mealsFromIdsError } = await supabase
+    .from('meals')
+    .select("*")
+    .in('id', [mealIds])
+
+    if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
+
+    if (!mealsFromIds) return []
+
+    responseBody = {
+      offsetStart,
+      search: 1,
+      meals: mealsFromIds
+    }
+
+    return new Response(JSON.stringify(responseBody))
   }
-  // const { data, error } = await supabase
-  //   .from('meal_ingredients_measurements')
-  //   .select('meal_id')
-  //   .like('ingredient', `%${search}%`)
-
-  // console.log(data, error)
-
-  // const s = Array.from(new Set(data?.map((d: any) => d.meal_id)));
-
-  // const { data: meals, error: e } = await supabase
-  //   .from('meals')
-  //   .select('*')
-  //   .in('id', s.slice(0, 10));
-
-  // console.log(meals);
-
-
 }
-
-
-
-// meal_ingredients_measurements
-
-
-// ! when you fetch you need to know what is it a searched item then you need to remove the randomly searched meals and you need to put the search meals in the array then the rest of the items when you scroll down will go to the end of the array

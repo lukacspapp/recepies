@@ -7,6 +7,7 @@ import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
 import { useInView } from 'react-intersection-observer'
+import { Spinner } from "@nextui-org/react";
 
 type RecepieListProps = {
   ingredients: string[]
@@ -24,17 +25,14 @@ export default function RecepieList({
 
   const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
-  const {ref, inView} = useInView({ triggerOnce: true })
-
-
-  console.log('====================================');
-  console.log('mealList', mealList.length);
-  console.log('====================================');
+  const [paginationLoading, setPaginationLoading] = React.useState<boolean>(false)
+  const { ref, inView } = useInView({ triggerOnce: true })
 
   return (
     <>
       <div className='flex justify-center my-8 max-w-3xl mx-auto'>
         <SearchBar
+          setPaginationLoading={setPaginationLoading}
           inView={inView}
           ingredients={ingredients}
           categories={categories}
@@ -66,7 +64,7 @@ export default function RecepieList({
             null
           )}
         </div>
-        {loading ? 'Loading...' : null}
+        {paginationLoading && <div className='flex justify-center my-5'><Spinner size='lg' color='success' /></div>}
       </Suspense>
       {mealList && mealList.length === 0 && !loading && <NoResult />}
     </>
