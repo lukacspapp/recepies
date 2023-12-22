@@ -3,7 +3,7 @@ import React from 'react'
 import Suggestion from './Suggestion'
 import { UseFormReturn } from 'react-hook-form'
 
-type Props = {
+type SuggestionListProps = {
   suggestions: { suggestion: string; type: string; }[]
   form: UseFormReturn<{
     search: string;
@@ -13,7 +13,10 @@ type Props = {
   }, any, undefined>
 }
 
-export default function SuggestionList({ suggestions, form }: Props) {
+export default function SuggestionList({
+  suggestions,
+  form
+}: SuggestionListProps) {
   return (
     <div
       className="m-2 w-full absolute top-full bg-gray-100 max-w-md shadow-md rounded z-10"

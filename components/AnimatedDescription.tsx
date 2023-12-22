@@ -7,7 +7,11 @@ import { descriptionStyle, titleStyle } from "../styles/styles"
 import { DescriptionType } from "../lib/types/types"
 
 
-export default function AnimatedDescription({ title, description, hideBreak = true }: DescriptionType) {
+export default function AnimatedDescription({
+  title,
+  description,
+  hideBreak = true
+}: DescriptionType) {
   const transition = "transition-all duration-500"
   const [show, setShow] = useState(false)
   useEffect(() => {

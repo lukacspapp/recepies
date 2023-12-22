@@ -46,3 +46,56 @@ export function getOffsetEnd(offSetEnd: number , mealsLength: number) {
   }
   return offSetEnd
 }
+
+export function formatTitle(title: string) {
+  // Replace underscores with spaces
+  let reversedString = title.replace(/_/g, ' ');
+
+  // Capitalize the first letter of each word
+  reversedString = reversedString.replace(/\b\w/g, (match) => match.toUpperCase());
+
+  return reversedString;
+}
+
+export function formatToLowerCaseWithUnderscores(title: string) {
+  // Replace spaces with underscores and convert to lowercase
+  let formattedTitle = title.trim().toLowerCase().replace(/\s+/g, '_');
+
+  // Remove consecutive underscores
+  formattedTitle = formattedTitle.replace(/_+/g, '_');
+
+  // Remove leading underscore
+  if (formattedTitle.startsWith('_')) {
+    formattedTitle = formattedTitle.substring(1);
+  }
+
+  return formattedTitle;
+}
+
+export function formatToMealDBTitle(input: string) {
+  // Replace hyphens with underscores
+  let result = input.replace(/-/g, '_');
+
+  // Replace consecutive underscores with a single underscore
+  result = result.replace(/_+/g, '_');
+
+  // Remove leading and trailing underscores
+  result = result.replace(/^_+|_+$/g, '');
+
+  // Convert to lowercase
+  result = result.toLowerCase();
+
+  return result;
+}
+
+export function serializeSlug(slug: string) {
+  const slugName = slug.toLowerCase().replace(/\s/g, "-")
+  const slugNameNoSpecialChar = slugName.replace(/[^a-zA-Z0-9-]/g, "");
+  const serializedString = slugNameNoSpecialChar.replace(/-*$/,"")
+  return serializedString.replace(/-{2,}/g, "-")
+}
+
+export function serializeSearchParam(searchParam: string) {
+  const serializedString = searchParam.toLowerCase().replace(/\s/g, "_").replace(/[^a-zA-Z0-9-_]/g, "")
+  return serializedString.replace(/_{2,}/g, "_").replace(/_/g, ",")
+}

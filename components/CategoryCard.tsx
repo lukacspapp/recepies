@@ -15,7 +15,12 @@ type CategoryCardProps = {
   description?: string
 }
 
-export default function CategoryCard({ id, name, image, description = '' }: CategoryCardProps) {
+export default function CategoryCard({
+  id,
+  name,
+  image,
+  description = ''
+}: CategoryCardProps) {
 
   const pathname = usePathname()
   const { user } = useAuth()

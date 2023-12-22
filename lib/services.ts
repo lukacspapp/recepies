@@ -29,24 +29,24 @@ export async function getMeals(
     if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
 
     return meals
+  } else {
+    // Call all meals ID that mathes the search
+    let { data: meals, error: mealsError } = await supabase
+      .from('meals')
+      .select("id")
+      .like(type.toLocaleLowerCase(), `%${search}%`)
+
+    if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
+
+    const mealIds = meals ? meals.slice(offSetStart, getOffsetEnd(offSetEnd, meals?.length)).map((meal: any) => meal.id) : []
+
+    let { data: mealsFromIds, error: mealsFromIdsError } = await supabase
+      .from('meals')
+      .select("*")
+      .in('id', [mealIds])
+
+    if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
+
+    return mealsFromIds
   }
-
-  // Call all meals ID that mathes the search
-  let { data: meals, error: mealsError } = await supabase
-    .from('meals')
-    .select("id")
-    .like(type.toLocaleLowerCase(), `%${search}%`)
-
-  if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
-
-  const mealIds = meals ? meals.slice(offSetStart, getOffsetEnd(offSetEnd, meals?.length)).map((meal: any) => meal.id) : []
-
-  let { data: mealsFromIds, error: mealsFromIdsError } = await supabase
-    .from('meals')
-    .select("*")
-    .in('id', [mealIds])
-
-  if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
-
-  return mealsFromIds
 }

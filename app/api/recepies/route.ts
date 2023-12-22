@@ -1,5 +1,5 @@
 import { doRequest } from "@/lib/DoRequest";
-import { serializeSearchParam } from "@/lib/stringFormatter";
+import { serializeSearchParam } from "@/lib/utils";
 
 const key = process.env.RECEPIES_API_KEY;
 

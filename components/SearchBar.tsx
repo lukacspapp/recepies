@@ -40,8 +40,8 @@ export default function SearchBar({
   setPaginationLoading
 }: SearchBarProps) {
 
-  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
   const [prevSearchType, setPrevSearchType] = useState<string>('')
+  const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
   const form = useForm<z.infer<typeof formSchema>>(defaultFromValues)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

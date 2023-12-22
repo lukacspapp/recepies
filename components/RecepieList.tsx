@@ -8,6 +8,7 @@ import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
 import { useInView } from 'react-intersection-observer'
 import { Spinner } from "@nextui-org/react";
+import { formatTitle } from '@/lib/utils'
 
 type RecepieListProps = {
   ingredients: string[]
@@ -53,11 +54,11 @@ export default function RecepieList({
                 i={i}
                 key={meal.id}
                 id={meal.id}
-                strMealThumb={meal.image}
-                strMeal={meal.title}
-                strCategory={meal.category}
-                strArea={meal.cuisine}
-                strDescription={meal.description}
+                image={meal.image}
+                title={formatTitle(meal.title)}
+                category={meal.category}
+                cuisine={meal.cuisine}
+                description={meal.description}
               />
             ))
           ) : (

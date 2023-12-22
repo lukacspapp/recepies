@@ -12,7 +12,11 @@ type SeggestionProps = {
   }>
 }
 
-export default function Suggestion({ suggestion, type, setValue }: SeggestionProps) {
+export default function Suggestion({
+  suggestion,
+  type,
+  setValue
+}: SeggestionProps) {
 
   const colors: {[key: string]: string} = {
     "Category": "text-green-500",

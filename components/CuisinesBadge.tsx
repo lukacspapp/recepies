@@ -9,7 +9,10 @@ type CuisinesBadgeProps = {
   color: string
 }
 
-export default function CuisinesBadge({ cuisine, color }: CuisinesBadgeProps) {
+export default function CuisinesBadge({
+  cuisine,
+  color
+}: CuisinesBadgeProps) {
 
   return (
     <Link
