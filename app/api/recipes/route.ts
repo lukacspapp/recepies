@@ -1,9 +1,17 @@
 import { getMeals } from '@/lib/services'
 import { getOffsetEnd, pickTwoNumbers } from '@/lib/utils'
+import { Database } from '@/types/supabase'
+import { Meal } from '@/types/types'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
-let responseBody = {
+export interface mealResponse {
+  search: number,
+  meals: Meal[],
+  offsetStart: number,
+}
+
+let deafultResponseBody: mealResponse = {
   search: 0,
   meals: [] as any,
   offsetStart: 0,
@@ -12,7 +20,7 @@ let responseBody = {
 export async function POST(req: Request) {
 
   const cookieStore = cookies()
-  const supabase = createRouteHandlerClient({ cookies: () => cookieStore })
+  const supabase = createRouteHandlerClient<Database>({ cookies: () => cookieStore })
   const { search, type, offsetStart, offsetEnd } = await req.json() as { search: string, type: string, offsetStart: number, offsetEnd: number };
 
   if (type) {
@@ -21,21 +29,19 @@ export async function POST(req: Request) {
 
       const meals = await getMeals(supabase, type, search, offsetStart, offsetEnd)
 
-      responseBody = {
+      deafultResponseBody = {
         offsetStart,
         search: 1,
-        meals
+        meals: meals
       }
 
-      if (meals) return new Response(JSON.stringify(responseBody))
+      if (meals) return new Response(JSON.stringify(deafultResponseBody))
 
     } catch (e) {
       throw new Error(String(e))
     }
 
   } else if (offsetEnd && !search) {
-
-    // when the user is om the hom page scrolling through meals without searching
 
     const { n1, n2 } = pickTwoNumbers();
 
@@ -55,13 +61,13 @@ export async function POST(req: Request) {
 
       if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
 
-      responseBody = {
+      deafultResponseBody = {
         offsetStart: n1,
         search: 0,
-        meals: mealsFromIds
+        meals: mealsFromIds as Meal[] || []
       }
 
-      return new Response(JSON.stringify(responseBody))
+      return new Response(JSON.stringify(deafultResponseBody))
 
     } catch (e) {
       throw new Error(String(e));
@@ -117,12 +123,12 @@ export async function POST(req: Request) {
 
     if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
 
-    responseBody = {
+    deafultResponseBody = {
       offsetStart,
       search: 1,
-      meals: mealsFromIds
+      meals: mealsFromIds as Meal[] || []
     }
 
-    return new Response(JSON.stringify(responseBody))
+    return new Response(JSON.stringify(deafultResponseBody))
   }
 }

@@ -3,12 +3,14 @@ import RecepieList from "@/components/RecepieList";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { pickTwoNumbers } from "@/lib/utils";
+import { Database } from "@/types/supabase";
+import { Meal } from "@/types/types";
 
 export default async function Home() {
 
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = createServerComponentClient<Database>({ cookies })
 
-  let mealList: any[] = []
+  let mealList: Meal[] = []
   let ingredients: string[] = []
   let categories: string[] = []
   let areas: string[] = []
@@ -40,7 +42,10 @@ export default async function Home() {
   }
 
   if (meals && !mealsError) {
-    mealList = meals
+    mealList = meals.map((meal: any) => ({
+      ...meal,
+      creator_id: meal.creator_id || "",
+    }));
   }
 
   return (
@@ -52,7 +57,7 @@ export default async function Home() {
             meals={mealList}
             ingredients={ingredients}
             categories={categories}
-            areas={areas}
+            cuisines={areas}
           />
         </div>
       </section>

@@ -15,7 +15,7 @@ export default async function page({ params }: { params: { slug: string } }) {
 
   if (error) throw new Error(error.message)
 
-  const meals = mealList ? mealList : []
+  const meals = mealList || []
 
   return (
     <main className="w-full">
@@ -26,7 +26,7 @@ export default async function page({ params }: { params: { slug: string } }) {
             description={`Best Recepies from the ${params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')} Cuisine` }
           />
           <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
-            {meals.map((meal: any) => (
+            {meals.map((meal) => (
               <CategoryCard
                 id={meal.id}
                 key={meal.id}

@@ -14,19 +14,19 @@ export interface Database {
           created_at: string
           id: string
           meal_id: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
           meal_id: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string
           id?: string
           meal_id?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -41,23 +41,23 @@ export interface Database {
       meal_categories: {
         Row: {
           created_at: string
-          description: string | null
-          id: string | null
-          image: string | null
+          description: string
+          id: string
+          image: string
           title: string
         }
         Insert: {
           created_at?: string
-          description?: string | null
-          id?: string | null
-          image?: string | null
+          description: string
+          id?: string
+          image: string
           title: string
         }
         Update: {
           created_at?: string
-          description?: string | null
-          id?: string | null
-          image?: string | null
+          description?: string
+          id?: string
+          image?: string
           title?: string
         }
         Relationships: []
@@ -84,23 +84,23 @@ export interface Database {
         Row: {
           created_at: string
           id: string
-          ingredient: string | null
-          meal_id: string | null
-          measurement: string | null
+          ingredient: string
+          meal_id: string
+          measurement: string
         }
         Insert: {
           created_at?: string
           id?: string
-          ingredient?: string | null
-          meal_id?: string | null
-          measurement?: string | null
+          ingredient: string
+          meal_id: string
+          measurement: string
         }
         Update: {
           created_at?: string
           id?: string
-          ingredient?: string | null
-          meal_id?: string | null
-          measurement?: string | null
+          ingredient?: string
+          meal_id?: string
+          measurement?: string
         }
         Relationships: [
           {
@@ -132,11 +132,11 @@ export interface Database {
       }
       meals: {
         Row: {
-          category: string | null
+          category: string
           created_at: string
-          creator_id: string
-          cuisine: string | null
-          description: string | null
+          creator_id: string | null
+          cuisine: string
+          description: string
           id: string
           image: string
           title: string
@@ -144,11 +144,11 @@ export interface Database {
           video_link: string
         }
         Insert: {
-          category?: string | null
+          category: string
           created_at?: string
-          creator_id: string
-          cuisine?: string | null
-          description?: string | null
+          creator_id?: string | null
+          cuisine: string
+          description: string
           id?: string
           image: string
           title: string
@@ -156,11 +156,11 @@ export interface Database {
           video_link: string
         }
         Update: {
-          category?: string | null
+          category?: string
           created_at?: string
-          creator_id?: string
-          cuisine?: string | null
-          description?: string | null
+          creator_id?: string | null
+          cuisine?: string
+          description?: string
           id?: string
           image?: string
           title?: string

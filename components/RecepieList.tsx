@@ -1,31 +1,32 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import SearchBar from './SearchBar'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
-import { useInView } from 'react-intersection-observer'
+import { IntersectionOptions, useInView } from 'react-intersection-observer'
 import { Spinner } from "@nextui-org/react";
 import { formatTitle } from '@/lib/utils'
+import { Meal } from '@/types/types'
 
 type RecepieListProps = {
   ingredients: string[]
   categories: string[]
-  areas: string[]
-  meals: any
+  cuisines: string[]
+  meals: Meal[]
 }
 
 export default function RecepieList({
   ingredients,
   categories,
-  areas,
+  cuisines,
   meals,
 }: RecepieListProps) {
 
-  const [mealList, setMealList] = React.useState<any[]>(meals)
-  const [loading, setLoading] = React.useState<boolean>(false)
-  const [paginationLoading, setPaginationLoading] = React.useState<boolean>(false)
+  const [mealList, setMealList] = useState<Meal[]>(meals)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [paginationLoading, setPaginationLoading] = useState<boolean>(false)
   const { ref, inView } = useInView({ triggerOnce: true })
 
   return (
@@ -36,7 +37,7 @@ export default function RecepieList({
           inView={inView}
           ingredients={ingredients}
           categories={categories}
-          areas={areas}
+          cuisines={cuisines}
           setMealList={setMealList}
           loading={loading}
           setLoading={setLoading}
@@ -47,7 +48,7 @@ export default function RecepieList({
           {loading ? (
             Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
           ) : mealList && mealList.length > 0 ? (
-            mealList.map((meal: any, i: number) => (
+            mealList.map((meal: Meal, i: number) => (
               <RecipeCard
                 inViewRef={ref}
                 i={i}

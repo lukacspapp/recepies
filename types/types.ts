@@ -22,20 +22,53 @@ export const defaultFromValues = {
   resolver: zodResolver(useFormDefaultSearchSchema),
 }
 
+export interface Meal {
+  category: string;
+  created_at: string;
+  creator_id: string;
+  cuisine: string;
+  description: string;
+  id: string;
+  image: string;
+  title: string;
+  updated_at: string;
+  video_link: string;
+}
+
+export interface CategoryTable {
+  created_at: string;
+  description: string;
+  id: string;
+  image: string;
+  title: string;
+}
+
+export interface CuisineTable {
+  created_at: string;
+  id: string;
+  title: string;
+}
+
+export interface IngredientTable {
+  created_at: string;
+  id: string;
+  title: string;
+}
+
 export interface IngridientMeasurement {
   ingridient: string
   measurement: string
 }
 
-export interface DescriptionType  {
+export interface DescriptionType {
   title: string
   description: string
   hideBreak?: boolean
 }
 
-export type SuggestionType = 'categories' | 'cuisines' | 'ingredient' ;
+export type SuggestionType = 'categories' | 'cuisines' | 'ingredient';
 
-export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 export type CuisineColors = {
   [key: string]: string;
@@ -50,4 +83,4 @@ export type IngredientAndMeasure = {
   measures: string[];
 };
 
-export type SearchType = 'Category' | 'Cuisine' | 'Ingredient' ;
+export type SearchType = 'Category' | 'Cuisine' | 'Ingredient';

@@ -1,17 +1,18 @@
 import AnimatedDescription from '@/components/AnimatedDescription'
 import CuisinesBadge from '@/components/CuisinesBadge'
+import { Database } from '@/types/supabase'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
 export default async function page() {
 
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = createServerComponentClient<Database>({ cookies })
 
   let { data: cuisineList, error } = await supabase
     .from('meal_cuisines')
     .select('*')
 
-  const cuisines = cuisineList ? cuisineList : []
+  const cuisines = cuisineList || []
 
   if (error) throw new Error(error.message)
 
@@ -22,7 +23,7 @@ export default async function page() {
         <div className="container px-4 md:px-6">
           <AnimatedDescription title={"Cuisines"} description={"Browse by Cuisines"} />
           <div className="flex flex-wrap justify-center">
-            {cuisines.map((cuisine: any, i: number) => (
+            {cuisines.map((cuisine, i: number) => (
               <CuisinesBadge
                 key={`${i}-cuisine`}
                 cuisine={cuisine.title}

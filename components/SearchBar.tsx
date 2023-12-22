@@ -14,16 +14,17 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { defaultFromValues, formSchema } from '@/types/types'
+import { Meal, defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
+import { mealResponse } from '@/app/api/recipes/route'
 
 
 type SearchBarProps = {
   ingredients: string[]
   categories: string[]
-  areas: string[]
-  setMealList: React.Dispatch<React.SetStateAction<any[]>>
+  cuisines: string[]
+  setMealList: React.Dispatch<React.SetStateAction<Meal[]>>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
   inView: boolean
@@ -33,7 +34,7 @@ type SearchBarProps = {
 export default function SearchBar({
   ingredients,
   categories,
-  areas,
+  cuisines: areas,
   setMealList,
   setLoading,
   inView,
@@ -75,11 +76,11 @@ export default function SearchBar({
     setSuggestions(suggestionObjects);
   }
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     setSuggestions([])
     setLoading(true)
 
-    const res = fetch('/api/recipes', {
+    const res: Promise<mealResponse> = fetch('/api/recipes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -4,11 +4,12 @@ import AnimatedDescription from '@/components/AnimatedDescription';
 import DashboardList from '@/components/DashboardList';
 import { redirect } from 'next/navigation';
 import NoResult from '@/components/NoResult';
+import { Database } from '@/types/supabase';
 
 export default async function page() {
 
 
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = createServerComponentClient<Database>({ cookies })
   const { data: { session } } = await supabase.auth.getSession();
 
   if (!session) redirect('/login')
@@ -31,7 +32,7 @@ export default async function page() {
 
     if (error) throw new Error(error.message)
 
-    likedMeals = liked_meals ? liked_meals : []
+    likedMeals = liked_meals || []
   }
 
   return (

@@ -4,11 +4,13 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { cookies } from 'next/headers';
 import { formatTitle, formatToMealDBTitle } from "@/lib/utils";
+import { Database } from "@/types/supabase";
+import { IngridientMeasurement } from "@/types/types";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
 
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = createServerComponentClient<Database>({ cookies })
 
   const { data: matchingMeals, error: mealsError } = await supabase
     .from('meals')
@@ -17,7 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (mealsError) throw new Error(mealsError.message)
 
-  const meal = matchingMeals ? matchingMeals[0] : null
+  const meal = matchingMeals[0]
 
   const { data: mealIngredientsMmeasurements, error: mealIngredientsMmeasurementsError } = await supabase
     .from('meal_ingredients_measurements')
@@ -26,7 +28,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (mealIngredientsMmeasurementsError) throw new Error(mealIngredientsMmeasurementsError.message)
 
-  const ingredientsAndMeasurements = mealIngredientsMmeasurements?.map((item: any, i) => {
+  const ingredientsAndMeasurements = mealIngredientsMmeasurements?.map((item: { ingredient: string; measurement: string }, i: number) => {
     return {
       ingredient: item.ingredient,
       measurement: item.measurement

@@ -1,5 +1,6 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { getOffsetEnd } from "./utils";
+import { Meal } from "@/types/types";
 
 
 export async function getMeals(
@@ -8,7 +9,7 @@ export async function getMeals(
   search: string,
   offSetStart: number,
   offSetEnd: number
-) {
+): Promise<Meal[]> {
 
   if (type === 'Ingredient') {
 
@@ -21,8 +22,6 @@ export async function getMeals(
 
     let mealIds = mealIdsFromIngredients ? mealIdsFromIngredients.slice(offSetStart, getOffsetEnd(offSetEnd, mealIdsFromIngredients.length)).map((meal: any) => meal.meal_id) : []
 
-    console.log(mealIds);
-
     let { data: meals, error: mealsError } = await supabase
       .from('meals')
       .select("*")
@@ -30,7 +29,7 @@ export async function getMeals(
 
     if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
 
-    return meals
+    return meals ? meals : []
   } else {
     // Call all meals ID that mathes the search
     let { data: meals, error: mealsError } = await supabase
@@ -49,6 +48,6 @@ export async function getMeals(
 
     if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
 
-    return mealsFromIds
+    return mealsFromIds ? mealsFromIds : []
   }
 }
