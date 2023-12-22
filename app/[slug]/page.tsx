@@ -3,7 +3,7 @@ import Video from "@/components/Video";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import { cookies } from 'next/headers';
-import { formatToMealDBTitle } from "@/lib/utils";
+import { formatTitle, formatToMealDBTitle } from "@/lib/utils";
 
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -48,7 +48,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               priority
             />
             <h2 className="leading-tighter mb-2 text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
-              {meal.title}
+              {formatTitle(meal.title)}
             </h2>
               <div className="flex mt-1 justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
                 <Badge value={meal.category} type='categories' />
