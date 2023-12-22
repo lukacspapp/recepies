@@ -21,6 +21,8 @@ export async function getMeals(
 
     let mealIds = mealIdsFromIngredients ? mealIdsFromIngredients.slice(offSetStart, getOffsetEnd(offSetEnd, mealIdsFromIngredients.length)).map((meal: any) => meal.meal_id) : []
 
+    console.log(mealIds);
+
     let { data: meals, error: mealsError } = await supabase
       .from('meals')
       .select("*")

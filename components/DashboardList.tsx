@@ -1,28 +1,24 @@
 'use client'
 
-import { Meal } from '@/lib/types/types'
 import CategoryCard from './CategoryCard'
-import NoResult from './NoResult'
+import { formatTitle } from '@/lib/utils'
 
 type DashboardListProps = {
-  likedMeals: Meal[]
+  likedMeals: any
 }
 
 export default function DashboardList({ likedMeals }: DashboardListProps) {
 
   return (
-    <div className={`${likedMeals.length > 0 ? `grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4` : ''}`}>
-      {likedMeals.length > 0 ?
-        likedMeals.map((meal: Meal) => (
+    <div className='grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4'>
+      {likedMeals.map((meal: any) => (
           <CategoryCard
-            id={meal.idMeal}
-            key={meal.idMeal}
-            name={meal.strMeal}
-            image={meal.strMealThumb}
+            id={meal.id}
+            key={meal.id}
+            name={formatTitle(meal.title)}
+            image={meal.image}
           />
-        )) : (
-          <NoResult />
-        )}
+        ))}
     </div>
   )
 }
