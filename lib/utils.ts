@@ -11,7 +11,7 @@ export function pickTwoNumbers() {
   const start = Math.floor(Math.random() * 292);
 
   const n1 = start;
-  const n2 = start + 9;
+  const n2 = start + 10;
 
   return { n1, n2 };
 }
