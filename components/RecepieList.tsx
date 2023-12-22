@@ -5,7 +5,7 @@ import SearchBar from './SearchBar'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
-import { IntersectionOptions, useInView } from 'react-intersection-observer'
+import { useInView } from 'react-intersection-observer'
 import { Spinner } from "@nextui-org/react";
 import { formatTitle } from '@/lib/utils'
 import { Meal } from '@/types/types'
@@ -28,6 +28,7 @@ export default function RecepieList({
   const [loading, setLoading] = useState<boolean>(false)
   const [paginationLoading, setPaginationLoading] = useState<boolean>(false)
   const { ref, inView } = useInView({ triggerOnce: true })
+
 
   return (
     <>
