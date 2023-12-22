@@ -1,6 +1,7 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { getOffsetEnd } from "./utils";
 import { Meal } from "@/types/types";
+import fetchMealsWithIds from "@/hooks/fetchMealsWithRange";
 
 
 export async function getMeals(
@@ -22,16 +23,11 @@ export async function getMeals(
 
     let mealIds = mealIdsFromIngredients ? mealIdsFromIngredients.slice(offSetStart, getOffsetEnd(offSetEnd, mealIdsFromIngredients.length)).map((meal: any) => meal.meal_id) : []
 
-    let { data: meals, error: mealsError } = await supabase
-      .from('meals')
-      .select("*")
-      .in('id', [mealIds])
-
-    if (mealsError) throw new Error(`${mealsError.message} ${mealsError.details}`)
+    const meals = await fetchMealsWithIds(mealIds, supabase)
 
     return meals ? meals : []
   } else {
-    // Call all meals ID that mathes the search
+
     let { data: meals, error: mealsError } = await supabase
       .from('meals')
       .select("id")
@@ -41,12 +37,7 @@ export async function getMeals(
 
     const mealIds = meals ? meals.slice(offSetStart, getOffsetEnd(offSetEnd, meals?.length)).map((meal: any) => meal.id) : []
 
-    let { data: mealsFromIds, error: mealsFromIdsError } = await supabase
-      .from('meals')
-      .select("*")
-      .in('id', [mealIds])
-
-    if (mealsFromIdsError) throw new Error(`${mealsFromIdsError.message} ${mealsFromIdsError.details}`)
+    const mealsFromIds = await fetchMealsWithIds(mealIds, supabase)
 
     return mealsFromIds ? mealsFromIds : []
   }
