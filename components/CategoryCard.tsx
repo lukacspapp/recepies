@@ -42,7 +42,7 @@ export default function CategoryCard({
         </Link>
         <div>
 
-          <h2 className="leading-tighter mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
+          <h2 className="leading-tighter my-1 mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
             {name}
           </h2>
           {description && <div className="relative h-[6rem] overflow-hidden">
