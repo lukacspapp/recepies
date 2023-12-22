@@ -15,7 +15,12 @@ type CategoryCardProps = {
   description?: string
 }
 
-export default function CategoryCard({ id, name, image, description = '' }: CategoryCardProps) {
+export default function CategoryCard({
+  id,
+  name,
+  image,
+  description = ''
+}: CategoryCardProps) {
 
   const pathname = usePathname()
   const { user } = useAuth()
@@ -37,7 +42,7 @@ export default function CategoryCard({ id, name, image, description = '' }: Cate
         </Link>
         <div>
 
-          <h2 className="leading-tighter mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
+          <h2 className="leading-tighter my-1 mb-3 text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl">
             {name}
           </h2>
           {description && <div className="relative h-[6rem] overflow-hidden">

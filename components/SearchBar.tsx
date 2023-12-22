@@ -5,7 +5,6 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import * as z from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import {
   Form,
@@ -15,36 +14,36 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { Meal } from '@/lib/types'
+import { Meal, defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
+import { mealResponse } from '@/app/api/recipes/route'
+
 
 type SearchBarProps = {
   ingredients: string[]
   categories: string[]
-  areas: string[]
+  cuisines: string[]
   setMealList: React.Dispatch<React.SetStateAction<Meal[]>>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  inView: boolean
+  setPaginationLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export default function SearchBar({
   ingredients,
   categories,
-  areas,
+  cuisines: areas,
   setMealList,
-  setLoading
+  setLoading,
+  inView,
+  setPaginationLoading
 }: SearchBarProps) {
 
-  const formSchema = z.object({ search: z.string().min(1, { message: "Search is Empty" }).max(25), type: z.string() })
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      search: "",
-      type: "",
-    },
-  })
+  const [prevSearchType, setPrevSearchType] = useState<string>('')
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
+  const form = useForm<z.infer<typeof formSchema>>(defaultFromValues)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const searchValue = e.target.value.toLowerCase();
@@ -77,11 +76,11 @@ export default function SearchBar({
     setSuggestions(suggestionObjects);
   }
 
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     setSuggestions([])
     setLoading(true)
-    const res = fetch('/api/recepies', {
+
+    const res: Promise<mealResponse> = fetch('/api/recipes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -97,9 +96,39 @@ export default function SearchBar({
     });
 
     const meals = await res;
-    setMealList(meals)
+
+    setPrevSearchType(values.search);
+
+    if (meals && meals.search && prevSearchType !== values.search) {
+      setMealList((prevMealList) => {
+        return meals.offsetStart > 9
+          ? [...prevMealList, ...meals.meals]
+          : meals.meals;
+      });
+    } else {
+      setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
+    }
+
+    setPaginationLoading(false)
     setLoading(false)
   }
+
+  function handleInViewChange() {
+    if (inView) {
+      setPaginationLoading(true)
+      setLoading(true)
+
+      form.setValue('offsetStart', form.getValues().offsetEnd);
+      form.setValue('offsetEnd', form.getValues().offsetEnd + 10);
+      onSubmit(form.getValues());
+
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    handleInViewChange();
+  }, [inView]);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -117,10 +146,16 @@ export default function SearchBar({
     };
   }, [suggestions])
 
+  useEffect(() => {
+    form.setValue('offsetStart', 0);
+    form.setValue('offsetEnd', 10);
+  }, [form.getValues('search')]);
+
   return (
     <>
       <Form {...form}>
         <form
+          autoComplete='off'
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex items-end justify-center space-y-1 space-x-1 relative w-80"
         >
@@ -133,10 +168,11 @@ export default function SearchBar({
                 <FormMessage className='absolute bottom-10' />
                 <FormControl>
                   <Input
+                    autoComplete='off'
                     className='text-lg'
                     disabled={form.formState.isSubmitting}
                     {...field}
-                    placeholder="Ingridients, Meals...."
+                    placeholder="Ingredients, Meals...."
                     onChange={(e) => {
                       handleChange(e)
                       field.onChange(e)

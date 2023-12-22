@@ -1,36 +1,43 @@
 'use client'
 
-import React, { Suspense } from 'react'
+import React, { Suspense, useState } from 'react'
 import SearchBar from './SearchBar'
-import { Meal } from '@/lib/types'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
+import { IntersectionOptions, useInView } from 'react-intersection-observer'
+import { Spinner } from "@nextui-org/react";
+import { formatTitle } from '@/lib/utils'
+import { Meal } from '@/types/types'
 
 type RecepieListProps = {
   ingredients: string[]
   categories: string[]
-  areas: string[]
+  cuisines: string[]
   meals: Meal[]
 }
 
 export default function RecepieList({
   ingredients,
   categories,
-  areas,
-  meals
+  cuisines,
+  meals,
 }: RecepieListProps) {
 
-  const [mealList, setMealList] = React.useState<Meal[]>(meals)
-  const [loading, setLoading] = React.useState<boolean>(false)
+  const [mealList, setMealList] = useState<Meal[]>(meals)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [paginationLoading, setPaginationLoading] = useState<boolean>(false)
+  const { ref, inView } = useInView({ triggerOnce: true })
 
   return (
     <>
       <div className='flex justify-center my-8 max-w-3xl mx-auto'>
         <SearchBar
+          setPaginationLoading={setPaginationLoading}
+          inView={inView}
           ingredients={ingredients}
           categories={categories}
-          areas={areas}
+          cuisines={cuisines}
           setMealList={setMealList}
           loading={loading}
           setLoading={setLoading}
@@ -41,21 +48,24 @@ export default function RecepieList({
           {loading ? (
             Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
           ) : mealList && mealList.length > 0 ? (
-            mealList.map((meal: Meal) => (
+            mealList.map((meal: Meal, i: number) => (
               <RecipeCard
-                key={meal.idMeal}
-                id={meal.idMeal}
-                strMealThumb={meal.strMealThumb}
-                strMeal={meal.strMeal}
-                strCategory={meal.strCategory}
-                strArea={meal.strArea}
-                strDescription={meal.strInstructions}
+                inViewRef={ref}
+                i={i}
+                key={meal.id}
+                id={meal.id}
+                image={meal.image}
+                title={formatTitle(meal.title)}
+                category={meal.category}
+                cuisine={meal.cuisine}
+                description={meal.description}
               />
             ))
           ) : (
             null
           )}
         </div>
+        {paginationLoading && <div className='flex justify-center my-5'><Spinner size='lg' color='success' /></div>}
       </Suspense>
       {mealList && mealList.length === 0 && !loading && <NoResult />}
     </>

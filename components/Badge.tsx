@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { badgeVariants } from './ui/badge'
-import { SuggestionType } from '@/lib/types'
+import { SuggestionType } from '@/types/types'
 
 
 type BadgeProps = {
@@ -12,7 +12,11 @@ type BadgeProps = {
   className?: string
 }
 
-export default function Badge({ value, type, className }: BadgeProps) {
+export default function Badge({
+  value,
+  type,
+  className
+}: BadgeProps) {
 
   const colors: { [key: string]: string } = {
     "categories": "bg-green-500",

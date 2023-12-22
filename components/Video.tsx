@@ -3,11 +3,11 @@
 import React from 'react'
 import YouTube from "react-youtube";
 
-type Props = {
+type VideoProps = {
   id: string
 }
 
-export default function Video({ id }: Props) {
+export default function Video({ id }: VideoProps) {
 
   const opts = {
     height: '240',

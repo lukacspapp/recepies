@@ -29,7 +29,6 @@ const listTypes = [
   { name: 'Cusinies', href: '/cuisines', color: 'bg-lime-400', spinnerColor: 'warning' },
 ]
 
-
 export default function Nav() {
 
   const pathname = usePathname();

@@ -10,7 +10,15 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Footer from './Footer'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
 
-export function Providers({ children, likedMealIds }: { children: React.ReactNode, likedMealIds: string[] }) {
+type ProvidersProps = {
+  children: React.ReactNode
+  likedMealIds: string[]
+}
+
+export function Providers({
+  children,
+  likedMealIds
+}: ProvidersProps) {
 
   const supabase = createClientComponentClient()
   const pathname = usePathname()
@@ -35,7 +43,6 @@ export function Providers({ children, likedMealIds }: { children: React.ReactNod
     if (!user) {
       useLikedMealStore.setState({ likedMealIds: [] })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   return (

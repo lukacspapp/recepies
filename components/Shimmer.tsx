@@ -1,6 +1,16 @@
 'use client'
 
-export default function Shimmer({ w, h, theme }: { w: number; h: number; theme?: string }) {
+type ShimmerProps = {
+  w: number
+  h: number
+  theme?: string
+}
+
+export default function Shimmer({
+  w,
+  h,
+  theme
+}: ShimmerProps) {
   return (
     <svg className="rounded-md" width={w} height={h} version="1.1" xmlns="http://www.w3.org/2000/svg">
       <rect id="r" width={w} height={h} fill={theme === "dark" ? "#171717" : "#e2e8f0"} />
