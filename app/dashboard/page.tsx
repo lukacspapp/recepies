@@ -1,8 +1,6 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers';
-import { doRequest } from '@/lib/DoRequest';
 import AnimatedDescription from '@/components/AnimatedDescription';
-import { Meal } from '@/lib/types/types';
 import DashboardList from '@/components/DashboardList';
 import { redirect } from 'next/navigation';
 import NoResult from '@/components/NoResult';
@@ -15,7 +13,7 @@ export default async function page() {
 
   if (!session) redirect('/login')
 
-  let likedMeals: Meal[] = []
+  let likedMeals: any[] = []
 
   let { data: mealIdList, error } = await supabase
     .from('liked_meals')

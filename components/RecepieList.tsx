@@ -2,7 +2,6 @@
 
 import React, { Suspense } from 'react'
 import SearchBar from './SearchBar'
-import { NewMeal } from '@/lib/types/types'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
 import NoResult from './NoResult'
@@ -14,7 +13,7 @@ type RecepieListProps = {
   ingredients: string[]
   categories: string[]
   areas: string[]
-  meals: NewMeal[]
+  meals: any
 }
 
 export default function RecepieList({
@@ -24,7 +23,7 @@ export default function RecepieList({
   meals,
 }: RecepieListProps) {
 
-  const [mealList, setMealList] = React.useState<NewMeal[]>(meals)
+  const [mealList, setMealList] = React.useState<any[]>(meals)
   const [loading, setLoading] = React.useState<boolean>(false)
   const [paginationLoading, setPaginationLoading] = React.useState<boolean>(false)
   const { ref, inView } = useInView({ triggerOnce: true })
@@ -48,7 +47,7 @@ export default function RecepieList({
           {loading ? (
             Array.from(Array(3).keys()).map((_, index) => <LoadingRecepieCard key={index} />)
           ) : mealList && mealList.length > 0 ? (
-            mealList.map((meal: NewMeal, i: number) => (
+            mealList.map((meal: any, i: number) => (
               <RecipeCard
                 inViewRef={ref}
                 i={i}

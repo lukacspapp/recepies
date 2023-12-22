@@ -4,7 +4,7 @@ import { Transition } from "@headlessui/react"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import { descriptionStyle, titleStyle } from "../styles/styles"
-import { DescriptionType } from "../lib/types/types"
+import { DescriptionType } from "../types/types"
 
 
 export default function AnimatedDescription({

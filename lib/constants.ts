@@ -1,4 +1,4 @@
-import { CuisineColors } from "./types/types";
+import { CuisineColors } from "../types/types";
 
 export const cuisineList: CuisineColors = {
   "American" : "🇺🇸",

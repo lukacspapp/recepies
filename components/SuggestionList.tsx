@@ -1,4 +1,4 @@
-import { SuggestionType } from '@/lib/types/types'
+import { SuggestionType } from '@/types/types'
 import React from 'react'
 import Suggestion from './Suggestion'
 import { UseFormReturn } from 'react-hook-form'

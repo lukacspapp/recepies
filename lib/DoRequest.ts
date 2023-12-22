@@ -1,4 +1,4 @@
-import { RequestMethod } from "./types/types";
+import { RequestMethod } from "../types/types";
 
 export async function doRequest(
   method: RequestMethod,
@@ -30,4 +30,8 @@ export async function doRequest(
   } catch (e) {
     return `There was an Error: ${e}`;
   }
+}
+
+export async function fetcher() {
+
 }

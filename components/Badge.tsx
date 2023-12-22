@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { badgeVariants } from './ui/badge'
-import { SuggestionType } from '@/lib/types/types'
+import { SuggestionType } from '@/types/types'
 
 
 type BadgeProps = {

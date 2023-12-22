@@ -11,18 +11,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const supabase = createServerComponentClient({ cookies })
 
   const { data: matchingMeals, error: mealsError } = await supabase
-  .from('meals')
-  .select('*')
-  .eq('title', formatToMealDBTitle(params.slug))
+    .from('meals')
+    .select('*')
+    .eq('title', formatToMealDBTitle(params.slug))
 
   if (mealsError) throw new Error(mealsError.message)
 
   const meal = matchingMeals ? matchingMeals[0] : null
 
   const { data: mealIngredientsMmeasurements, error: mealIngredientsMmeasurementsError } = await supabase
-  .from('meal_ingredients_measurements')
-  .select("*")
-  .eq('meal_id', meal.id)
+    .from('meal_ingredients_measurements')
+    .select("*")
+    .eq('meal_id', meal.id)
 
   if (mealIngredientsMmeasurementsError) throw new Error(mealIngredientsMmeasurementsError.message)
 
@@ -50,10 +50,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
             <h2 className="leading-tighter mb-2 text-center text-xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem]">
               {formatTitle(meal.title)}
             </h2>
-              <div className="flex mt-1 justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
-                <Badge value={meal.category} type='categories' />
-                <Badge value={meal.cuisine} className="ml-2" type='cuisines' />
-              </div>
+            <div className="flex mt-1 justify-center space-x-2 md:space-x-4 text-sm md:text-base lg:text-lg dark:text-zinc-400">
+              <Badge value={meal.category} type='categories' />
+              <Badge value={meal.cuisine} className="ml-2" type='cuisines' />
+            </div>
             <h3 className="leading-tight text-lg mt-4 font-bold tracking-tighter md:text-lg lg:text-xl xl:text-2xl">
               Instructions
             </h3>
@@ -64,7 +64,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
               Ingredients and Measurements
             </h3>
             <ul className="list-disc list-inside mt-3 text-sm md:text-base lg:text-lg dark:text-zinc-400">
-              {ingredientsAndMeasurements.length > 0 ?? ingredientsAndMeasurements.map((item: { ingredient: string, measurement: string }, i: number) => (
+              {ingredientsAndMeasurements.map((item: { ingredient: string, measurement: string }, i: number) => (
                 <li key={i}>{item.ingredient} - {item.measurement}</li>
               ))}
             </ul>

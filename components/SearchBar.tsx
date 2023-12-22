@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Label } from './ui/label'
-import { NewMeal, defaultFromValues, formSchema } from '@/lib/types/types'
+import { defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
 
@@ -23,7 +23,7 @@ type SearchBarProps = {
   ingredients: string[]
   categories: string[]
   areas: string[]
-  setMealList: React.Dispatch<React.SetStateAction<NewMeal[]>>
+  setMealList: React.Dispatch<React.SetStateAction<any[]>>
   loading: boolean
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
   inView: boolean

@@ -41,17 +41,23 @@ export interface Database {
       meal_categories: {
         Row: {
           created_at: string
+          description: string | null
           id: string | null
+          image: string | null
           title: string
         }
         Insert: {
           created_at?: string
+          description?: string | null
           id?: string | null
+          image?: string | null
           title: string
         }
         Update: {
           created_at?: string
+          description?: string | null
           id?: string | null
+          image?: string | null
           title?: string
         }
         Relationships: []
@@ -73,6 +79,38 @@ export interface Database {
           title?: string
         }
         Relationships: []
+      }
+      meal_ingredients_measurements: {
+        Row: {
+          created_at: string
+          id: string
+          ingredient: string | null
+          meal_id: string | null
+          measurement: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ingredient?: string | null
+          meal_id?: string | null
+          measurement?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ingredient?: string | null
+          meal_id?: string | null
+          measurement?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meal_ingredients_measurements_meal_id_fkey"
+            columns: ["meal_id"]
+            isOneToOne: false
+            referencedRelation: "meals"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       meal_ingridients: {
         Row: {
@@ -101,7 +139,6 @@ export interface Database {
           description: string | null
           id: string
           image: string
-          ingridient_measurement: Json | null
           title: string
           updated_at: string | null
           video_link: string
@@ -114,7 +151,6 @@ export interface Database {
           description?: string | null
           id?: string
           image: string
-          ingridient_measurement?: Json | null
           title: string
           updated_at?: string | null
           video_link: string
@@ -127,7 +163,6 @@ export interface Database {
           description?: string | null
           id?: string
           image?: string
-          ingridient_measurement?: Json | null
           title?: string
           updated_at?: string | null
           video_link?: string
