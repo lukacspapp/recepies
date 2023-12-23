@@ -17,7 +17,7 @@ import { Label } from './ui/label'
 import { Meal, defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
-import { mealResponse } from '@/app/api/recipes/route'
+import { fetchMeals } from '@/lib/services'
 
 
 type SearchBarProps = {
@@ -41,7 +41,6 @@ export default function SearchBar({
   setPaginationLoading
 }: SearchBarProps) {
 
-  const [prevSearchType, setPrevSearchType] = useState<string>('')
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
   const form = useForm<z.infer<typeof formSchema>>(defaultFromValues)
 
@@ -80,49 +79,25 @@ export default function SearchBar({
     setSuggestions([])
     setLoading(true)
 
-    const res: Promise<mealResponse> = fetch('/api/recipes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values)
-    }).then(res => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      }
-      return res.json();
-    }).catch(error => {
-      console.error('Error:', error);
-    });
+    const meals = await fetchMeals('/api/recipes', values);
 
-    const meals = await res;
+    setMealList(meals.meals);
+    setLoading(false)
+  }
 
-    setPrevSearchType(values.search);
+  async function handlePagination() {
+    setPaginationLoading(true)
 
-    if (meals && meals.search && prevSearchType !== values.search) {
-      setMealList((prevMealList) => {
-        return meals.offsetStart > 9
-          ? [...prevMealList, ...meals.meals]
-          : meals.meals;
-      });
-    } else {
-      setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
-    }
+    const meals = await fetchMeals('/api/recipes', form.getValues())
+
+    setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
 
     setPaginationLoading(false)
-    setLoading(false)
   }
 
   function handleInViewChange() {
     if (inView) {
-      setPaginationLoading(true)
-      setLoading(true)
-
-      form.setValue('offsetStart', form.getValues().offsetEnd);
-      form.setValue('offsetEnd', form.getValues().offsetEnd + 10);
-      onSubmit(form.getValues());
-
-      setLoading(false)
+      handlePagination();
     }
   }
 

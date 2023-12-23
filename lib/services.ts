@@ -1,7 +1,9 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { getOffsetEnd } from "./utils";
-import { Meal } from "@/types/types";
+import { Meal, formSchema } from "@/types/types";
 import fetchMealsWithIds from "@/hooks/fetchMealsWithRange";
+import { z } from "zod";
+import { mealResponse } from "@/app/api/recipes/route";
 
 
 export async function getMeals(
@@ -41,4 +43,33 @@ export async function getMeals(
 
     return mealsFromIds ? mealsFromIds : []
   }
+}
+
+export async function fetchMeals(
+  url: string,
+  body: z.infer<typeof formSchema>
+): Promise<mealResponse> {
+
+  try {
+
+    const res = await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (res.ok) {
+      const responseBody = await res.json();
+
+      return responseBody;
+    }
+
+    throw new Error(`There was an Error: ${res.statusText}`)
+  } catch (e) {
+
+    throw new Error(String(e))
+  }
+
 }
