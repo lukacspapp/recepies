@@ -17,7 +17,7 @@ import { Label } from './ui/label'
 import { Meal, defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
-import { fetchMeals } from '@/lib/services'
+import { fetcher } from '@/lib/services'
 
 
 type SearchBarProps = {
@@ -77,9 +77,14 @@ export default function SearchBar({
 
   async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     setSuggestions([])
+    setMealList([])
     setLoading(true)
 
-    const meals = await fetchMeals('/api/recipes', values);
+    const meals = await fetcher(
+      'POST',
+      '/api/recipes',
+      values
+    );
 
     setMealList(meals.meals);
     setLoading(false)
@@ -88,7 +93,11 @@ export default function SearchBar({
   async function handlePagination() {
     setPaginationLoading(true)
 
-    const meals = await fetchMeals('/api/recipes', form.getValues())
+    const meals = await fetcher(
+      'POST',
+      '/api/recipes',
+      form.getValues()
+    )
 
     setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
 
@@ -97,6 +106,8 @@ export default function SearchBar({
 
   function handleInViewChange() {
     if (inView) {
+      form.setValue('offsetStart', form.getValues('offsetEnd'));
+      form.setValue('offsetEnd', form.getValues('offsetEnd') + 10);
       handlePagination();
     }
   }

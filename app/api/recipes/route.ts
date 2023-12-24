@@ -8,16 +8,11 @@ import { Meal } from '@/types/types'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
-export interface mealResponse {
+export interface DTO {
   search: number,
   meals: Meal[],
+  likedMeals?: string[],
   offsetStart: number,
-}
-
-let deafultResponseBody: mealResponse = {
-  search: 0,
-  meals: [] as any,
-  offsetStart: 0,
 }
 
 export async function POST(req: Request) {
@@ -32,13 +27,13 @@ export async function POST(req: Request) {
 
       const meals = await getMeals(supabase, type, search, offsetStart, offsetEnd)
 
-      deafultResponseBody = {
+      const responseBody: DTO = {
         offsetStart,
         search: 1,
         meals: meals
       }
 
-      if (meals) return new Response(JSON.stringify(deafultResponseBody))
+      if (meals) return new Response(JSON.stringify(responseBody))
 
     } catch (e) {
       throw new Error(String(e))
@@ -59,13 +54,14 @@ export async function POST(req: Request) {
 
       const mealsFromIds = await fetchMealsWithIds(mealIds, supabase)
 
-      deafultResponseBody = {
+      const responseBody: DTO = {
+        likedMeals: [],
         offsetStart: n1,
         search: 0,
         meals: mealsFromIds as Meal[] || []
       }
 
-      return new Response(JSON.stringify(deafultResponseBody))
+      return new Response(JSON.stringify(responseBody))
 
     } catch (e) {
       throw new Error(String(e));
@@ -100,12 +96,13 @@ export async function POST(req: Request) {
 
     const mealsFromIds = await fetchMealsWithIds(mealIds, supabase)
 
-    deafultResponseBody = {
+    const responseBody: DTO = {
+      likedMeals: [],
       offsetStart,
       search: 1,
       meals: mealsFromIds as Meal[] || []
     }
 
-    return new Response(JSON.stringify(deafultResponseBody))
+    return new Response(JSON.stringify(responseBody))
   }
 }

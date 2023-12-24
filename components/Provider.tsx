@@ -9,6 +9,7 @@ import { useEffect } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Footer from './Footer'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
+import { fetcher } from '@/lib/services'
 
 type ProvidersProps = {
   children: React.ReactNode
@@ -20,15 +21,15 @@ export function Providers({
   likedMealIds
 }: ProvidersProps) {
 
-  const supabase = createClientComponentClient()
   const pathname = usePathname()
   const { user } = useAuth()
   useLikedMealStore.setState({ likedMealIds: likedMealIds })
 
   async function getLikedMeals() {
-    const { data: likedMeals } = await supabase
-      .from('liked_meals')
-      .select('meal_id')
+    const { likedMeals } = await fetcher(
+      'POST',
+      '/api/liked-meals',
+    )
 
     if (likedMeals) {
       const likedMealIds = likedMeals.map((meal: any) => meal.meal_id)
