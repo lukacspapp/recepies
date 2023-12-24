@@ -3,7 +3,7 @@ import { getOffsetEnd } from "./utils";
 import { Meal, RequestMethod, formSchema } from "@/types/types";
 import fetchMealsWithIds from "@/hooks/fetchMealsWithRange";
 import { z } from "zod";
-import { DTO } from "@/app/api/recipes/route";
+import { ResponseDTO } from "@/app/api/recipes/route";
 
 
 export async function getMeals(
@@ -49,7 +49,7 @@ export async function fetcher(
   method: RequestMethod,
   url: string,
   body?: z.infer<typeof formSchema>
-): Promise<DTO> {
+): Promise<ResponseDTO> {
 
   const options: RequestInit = {
     method: method,

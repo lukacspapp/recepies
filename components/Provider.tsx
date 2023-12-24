@@ -31,8 +31,7 @@ export function Providers({
       '/api/liked-meals',
     )
 
-    if (likedMeals) {
-      const likedMealIds = likedMeals.map((meal: any) => meal.meal_id)
+    if (likedMeals && likedMeals.length > 0) {
       useLikedMealStore.setState({ likedMealIds: likedMealIds })
     }
   }

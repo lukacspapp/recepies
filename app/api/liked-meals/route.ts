@@ -1,7 +1,7 @@
 import { Database } from "@/types/supabase"
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import { DTO } from "../recipes/route"
+import { ResponseDTO } from "../recipes/route"
 
 export async function POST() {
 
@@ -14,12 +14,10 @@ export async function POST() {
 
   if (likedMealsError) throw new Error(`${likedMealsError.message} ${likedMealsError.details}`)
 
-  const mealIds = likedMeals?.map((meal: any) => meal.meal_id)
+  const mealIds =likedMeals ? likedMeals.map((meal: any) => meal.meal_id) : []
 
-  const responseBody: DTO = {
+  const responseBody: ResponseDTO = {
     likedMeals: mealIds,
-    offsetStart: 0,
-    search: 0,
     meals: []
   }
 

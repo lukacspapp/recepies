@@ -80,26 +80,26 @@ export default function SearchBar({
     setMealList([])
     setLoading(true)
 
-    const meals = await fetcher(
+    const { meals } = await fetcher(
       'POST',
       '/api/recipes',
       values
     );
 
-    setMealList(meals.meals);
+    setMealList(meals);
     setLoading(false)
   }
 
   async function handlePagination() {
     setPaginationLoading(true)
 
-    const meals = await fetcher(
+    const { meals } = await fetcher(
       'POST',
       '/api/recipes',
       form.getValues()
     )
 
-    setMealList((prevMealList) => [...prevMealList, ...meals.meals]);
+    setMealList((prevMealList) => [...prevMealList, ...meals]);
 
     setPaginationLoading(false)
   }

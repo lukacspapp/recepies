@@ -41,7 +41,7 @@ export default async function page() {
         <div className="container px-4 md:px-6">
           <AnimatedDescription
             title={'Welcome to your Dashboard'}
-            description={"Here you can find your liked recepies"}
+            description={"Here you can find your liked recipes"}
           />
           {likedMeals.length > 0 ?
             <DashboardList likedMeals={likedMeals} />

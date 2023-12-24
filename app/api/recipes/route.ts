@@ -8,11 +8,9 @@ import { Meal } from '@/types/types'
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 
-export interface DTO {
-  search: number,
+export interface ResponseDTO {
   meals: Meal[],
   likedMeals?: string[],
-  offsetStart: number,
 }
 
 export async function POST(req: Request) {
@@ -27,9 +25,7 @@ export async function POST(req: Request) {
 
       const meals = await getMeals(supabase, type, search, offsetStart, offsetEnd)
 
-      const responseBody: DTO = {
-        offsetStart,
-        search: 1,
+      const responseBody: ResponseDTO = {
         meals: meals
       }
 
@@ -54,10 +50,7 @@ export async function POST(req: Request) {
 
       const mealsFromIds = await fetchMealsWithIds(mealIds, supabase)
 
-      const responseBody: DTO = {
-        likedMeals: [],
-        offsetStart: n1,
-        search: 0,
+      const responseBody: ResponseDTO = {
         meals: mealsFromIds as Meal[] || []
       }
 
@@ -96,10 +89,7 @@ export async function POST(req: Request) {
 
     const mealsFromIds = await fetchMealsWithIds(mealIds, supabase)
 
-    const responseBody: DTO = {
-      likedMeals: [],
-      offsetStart,
-      search: 1,
+    const responseBody: ResponseDTO = {
       meals: mealsFromIds as Meal[] || []
     }
 
