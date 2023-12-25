@@ -25,7 +25,7 @@ export default async function page({ params }: { params: { slug: string } }) {
         <div className="container px-4 md:px-6">
           <AnimatedDescription
             title={params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')}
-            description={`Best Recepies within the ${params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')} Category` }
+            description={`Best Recipes within the ${params.slug.charAt(0).toUpperCase() + params.slug.slice(1).replace(/-/g, ' ')} Category` }
           />
           <div className="grid gap-10 sm:gap-12 md:gap-16 md:grid-cols-2 lg:grid cols-2 lg:gap-8 xl:grid-cols-3 2xl:grid-cols-4">
             {meals.map((meal) => (

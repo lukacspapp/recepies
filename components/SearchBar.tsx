@@ -38,7 +38,7 @@ export default function SearchBar({
   setMealList,
   setLoading,
   inView,
-  setPaginationLoading
+  setPaginationLoading,
 }: SearchBarProps) {
 
   const [suggestions, setSuggestions] = useState<{ suggestion: string; type: string; }[]>([])
@@ -86,8 +86,10 @@ export default function SearchBar({
       values
     );
 
-    setMealList(meals);
+    setMealList(meals)
+
     setLoading(false)
+
   }
 
   async function handlePagination() {

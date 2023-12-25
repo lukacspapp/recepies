@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import SearchBar from './SearchBar'
 import RecipeCard from './RecipeCard'
 import LoadingRecepieCard from './LoadingRecepieCard'
@@ -28,7 +28,6 @@ export default function RecepieList({
   const [loading, setLoading] = useState<boolean>(false)
   const [paginationLoading, setPaginationLoading] = useState<boolean>(false)
   const { ref, inView } = useInView({ triggerOnce: true })
-
 
   return (
     <>
