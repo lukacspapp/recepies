@@ -1,6 +1,5 @@
 "use client"
 
-import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 
@@ -19,16 +18,13 @@ import {
   useForm
 } from "react-hook-form"
 import { Input } from "./ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectTrigger,
-  SelectValue,
-  SelectItem
-} from "./ui/select"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
+import { CaretSortIcon } from "@radix-ui/react-icons"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "./ui/command"
+import { CheckIcon } from "lucide-react"
 
 const profileFormSchema = z.object({
   title: z
@@ -81,8 +77,6 @@ const defaultValues: Partial<ProfileFormValues> = {
 }
 
 export default function CreateMealForm() {
-  const [open, setOpen] = useState(false)
-  const [value, setValue] = useState("")
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
@@ -100,7 +94,7 @@ export default function CreateMealForm() {
 
   }
 
-  const languages = [
+  const languagesList = [
     { label: "English", value: "en" },
     { label: "French", value: "fr" },
     { label: "German", value: "de" },
@@ -110,7 +104,14 @@ export default function CreateMealForm() {
     { label: "Japanese", value: "ja" },
     { label: "Korean", value: "ko" },
     { label: "Chinese", value: "zh" },
-  ] as const
+  ]
+
+  const [languages, setLanguages] = useState(languagesList)
+  const [newLanguage, setNewLanguage] = useState('')
+
+  useEffect(() => {
+
+  }, [languages])
 
   return (
     <Form {...form}>
@@ -171,23 +172,91 @@ export default function CreateMealForm() {
           control={form.control}
           name="language"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="m@example.com">m@example.com</SelectItem>
-                  <SelectItem value="m@google.com">m@google.com</SelectItem>
-                  <SelectItem value="m@support.com">m@support.com</SelectItem>
-                </SelectContent>
-              </Select>
+            <FormItem className="flex flex-col">
+              <FormLabel>Language</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-[200px] justify-between",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value
+                        ? languages.find(
+                          (language) => language.value === field.value
+                        )?.label
+                        : "Select language"}
+                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-[200px] p-0">
+                  <Command>
+                    <CommandInput
+                      placeholder="Search framework..."
+                      className="h-9"
+                    />
+                    <CommandEmpty>No framework found.</CommandEmpty>
+                    <CommandGroup>
+                      {languages.map((language) => (
+                        <CommandItem
+                          value={language.label}
+                          key={language.value}
+                          onSelect={() => {
+                            form.setValue("language", language.value)
+                          }}
+                        >
+                          {language.label}
+                          <CheckIcon
+                            className={cn(
+                              "ml-auto h-4 w-4",
+                              language.value === field.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                      <CommandSeparator className="mt-1" />
+                      <CommandList>
+                        <CommandGroup>
+                          <CommandList>
+                            <div className="flex p-1">
+                                <Input
+                                  onChange={(e) => {setNewLanguage(e.target.value)}}
+                                  type="text"
+                                  autoCapitalize="on"
+                                  placeholder="Add New"
+                                  className="h-9"
+                                />
+                                <Button
+                                  onClick={() => {
+                                    setLanguages([
+                                      ...languages,
+                                      { label: newLanguage, value: newLanguage },
+                                    ])
+                                    form.setValue("language", newLanguage)
+                                  }}
+                                  type="submit"
+                                  variant="ghost"
+                                  className="ml-2 h-9"
+                                >
+                                  +
+                                </Button>
+                            </div>
+                          </CommandList>
+                        </CommandGroup>
+                      </CommandList>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
               <FormDescription>
-                You can manage verified email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
+                This is the language that will be used in the dashboard.
               </FormDescription>
               <FormMessage />
             </FormItem>
