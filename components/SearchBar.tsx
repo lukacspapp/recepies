@@ -75,6 +75,10 @@ export default function SearchBar({
     setSuggestions(suggestionObjects);
   }
 
+  async function setMeals(meals: Meal[]) {
+    setMealList(meals)
+  }
+
   async function onSubmit(values: z.infer<typeof formSchema>): Promise<void> {
     setSuggestions([])
     setMealList([])
@@ -86,7 +90,7 @@ export default function SearchBar({
       values
     );
 
-    setMealList(meals)
+    await setMeals(meals)
 
     setLoading(false)
 
