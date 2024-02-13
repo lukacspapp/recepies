@@ -17,6 +17,7 @@ import { Label } from './ui/label'
 import { Meal, defaultFromValues, formSchema } from '@/types/types'
 import { Loader2 } from 'lucide-react'
 import SuggestionList from './SuggestionList'
+import { fecser } from '../node_modules/fecser/dist'
 import { fetcher } from '@/lib/services'
 
 
@@ -84,11 +85,13 @@ export default function SearchBar({
     setMealList([])
     setLoading(true)
 
-    const { meals } = await fetcher(
-      'POST',
+    const { meals } = await fecser(
       '/api/recipes',
-      values
-    );
+      {
+        method: 'POST',
+        body: values
+      }
+    ) as { meals: Meal[] };
 
     await setMeals(meals)
 
